@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domain.ComplexModels;
+
+public partial class ProductPicture
+{
+    public Guid Id { get; set; }
+
+    public string Image { get; set; } = null!;
+
+    public Guid ProductId { get; set; }
+
+    public virtual Product Product { get; set; } = null!;
+}

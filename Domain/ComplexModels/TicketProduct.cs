@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domain.ComplexModels;
+
+public partial class TicketProduct
+{
+    public Guid TpId { get; set; }
+
+    public Guid TpFrProduct { get; set; }
+
+    public long TpFrTicket { get; set; }
+
+    public virtual Product TpFrProductNavigation { get; set; } = null!;
+
+    public virtual Ticket TpFrTicketNavigation { get; set; } = null!;
+}
