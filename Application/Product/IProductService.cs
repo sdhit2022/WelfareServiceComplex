@@ -38,12 +38,12 @@ namespace Application.Product
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ILogger<ProductService> _logger;
         private readonly IMapper _mapper;
-        private readonly IComplexContext _shopContext;
+        private readonly IComplexContext _complexContext;
 
         public ProductService(IComplexContext shopContext, IMapper mapper, ILogger<ProductService> logger,
             IHttpContextAccessor contextAccessor, IAuthHelper authHelper)
         {
-            _shopContext = shopContext;
+            _complexContext = shopContext;
             _mapper = mapper;
             _logger = logger;
             _contextAccessor = contextAccessor;
@@ -52,13 +52,13 @@ namespace Application.Product
 
         public List<ProductPropertiesDto> GetProductProperty(Guid id)
         {
-            return _mapper.Map<List<ProductPropertiesDto>>(_shopContext.ProductProperties.Include(x => x.Property)
+            return _mapper.Map<List<ProductPropertiesDto>>(_complexContext.ProductProperties.Include(x => x.Property)
                 .Where(x => x.ProductId == id).AsNoTracking());
         }
 
         public List<ProductPicturesDto> GetProductPictures(Guid productId)
         {
-            var result = _shopContext.ProductPictures.Where(x => x.ProductId == productId);
+            var result = _complexContext.ProductPictures.Where(x => x.ProductId == productId);
             var map = _mapper.Map<List<ProductPicturesDto>>(result);
             //foreach (var picturesDto in map)
             //    picturesDto.ImageBase64 = Convert.FromBase64String(picturesDto.Image);
@@ -70,18 +70,18 @@ namespace Application.Product
             var result = new ResultDto();
             try
             {
-                var product = _shopContext.Products.Find(id);
+                var product = _complexContext.Products.Find(id);
                 if (product == null)
                 {
                     _logger.LogError($"Don't Any Record width Id {id} of Table Product");
                     throw new Exception($"Don't Any Record width Id {id} of Table Product");
                 }
 
-                _shopContext.ProductPictures.RemoveRange(_shopContext.ProductPictures.Where(x => x.ProductId == id));
-                _shopContext.ProductProperties.RemoveRange(
-                    _shopContext.ProductProperties.Where(x => x.ProductId == id));
-                _shopContext.Products.Remove(product);
-                _shopContext.SaveChanges();
+                _complexContext.ProductPictures.RemoveRange(_complexContext.ProductPictures.Where(x => x.ProductId == id));
+                _complexContext.ProductProperties.RemoveRange(
+                    _complexContext.ProductProperties.Where(x => x.ProductId == id));
+                _complexContext.Products.Remove(product);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception e)
@@ -93,7 +93,7 @@ namespace Application.Product
 
         public List<ProductDto.ProductDto> GetAll()
         {
-            var result = _shopContext.Products.Include(x => x.TaxU).Include(x => x.PrdLvlUid3Navigation)
+            var result = _complexContext.Products.Include(x => x.TaxU).Include(x => x.PrdLvlUid3Navigation)
                 .AsNoTracking().Select(x => new
                 {
                     x.PrdUid,
@@ -140,7 +140,7 @@ namespace Application.Product
 
         public EditProduct GetDetailsForEdit(Guid id)
         {
-            var product = _shopContext.Products.Include(x => x.PrdLvlUid3Navigation).Include(x => x.ProductPictures)
+            var product = _complexContext.Products.Include(x => x.PrdLvlUid3Navigation).Include(x => x.ProductPictures)
                 .Include(x => x.ProductProperties).ThenInclude(x => x.Property).SingleOrDefault(x => x.PrdUid == id);
             var map = _mapper.Map<EditProduct>(product);
             map.Image = Convert.FromBase64String(map.PrdImage);
@@ -193,7 +193,7 @@ namespace Application.Product
 
         public ProductDetails GetDetails(Guid id)
         {
-            return _shopContext.Products.Include(x => x.UomUid1Navigation).Include(x => x.FkProductUnit2Navigation)
+            return _complexContext.Products.Include(x => x.UomUid1Navigation).Include(x => x.FkProductUnit2Navigation)
                 .Select(x => new
                 {
                     x.PrdName,
@@ -234,13 +234,13 @@ namespace Application.Product
 
         public List<PropertySelectOptionDto> PropertySelectOption()
         {
-            return _shopContext.Properties.Select(x => new PropertySelectOptionDto { Id = x.Id, Name = x.Name })
+            return _complexContext.Properties.Select(x => new PropertySelectOptionDto { Id = x.Id, Name = x.Name })
                 .AsNoTracking().ToList();
         }
 
         public List<UnitOfMeasurementDto> UnitOfMeasurement()
         {
-            return _shopContext.UnitOfMeasurements.Select(x => new { x.UomUid, x.UomName })
+            return _complexContext.UnitOfMeasurements.Select(x => new { x.UomUid, x.UomName })
                 .Select(x => new UnitOfMeasurementDto { Name = x.UomName, Id = x.UomUid })
                 .AsNoTracking().ToList();
         }
@@ -253,19 +253,19 @@ namespace Application.Product
             if (code == null) return result.Failed("حین چک کردن کد کالا خطای رخ داد،لطفا جدول تنظیمات را بررسی کنید");
             if (code == false) return result.Failed("طول کد کالا بیش تر حد مجاز هست");
 
-            using var transaction = _shopContext.Database.BeginTransaction();
+            using var transaction = _complexContext.Database.BeginTransaction();
             try
             {
                 command.PrdUid = Guid.NewGuid();
-                if (_shopContext.Products.Any(x =>
+                if (_complexContext.Products.Any(x =>
                         x.PrdName == command.PrdName.Fix() && x.PrdLvlUid3 == command.PrdLvlUid3))
                     return result.Failed(ValidateMessage.Duplicate);
                 if (command.Images != null)
                     command.PrdImage = ToBase64.Image(command.Images);
                 var product = _mapper.Map<Domain.ComplexModels.Product>(command);
 
-                _shopContext.Products.Add(product);
-                _shopContext.SaveChanges();
+                _complexContext.Products.Add(product);
+                _complexContext.SaveChanges();
 
                 if (command.Files.Any())
                     foreach (var addPicture in command.Files.Select(picture => ToBase64.Image(picture)).Select(image =>
@@ -276,8 +276,8 @@ namespace Application.Product
                                      ProductId = product.PrdUid
                                  }))
                     {
-                        _shopContext.ProductPictures.Add(addPicture);
-                        _shopContext.SaveChanges();
+                        _complexContext.ProductPictures.Add(addPicture);
+                        _complexContext.SaveChanges();
                     }
 
 
@@ -292,8 +292,8 @@ namespace Application.Product
                                  PropertyId = property.Id
                              }))
                     {
-                        _shopContext.ProductProperties.Add(newProp);
-                        _shopContext.SaveChanges();
+                        _complexContext.ProductProperties.Add(newProp);
+                        _complexContext.SaveChanges();
                     }
 
                 transaction.Commit();
@@ -316,17 +316,17 @@ namespace Application.Product
             if (code == null) return result.Failed("حین چک کردن کد کالا خطای رخ داد،لطفا جدول تنظیمات را بررسی کنید");
             if (code == false) return result.Failed("طول کد کالا بیش تر حد مجاز هست");
 
-            using var transaction = _shopContext.Database.BeginTransaction();
+            using var transaction = _complexContext.Database.BeginTransaction();
             try
             {
-                var product = _shopContext.Products.Find(command.PrdUid);
+                var product = _complexContext.Products.Find(command.PrdUid);
                 if (product == null)
                 {
                     _logger.LogError($"Don't found Any Product With Id {command.PrdUid} on table product");
                     throw new Exception($"Don't found Any Product With Id {command.PrdUid} on table product");
                 }
 
-                if (_shopContext.Products.Any(x =>
+                if (_complexContext.Products.Any(x =>
                         x.PrdName == product.PrdName && x.PrdLvlUid3 == product.PrdLvlUid3 &&
                         x.PrdUid != product.PrdUid))
                     return result.Failed(ValidateMessage.Duplicate);
@@ -341,8 +341,8 @@ namespace Application.Product
                 var productMap = _mapper.Map(command, product);
 
                 productMap.PrdUniqid = 0;
-                _shopContext.Products.Update(productMap).Property(x => x.PrdUniqid).IsModified = false;
-                _shopContext.SaveChanges();
+                _complexContext.Products.Update(productMap).Property(x => x.PrdUniqid).IsModified = false;
+                _complexContext.SaveChanges();
 
                 UpdatePictures(product.PrdUid, command.Files);
                 UpdateProperties(product.PrdUid);
@@ -364,7 +364,7 @@ namespace Application.Product
                 _contextAccessor.HttpContext.Session.GetJson<List<PropertySelectOptionDto>>("edit-Property") ??
                 new List<PropertySelectOptionDto>();
 
-            _shopContext.ProductProperties.Where(x => x.ProductId == productId).ExecuteDelete();
+            _complexContext.ProductProperties.Where(x => x.ProductId == productId).ExecuteDelete();
 
             foreach (var dto in getProperty)
             {
@@ -376,8 +376,8 @@ namespace Application.Product
                     Id = Guid.NewGuid()
                 };
 
-                _shopContext.ProductProperties.Add(update);
-                _shopContext.SaveChanges();
+                _complexContext.ProductProperties.Add(update);
+                _complexContext.SaveChanges();
             }
         }
 
@@ -387,22 +387,22 @@ namespace Application.Product
                 .ToList();
 
             if (!pictures.Any())
-                _shopContext.ProductPictures.Where(x => x.ProductId == productId).ExecuteDelete();
+                _complexContext.ProductPictures.Where(x => x.ProductId == productId).ExecuteDelete();
             if (pictures.Any())
             {
                 var list = new List<ProductPicture>();
                 foreach (var picture in pictures)
                 {
                     var productPictures =
-                        _shopContext.ProductPictures.FirstOrDefault(x =>
+                        _complexContext.ProductPictures.FirstOrDefault(x =>
                             x.ProductId == productId && x.Id == picture.Id);
                     list.Add(productPictures);
                 }
 
-                var list2 = _shopContext.ProductPictures.Where(x => x.ProductId == productId).ToList();
+                var list2 = _complexContext.ProductPictures.Where(x => x.ProductId == productId).ToList();
                 var list3 = list2.Except(list).ToList();
-                _shopContext.ProductPictures.RemoveRange(list3);
-                _shopContext.SaveChanges();
+                _complexContext.ProductPictures.RemoveRange(list3);
+                _complexContext.SaveChanges();
             }
 
             if (files.Any())
@@ -419,8 +419,8 @@ namespace Application.Product
                         Id = Guid.NewGuid(),
                         ProductId = productId
                     };
-                    _shopContext.ProductPictures.Add(add);
-                    _shopContext.SaveChanges();
+                    _complexContext.ProductPictures.Add(add);
+                    _complexContext.SaveChanges();
 
                     getPictures.Add(new ProductPicturesDto
                     {

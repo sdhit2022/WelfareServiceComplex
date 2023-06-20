@@ -22,15 +22,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{8D7D1E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{E30C6761-64A5-4785-8A3F-0EC422CB1F1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{F2C58C4C-DAC8-493A-A3C2-A153904031D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{F2C58C4C-DAC8-493A-A3C2-A153904031D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{00DBA1B3-6C45-454B-B80D-3F06295AB432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{00DBA1B3-6C45-454B-B80D-3F06295AB432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{8AE82594-33D5-4B8E-A88A-2C61718F72C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{8AE82594-33D5-4B8E-A88A-2C61718F72C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistent", "Persistent\Persistent.csproj", "{3769DA58-07FE-4B1F-9B44-5ABF7804F121}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistent", "Persistent\Persistent.csproj", "{3769DA58-07FE-4B1F-9B44-5ABF7804F121}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceComplex", "ServiceComplex\ServiceComplex.csproj", "{41748557-16BF-4AEA-BEBB-8BA5573E277C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceComplex", "ServiceComplex\ServiceComplex.csproj", "{41748557-16BF-4AEA-BEBB-8BA5573E277C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,6 +3,7 @@ using Application.BaseData.Dto;
 using Application.Interfaces;
 using Application.Product.Category;
 using Application.Product.ProductDto;
+using Application.Salon;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ public class RegisterServices
         services.AddTransient<IProductService, ProductService>();
         services.AddScoped<IProductCategory, ProductCategory>();
         services.AddScoped<IBaseDataService, BaseDataService>();
+        services.AddScoped<ISalonService, SalonService>();
 
 
         services.AddScoped<IValidator<ProductCategory.CreateProductLevel>, CategoryPrdValidator>();

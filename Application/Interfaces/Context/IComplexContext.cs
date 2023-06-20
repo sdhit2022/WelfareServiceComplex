@@ -178,7 +178,7 @@ public interface IComplexContext
 
     public DbSet<SalesCategory> SalesCategories { get; set; }
 
-    public DbSet<Salon> Salons { get; set; }
+    public DbSet<Domain.ComplexModels.Salon> Salons { get; set; }
 
     public DbSet<SalonDetail> SalonDetails { get; set; }
 
