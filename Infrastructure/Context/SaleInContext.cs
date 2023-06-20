@@ -8,17 +8,13 @@ namespace Infrastructure;
 
 public partial class SaleInContext : DbContext,ISaleInContext
 {
-    IHttpContextAccessor _httpContext;
+  private readonly  IHttpContextAccessor _httpContext;
 
-    public SaleInContext(IHttpContextAccessor httpContext)
-    {
-        _httpContext = httpContext;
 
-    }
-
-    public SaleInContext(DbContextOptions<SaleInContext> options)
+    public SaleInContext(DbContextOptions<SaleInContext> options, IHttpContextAccessor httpContext)
         : base(options)
     {
+        _httpContext = httpContext;
     }
 
     public virtual DbSet<Account> Accounts { get; set; }

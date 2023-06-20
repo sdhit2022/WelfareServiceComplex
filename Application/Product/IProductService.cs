@@ -38,9 +38,9 @@ namespace Application.Product
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ILogger<ProductService> _logger;
         private readonly IMapper _mapper;
-        private readonly IShopContext _shopContext;
+        private readonly IComplexContext _shopContext;
 
-        public ProductService(IShopContext shopContext, IMapper mapper, ILogger<ProductService> logger,
+        public ProductService(IComplexContext shopContext, IMapper mapper, ILogger<ProductService> logger,
             IHttpContextAccessor contextAccessor, IAuthHelper authHelper)
         {
             _shopContext = shopContext;

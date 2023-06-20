@@ -10,15 +10,12 @@ namespace Infrastructure;
 
 public partial class ComplexContext : DbContext,IComplexContext
 {
-    IHttpContextAccessor _httpContext;
-    public ComplexContext(IHttpContextAccessor httpContext)
-    {
-        _httpContext = httpContext;
-    }
-
-    public ComplexContext(DbContextOptions<ComplexContext> options)
+   private readonly IHttpContextAccessor _httpContext;
+    
+    public ComplexContext(DbContextOptions<ComplexContext> options, IHttpContextAccessor httpContext)
         : base(options)
     {
+        _httpContext = httpContext;
     }
 
     public virtual DbSet<Account> Accounts { get; set; }

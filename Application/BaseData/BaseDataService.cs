@@ -33,13 +33,13 @@ namespace Application.BaseData
     }
     internal class BaseDataService : IBaseDataService
     {
-        private readonly IShopContext _shopContext;
+        private readonly IComplexContext _complexContext;
         private readonly ILogger<BaseDataService> _logger;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _contextAccessor;
-        public BaseDataService(IShopContext shopContext, ILogger<BaseDataService> logger, IMapper mapper, IHttpContextAccessor contextAccessor)
+        public BaseDataService(IComplexContext complexContext, ILogger<BaseDataService> logger, IMapper mapper, IHttpContextAccessor contextAccessor)
         {
-            _shopContext = shopContext;
+            _complexContext = complexContext;
             _logger = logger;
             _mapper = mapper;
             _contextAccessor = contextAccessor;
@@ -50,7 +50,7 @@ namespace Application.BaseData
         public JsonResult GetAllUnit(JqueryDatatableParam param)
         {
 
-            var list = _shopContext.UnitOfMeasurements.AsNoTracking();
+            var list = _complexContext.UnitOfMeasurements.AsNoTracking();
 
             if (!string.IsNullOrEmpty(param.SSearch))
             {
@@ -105,11 +105,11 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                if (_shopContext.UnitOfMeasurements.Any(x => x.UomName == command.Name.Fix()))
+                if (_complexContext.UnitOfMeasurements.Any(x => x.UomName == command.Name.Fix()))
                     return result.Failed(ValidateMessage.Duplicate);
                 var unit = _mapper.Map<UnitOfMeasurement>(command);
-                _shopContext.UnitOfMeasurements.Add(unit);
-                _shopContext.SaveChanges();
+                _complexContext.UnitOfMeasurements.Add(unit);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)
@@ -124,18 +124,18 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                var unit = _shopContext.UnitOfMeasurements.Find(command.Id);
+                var unit = _complexContext.UnitOfMeasurements.Find(command.Id);
                 if (unit == null)
                 {
                     _logger.LogWarning($"Don't Find Any Record With Id {command.Id} On Table UnitOfMeasurements");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
 
-                if (_shopContext.UnitOfMeasurements.Any(x => x.UomName == command.Name.Fix() && x.UomUid != command.Id))
+                if (_complexContext.UnitOfMeasurements.Any(x => x.UomName == command.Name.Fix() && x.UomUid != command.Id))
                     return result.Failed(ValidateMessage.Duplicate);
                 var addUnit = _mapper.Map(command, unit);
-                _shopContext.UnitOfMeasurements.Update(addUnit);
-                _shopContext.SaveChanges();
+                _complexContext.UnitOfMeasurements.Update(addUnit);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)
@@ -151,15 +151,15 @@ namespace Application.BaseData
             var result = new ResultDto<List<UnitDto>>();
             try
             {
-                var unit = _shopContext.UnitOfMeasurements.Find(id);
+                var unit = _complexContext.UnitOfMeasurements.Find(id);
                 if (unit == null)
                 {
                     _logger.LogWarning($"Don't Find Any Record With Id {id} On Table UnitOfMeasurements");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
 
-                _shopContext.UnitOfMeasurements.Remove(unit);
-                _shopContext.SaveChanges();
+                _complexContext.UnitOfMeasurements.Remove(unit);
+                _complexContext.SaveChanges();
                 return result.Succeeded(null);
             }
 
@@ -185,11 +185,11 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                if (_shopContext.WareHouses.Any(x => x.WarHosName == command.Name.Fix()))
+                if (_complexContext.WareHouses.Any(x => x.WarHosName == command.Name.Fix()))
                     return result.Failed(ValidateMessage.Duplicate);
                 var unit = _mapper.Map<WareHouse>(command);
-                _shopContext.WareHouses.Add(unit);
-                _shopContext.SaveChanges();
+                _complexContext.WareHouses.Add(unit);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)
@@ -204,18 +204,18 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                var wareHouse = _shopContext.WareHouses.Find(command.Id);
+                var wareHouse = _complexContext.WareHouses.Find(command.Id);
                 if (wareHouse == null)
                 {
                     _logger.LogWarning($"Don't Find Any Record With Id {command.Id} On Table WareHouse");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
 
-                if (_shopContext.WareHouses.Any(x => x.WarHosName == command.Name.Fix() && x.WarHosUid != command.Id))
+                if (_complexContext.WareHouses.Any(x => x.WarHosName == command.Name.Fix() && x.WarHosUid != command.Id))
                     return result.Failed(ValidateMessage.Duplicate);
                 var map = _mapper.Map(command, wareHouse);
-                _shopContext.WareHouses.Update(map);
-                _shopContext.SaveChanges();
+                _complexContext.WareHouses.Update(map);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)
@@ -231,15 +231,15 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                var unit = _shopContext.WareHouses.Find(id);
+                var unit = _complexContext.WareHouses.Find(id);
                 if (unit == null)
                 {
                     _logger.LogWarning($"Don't Find Any Record With Id {id} On Table WareHouse");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
 
-                _shopContext.WareHouses.Remove(unit);
-                _shopContext.SaveChanges();
+                _complexContext.WareHouses.Remove(unit);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)
@@ -258,11 +258,11 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                if (_shopContext.AccountClubTypes.Any(x => x.AccClbTypName == command.Name.Fix()))
+                if (_complexContext.AccountClubTypes.Any(x => x.AccClbTypName == command.Name.Fix()))
                     return result.Failed(ValidateMessage.Duplicate);
                 var account = _mapper.Map<AccountClubType>(command);
-                _shopContext.AccountClubTypes.Add(account);
-                _shopContext.SaveChanges();
+                _complexContext.AccountClubTypes.Add(account);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)
@@ -277,18 +277,18 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                var account = _shopContext.AccountClubTypes.Find(command.Id);
+                var account = _complexContext.AccountClubTypes.Find(command.Id);
                 if (account == null)
                 {
                     _logger.LogWarning($"Don't Find Any Record With Id {command.Id} On Table AccountClubType");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
 
-                if (_shopContext.AccountClubTypes.Any(x => x.AccClbTypName == command.Name.Fix() && x.AccClbTypUid != command.Id))
+                if (_complexContext.AccountClubTypes.Any(x => x.AccClbTypName == command.Name.Fix() && x.AccClbTypUid != command.Id))
                     return result.Failed(ValidateMessage.Duplicate);
                 var map = _mapper.Map(command, account);
-                _shopContext.AccountClubTypes.Update(map);
-                _shopContext.SaveChanges();
+                _complexContext.AccountClubTypes.Update(map);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)
@@ -304,15 +304,15 @@ namespace Application.BaseData
             var result = new ResultDto();
             try
             {
-                var unit = _shopContext.AccountClubTypes.Find(id);
+                var unit = _complexContext.AccountClubTypes.Find(id);
                 if (unit == null)
                 {
                     _logger.LogWarning($"Don't Find Any Record With Id {id} On Table AccountClubType");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
 
-                _shopContext.AccountClubTypes.Remove(unit);
-                _shopContext.SaveChanges();
+                _complexContext.AccountClubTypes.Remove(unit);
+                _complexContext.SaveChanges();
                 return result.Succeeded();
             }
             catch (Exception exception)

@@ -32,12 +32,12 @@ public interface IProductCategory
 
 public class ProductCategory : IProductCategory
 {
-    private readonly IShopContext _context;
+    private readonly IComplexContext _context;
     private readonly IHttpContextAccessor _contextAccessor;
     private readonly ILogger<ProductCategory> _logger;
     private readonly IMapper _mapper;
 
-    public ProductCategory(IMapper mapper, IShopContext context, IHttpContextAccessor contextAccessor,
+    public ProductCategory(IMapper mapper, IComplexContext context, IHttpContextAccessor contextAccessor,
         ILogger<ProductCategory> logger)
     {
         _context = context;

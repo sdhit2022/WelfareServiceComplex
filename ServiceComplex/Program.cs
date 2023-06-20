@@ -32,6 +32,7 @@ try
     builder.Services.AddTransient<IComplexContext, ComplexContext>();
     builder.Services.AddTransient<ISaleInContext, SaleInContext>();
     builder.Services.AddSession();
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddDistributedMemoryCache();
     builder.Services.AddFluentValidationAutoValidation();
     builder.Services.AddFluentValidationClientsideAdapters();
@@ -56,10 +57,10 @@ try
 
     builder.Services.AddDbContext<ComplexContext>((serviceProvider, options) =>
     {
-        var httpContext = serviceProvider.GetService<IHttpContextAccessor>().HttpContext;
+        var httpContext = serviceProvider.GetService<IHttpContextAccessor>()?.HttpContext;
 
         if (httpContext == null) return;
-        string session = null;
+        string session = "";
 
 
         try

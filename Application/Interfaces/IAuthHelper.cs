@@ -37,11 +37,11 @@ public interface IAuthHelper
 
 public class AuthHelper : IAuthHelper
 {
-    private readonly IShopContext _context;
+    private readonly IComplexContext _context;
     private readonly ILogger<AuthHelper> _logger;
     private readonly ISaleInContext _saleInContext;
 
-    public AuthHelper(IShopContext context, ILogger<AuthHelper> logger, ISaleInContext saleInContext)
+    public AuthHelper(IComplexContext context, ILogger<AuthHelper> logger, ISaleInContext saleInContext)
     {
         _context = context;
         _logger = logger;
