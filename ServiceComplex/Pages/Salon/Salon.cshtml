@@ -148,7 +148,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="productName"> ایجاد سالن جدید : </h5>
+                <h5 class="modal-title text-center" > ایجاد سالن جدید : </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -162,12 +162,12 @@
                     <div class="widget-content">
                         <div class="form-row">
                             <div class="col-md-6 mb-5">
-                                <label for="SlnName">نام سالن:</label>
-                                <input id="SlnName" name="SlnName" type="text" class="form-control basic border-none">
+                                <label >نام سالن:</label>
+                                <input  name="SlnName" type="text" class="form-control basic border-none">
                             </div>
                             <div class="form-row">
-                                <label for="SlnType">نوع:</label>
-                                <select id="SlnType" name="SlnType" class="form-control" required>
+                                <label >نوع:</label>
+                                <select  name="SlnType" class="form-control" required>
                                     <option value="0" default="" selected="">انتخاب کنید</option>
                                     <option value="1">تالار</option>
                                     <option value="2">ورزشی</option>
@@ -185,8 +185,8 @@
 
                             </div>
                             <div class="col-md-6 mb-5">
-                                <label for="FrWarHosUid">انبار:</label>
-                                <select id="FrWarHosUid" name="FrWarHosUid" class="form-control" required>
+                                <label >انبار:</label>
+                                <select  name="FrWarHosUid" class="form-control" required>
                                     <option value="0" default="" selected="">انتخاب کنید</option>
                                 @for(int i=0;i<Model.WareHouses.Count;i++)
                                 {
@@ -221,7 +221,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="productName"> ویرایش : </h5>
+                <h5 class="modal-title text-center" > ویرایش : </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -229,7 +229,7 @@
                     </svg>
                 </button>
             </div>
-            <form method="post" class="needs-validation" asp-page="/Salon/Salon" asp-page-handler="Edit" name="submitForm" id="">
+            <form method="post" class="needs-validation" asp-page="/Salon/Salon" asp-page-handler="Edit" name="submitForm" id="EditForm">
                 <div class="modal-body">
 
                     <div class="widget-content">
@@ -260,7 +260,7 @@
                             <div class="col-md-6 mb-5">
                                 <label for="FrWarHosUid">انبار:</label>
                                 <select id="FrWarHosUid" name="FrWarHosUid" class="form-control" required>
-                                    <option value="0" default="" selected="">انتخاب کنید</option>
+                                    <option value="00000000-0000-0000-0000-000000000000" default="" selected="">انتخاب کنید</option>
                                     @for (int i = 0; i < Model.WareHouses.Count; i++)
                                     {
                                         <option value="@Model.WareHouses[i].WarHosUid">@Model.WareHouses[i].WarHosName</option>
@@ -281,7 +281,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn" data-dismiss="modal" id="saveChanges" value="ذخیره تغییرات"/> 
+                    <button onclick="saveEdit()" class="btn" data-dismiss="modal">ذخیره تغییرات</button>  
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -332,7 +332,7 @@
     <script>
 
         function Create(){
-            $("#createSalon").modal('show')
+            $("#createSalon").modal('show');
         }
 
         function Remove(id) {
@@ -369,13 +369,13 @@
                             }
                         }
 
-                    })
+                    });
                 }
-            })
-        };
+            });
+        }
 
         function Edit(id) {
-            $("#editSalon").modal('show')
+            $("#editSalon").modal('show');
             $.ajax({
                 type: "GET",
                 url: "?handler=Edit&SLN_ID=" + id,
@@ -383,12 +383,16 @@
                     var salon = JSON.parse(result);
                     $("#SlnName").val( salon.SlnName);
                     $("#SlnType").val(salon.SlnType);
-                    if (salon.FrWarHosUid !=null){
+                    //if (salon.FrWarHosUid !=null){
                     $("#FrWarHosUid").val(salon.FrWarHosUid);
-                    }
+                    //}
                     $("#SlnId").val(salon.SlnId);                
                 }
             });           
+        }
+        function saveEdit()
+        {
+            document.getElementById("EditForm").submit();
         }
         $('#saveChanges').click(function () {
             $("#editSalon").modal('hide');

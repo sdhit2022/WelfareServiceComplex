@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Salon
+namespace Application.BaseInfo.Salon
 {
     public enum SalonType
     {
-       
+
     }
 }

@@ -110,7 +110,7 @@ public interface IComplexContext
 
     public DbSet<InvoiceDetails2> InvoiceDetails2s { get; set; }
 
-    public DbSet<Job> Jobs { get; set; }
+    public DbSet<Domain.ComplexModels.Job> Jobs { get; set; }
 
     public DbSet<Language> Languages { get; set; }
 

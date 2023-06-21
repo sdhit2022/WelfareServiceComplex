@@ -1,10 +1,11 @@
 ﻿using Application.BaseData;
 using Application.BaseData.Dto;
+using Application.BaseInfo.Salon;
+using Application.BaseInfo.Warehouse;
 using Application.Interfaces;
+using Application.Job;
 using Application.Product.Category;
 using Application.Product.ProductDto;
-using Application.Salon;
-using Application.Warehouse;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ public class RegisterServices
         services.AddScoped<IBaseDataService, BaseDataService>();
         services.AddScoped<ISalonService, SalonService>();
         services.AddScoped<IWarehouseService, WarehouseService>();
+        services.AddScoped<IJobService, JobService>();
 
 
         services.AddScoped<IValidator<ProductCategory.CreateProductLevel>, CategoryPrdValidator>();

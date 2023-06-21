@@ -1,5 +1,5 @@
-using Application.Salon;
-using Application.Warehouse;
+using Application.BaseInfo.Salon;
+using Application.BaseInfo.Warehouse;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -49,7 +49,6 @@ namespace ServiceComplex.Pages.BaseData
                 {
                     SlnName = SlnName,
                     SlnType = SlnType,
-
                     FrWarHosUid = FrWarHosUid,
                 };
             }

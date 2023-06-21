@@ -120,7 +120,7 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<InvoiceDetails2> InvoiceDetails2s { get; set; }
 
-    public virtual DbSet<Job> Jobs { get; set; }
+    public virtual DbSet<Domain.ComplexModels.Job> Jobs { get; set; }
 
     public virtual DbSet<Language> Languages { get; set; }
 

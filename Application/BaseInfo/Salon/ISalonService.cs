@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Application.Common;
 
-namespace Application.Salon
+namespace Application.BaseInfo.Salon
 {
     public interface ISalonService
     {
@@ -69,7 +69,7 @@ namespace Application.Salon
         {
             var result = new ResultDto();
             Domain.ComplexModels.Salon salon = _complexContext.Salons.Find(id);
-            if(salon != null)
+            if (salon != null)
             {
                 try
                 {
@@ -77,7 +77,7 @@ namespace Application.Salon
                     saveChanges();
                     return result.Succeeded();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _logger.LogError($"حین حذف سالن با آیدی {id} خطای زیر رخ داد {ex}");
                     return result.Failed("عملیات با خطا مواجه شد");
@@ -118,7 +118,7 @@ namespace Application.Salon
                 _logger.LogError($"Don't Any Record width Id {salon.SlnId} of Table Salon");
                 return false;
             }
-            
+
         }
     }
 }
