@@ -4243,7 +4243,6 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.ToTable("Salon");
 
             entity.Property(e => e.SlnId)
-                .ValueGeneratedNever()
                 .HasColumnName("SLN_ID");
             entity.Property(e => e.FrWarHosUid).HasColumnName("FR_WAR_HOS_UID");
             entity.Property(e => e.SlnName)

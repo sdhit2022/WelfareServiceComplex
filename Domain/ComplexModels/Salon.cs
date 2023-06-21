@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.ComplexModels;
 
 public partial class Salon
 {
+    
     public long SlnId { get; set; }
 
     public string SlnName { get; set; } = null!;

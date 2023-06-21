@@ -19,7 +19,7 @@
 
         <div class="page-header">
             <div class="page-title">
-                <h3>گروه کالا ها</h3>
+                <h3>سالن ها</h3>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-6">
                     <div class="text-center">
-                        <a asp-page="/Products/Create" class="btn btn-secondary btn-rounded btn-sm">افزودن سالن جدید</a>
+                        <a onclick="Create()" class="btn btn-secondary btn-rounded btn-sm">افزودن سالن جدید</a>
                     </div>
                     <div class="table-responsive mb-4 mt-4">
                         <table id="dataTable" class="table table-hover table-bordered cell-border row-border" style="width:100%">
@@ -144,6 +144,79 @@
     </div>
 </div>
 
+<div class="modal fade" id="createSalon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:700px !Important">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="productName"> ایجاد سالن جدید : </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form method="post" class="needs-validation" asp-page="/Salon/Salon" asp-page-handler="Create" name="submitForm" id="">
+                <div class="modal-body">
+
+                    <div class="widget-content">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-5">
+                                <label for="SlnName">نام سالن:</label>
+                                <input id="SlnName" name="SlnName" type="text" class="form-control basic border-none">
+                            </div>
+                            <div class="form-row">
+                                <label for="SlnType">نوع:</label>
+                                <select id="SlnType" name="SlnType" class="form-control" required>
+                                    <option value="0" default="" selected="">انتخاب کنید</option>
+                                    <option value="1">تالار</option>
+                                    <option value="2">ورزشی</option>
+                                    <option value="3">ماساژ</option>
+                                    <option value="4">بازی</option>
+                                    <option value="5">استخر</option>
+                                    <option value="6">رستوران</option>
+                                    <option value="7">مهمانسرا</option>
+                                    <option value="8">بوفه</option>
+                                    <option value="9">کافیشاپ</option>
+                                    <option value="10">پارکینگ</option>
+                                    <option value="11">کلینیک</option>
+                                    <option value="12">سایر</option>
+                                </select>
+
+                            </div>
+                            <div class="col-md-6 mb-5">
+                                <label for="FrWarHosUid">انبار:</label>
+                                <select id="FrWarHosUid" name="FrWarHosUid" class="form-control" required>
+                                    <option value="0" default="" selected="">انتخاب کنید</option>
+                                @for(int i=0;i<Model.WareHouses.Count;i++)
+                                {
+                                        <option value="@Model.WareHouses[i].WarHosUid">@Model.WareHouses[i].WarHosName</option>
+                                }
+                                </select>
+
+
+                                @*<label for="SlnName">انبار:</label>
+                                <input id="FrWarHosUid" name="FrWarHosUid" type="text" class="form-control basic border-none">*@
+                            </div>
+                            
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn" data-dismiss="modal" id="saveChanges" value="ذخیره تغییرات" />
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="editSalon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
@@ -162,19 +235,43 @@
                     <div class="widget-content">
                         <div class="form-row">
                             <div class="col-md-6 mb-5">
-                                <input id="name" type="text" class="form-control basic border-none" value="نام سالن:&nbsp;&nbsp; " readonly>
+                                <label for="SlnName">نام سالن:</label>
+                                <input id="SlnName" name="SlnName" type="text" class="form-control basic border-none" >
                             </div>
-
-                            <div class="col-md-6 mb-5">
-                                <input id="type" class="form-control basic border-none" value="نوع:&nbsp;&nbsp; " readonly="">
-                            </div>
-                        </div>
                         <div class="form-row">
+                            <label for="SlnName">نوع:</label>
+                                <select id="SlnType" name="SlnType" class="form-control" required>
+                                    <option  value="0" default="" selected="">انتخاب کنید</option>
+                                    <option  value="1">تالار</option>
+                                    <option  value="2">ورزشی</option>
+                                    <option  value="3">ماساژ</option>
+                                    <option  value="4">بازی</option>
+                                    <option  value="5">استخر</option>
+                                    <option  value="6">رستوران</option>
+                                    <option  value="7">مهمانسرا</option>
+                                    <option  value="8">بوفه</option>
+                                    <option  value="9">کافیشاپ</option>
+                                    <option  value="10">پارکینگ</option>
+                                    <option  value="11">کلینیک</option>
+                                    <option  value="12">سایر</option>
+                                </select>
+
+                            </div>
                             <div class="col-md-6 mb-5">
-                                <input id="warehouse" type="text" class="form-control basic border-none" value="انبار:&nbsp;&nbsp; " readonly>
+                                <label for="FrWarHosUid">انبار:</label>
+                                <select id="FrWarHosUid" name="FrWarHosUid" class="form-control" required>
+                                    <option value="0" default="" selected="">انتخاب کنید</option>
+                                    @for (int i = 0; i < Model.WareHouses.Count; i++)
+                                    {
+                                        <option value="@Model.WareHouses[i].WarHosUid">@Model.WareHouses[i].WarHosName</option>
+                                    }
+                                </select>
+
+                                @*<label for="SlnName">انبار:</label>
+                                <input id="FrWarHosUid" name="FrWarHosUid" type="text" class="form-control basic border-none" >*@
                             </div>
                             <div class="col-md-6 mb-5" hidden>
-                                <input id="id" type="text" class="form-control basic border-none" value="آیدی:&nbsp;&nbsp; " readonly>
+                                <input id="SlnId" name="SlnId" type="number" class="form-control basic border-none" value="آیدی:&nbsp;&nbsp; ">
                             </div>
                            
                         </div>
@@ -182,33 +279,9 @@
                         
                     </div>
 
-                   @* <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                <div class="row">
-
-                                    <div class="col col-md-12">
-                                        <strong class="text-info">ویژگی ها</strong>
-                                        <table id="property-dataTable" class="Current-color table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>نام ویژگی</th>
-                                                    <th>مقدار ویژگی</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>*@
-
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn" data-dismiss="modal" id="saveChanges"><i @*class="flaticon-cancel-12"*@></i> ذخیره تغییرات</input>
+                    <input type="submit" class="btn" data-dismiss="modal" id="saveChanges" value="ذخیره تغییرات"/> 
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -216,7 +289,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="modal fade" id="pictureProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -257,11 +329,13 @@
 
 @section Scripts
 {
-
     <script>
-        function Remove(id) {
-            debugger
 
+        function Create(){
+            $("#createSalon").modal('show')
+        }
+
+        function Remove(id) {
             swal({
                 title: 'آیا مطمئنید؟',
                 text: "این عمل قابل بازگشت نیست!",
@@ -270,21 +344,21 @@
                 confirmButtonText: 'حذف',
                 padding: '2em'
             }).then(function (result) {
-
+                debugger
                 if (result.value) {
-
+                    debugger
                     $.ajax({
                         url: "?handler=Remove&id=" + id,
                         type: "get",
                         success: function (result) {
                             debugger
-                            if (result.isSucceeded) {
+                            if (result) {
                                 swal(
                                     'موفق!',
                                     result.message,
                                     'success'
                                 ).then(function () {
-                                    window.location = "/Products";
+                                    window.location = "/Salon/Salon";
                                 });
                             } else {
                                 swal(
@@ -296,7 +370,6 @@
                         }
 
                     })
-
                 }
             })
         };
@@ -305,54 +378,24 @@
             $("#editSalon").modal('show')
             $.ajax({
                 type: "GET",
-                url: "?handler=Edit&id=" + id,
+                url: "?handler=Edit&SLN_ID=" + id,
                 success: function (result) {
-                    debugger
-
-
-                    $("#name").text(result.SlnName);
-                    $("#type").text(result.SlnType);
-                    $("#warehouse").text(result.FrWarHosUid);
-                    $("#id").text(result.SlnId);
-                   
-
-
-                    //table.clear().draw();
-                    //result.properties.forEach(x => {
-                    //    const list =
-                    //        `
-                    //                                 <tr>
-                    //                                     <td>${x.propertyName ?? ""}</td>
-                    //                                      <td>${x.value ?? ""}</td>
-                    //                                 </tr>
-                    //                                                                                     `
-                    //    table.row.add($(list)).draw();
-                    //});
-
-                    //debugger
-                    //pictureTable.clear().draw();
-                    //result.pictures.forEach(x => {
-                    //    const list1 =
-                    //        `
-                    //                                 <tr>
-                    //                                     <td>
-                    //                                          <img src="data:image/png;base64,${x.image ?? ""}" style="max-width:80px;max-height:90px" />
-                    //                                     </td>
-                    //                                 </tr>
-                    //                                 `
-                    //    debugger
-                    //    pictureTable.row.add($(list1)).draw();
-                    //});
+                    var salon = JSON.parse(result);
+                    $("#SlnName").val( salon.SlnName);
+                    $("#SlnType").val(salon.SlnType);
+                    if (salon.FrWarHosUid !=null){
+                    $("#FrWarHosUid").val(salon.FrWarHosUid);
+                    }
+                    $("#SlnId").val(salon.SlnId);                
                 }
-
-            });
-        
-        $('#saveChanges').click(function () {  $("#editSalon").modal('hide')});
-
-         
+            });           
         }
+        $('#saveChanges').click(function () {
+            $("#editSalon").modal('hide');
+            $("#createSalon").modal('hide');
 
-
+        });
+        
     </script>
 }
 

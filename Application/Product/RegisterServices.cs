@@ -4,6 +4,7 @@ using Application.Interfaces;
 using Application.Product.Category;
 using Application.Product.ProductDto;
 using Application.Salon;
+using Application.Warehouse;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ public class RegisterServices
         services.AddScoped<IProductCategory, ProductCategory>();
         services.AddScoped<IBaseDataService, BaseDataService>();
         services.AddScoped<ISalonService, SalonService>();
+        services.AddScoped<IWarehouseService, WarehouseService>();
 
 
         services.AddScoped<IValidator<ProductCategory.CreateProductLevel>, CategoryPrdValidator>();
