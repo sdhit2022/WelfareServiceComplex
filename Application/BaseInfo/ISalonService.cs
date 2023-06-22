@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Application.Common;
 
-namespace Application.BaseInfo.Salon
+namespace Application.BaseInfo
 {
     public interface ISalonService
     {

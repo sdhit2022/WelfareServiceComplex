@@ -5,21 +5,16 @@ using AutoMapper;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Job
+namespace Application.BaseInfo
 {
-    public interface IJobService
+    public interface IWarehouseService
     {
-        List<Domain.ComplexModels.Job> GetAll();
+        List<WareHouse> GetAll();
     }
 
 
-    public class JobService : IJobService
+    public class WarehouseService : IWarehouseService
     {
         private readonly IAuthHelper _authHelper;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -27,7 +22,7 @@ namespace Application.Job
         private readonly IMapper _mapper;
         private readonly IComplexContext _complexContext;
 
-        public JobService(IAuthHelper authHelper, IHttpContextAccessor contextAccessor, ILogger<ProductService> logger, IMapper mapper, IComplexContext complexContext)
+        public WarehouseService(IAuthHelper authHelper, IHttpContextAccessor contextAccessor, ILogger<ProductService> logger, IMapper mapper, IComplexContext complexContext)
         {
             _authHelper = authHelper;
             _contextAccessor = contextAccessor;
@@ -36,9 +31,9 @@ namespace Application.Job
             _complexContext = complexContext;
         }
 
-        public List<Domain.ComplexModels.Job> GetAll()
+        public List<WareHouse> GetAll()
         {
-            return _complexContext.Jobs.ToList();
+            return _complexContext.WareHouses.ToList();
         }
     }
 }

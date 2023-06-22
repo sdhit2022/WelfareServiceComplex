@@ -1,5 +1,5 @@
 ﻿@page
-@model ServiceComplex.Pages.Jobs.JobModel
+@model ServiceComplex.Pages.BaseData.JobModel
 @{
 }
 
@@ -87,7 +87,7 @@
                     </svg>
                 </button>
             </div>
-            <form method="post" class="needs-validation" asp-page="/Job/Job" asp-page-handler="Create" name="submitForm" id="">
+            <form method="post" class="needs-validation" asp-page="/BaseData/Job" asp-page-handler="Create" name="submitForm" id="CreateForm">
                 <div class="modal-body">
 
                     <div class="widget-content">
@@ -103,7 +103,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn" data-dismiss="modal" id="saveChanges" value="ذخیره " />
+                        <input type="submit" class="btn" data-dismiss="modal" onclick="saveNew()" value="ذخیره " />
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -113,7 +113,7 @@
 </div>
 
 
-<div class="modal fade" id="editJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal hide fade" id="editJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
@@ -125,7 +125,7 @@
                     </svg>
                 </button>
             </div>
-            <form method="post" class="needs-validation" asp-page="/Job/Job" asp-page-handler="Edit" name="submitForm" id="EditForm">
+            <form method="post" class="needs-validation" asp-page="/BaseData/Job" asp-page-handler="Edit" name="submitForm" id="EditForm">
                 <div class="modal-body">
 
                     <div class="widget-content">
@@ -146,7 +146,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button onclick="saveEdit()" class="btn" data-dismiss="modal">ذخیره تغییرات</button>  
+                    <input type="submit" class="btn" data-dismiss="modal" onclick="saveEdit()">ذخیره تغییرات</input>
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -187,7 +187,7 @@
                                     result.message,
                                     'success'
                                 ).then(function () {
-                                    window.location = "/Job/Job";
+                                    window.location = "/BaseData/Job";
                                 });
                             } else {
                                 swal(
@@ -207,17 +207,21 @@
             $("#editJob").modal('show');
             $.ajax({
                 type: "GET",
-                url: "?handler=Edit&JOB_ID=" + id,
+                url: "?handler=Edit&JobId=" + id,
                 success: function (result) {
                     var job = JSON.parse(result);
-                    $("#JobName").val(job.JobId);
-                    $("#JobID").val(job.JobName);
+                    $("#JobName").val(job.JobName);
+                    $("#JobID").val(job.JobId);
                 }
             });           
         }
         function saveEdit()
         {
             document.getElementById("EditForm").submit();
+        }  
+        function saveNew()
+        {
+            document.getElementById("CreateForm").submit();
         }
       
         

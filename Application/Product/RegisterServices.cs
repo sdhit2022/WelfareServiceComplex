@@ -1,9 +1,7 @@
 ﻿using Application.BaseData;
 using Application.BaseData.Dto;
-using Application.BaseInfo.Salon;
-using Application.BaseInfo.Warehouse;
+using Application.BaseInfo;
 using Application.Interfaces;
-using Application.Job;
 using Application.Product.Category;
 using Application.Product.ProductDto;
 using FluentValidation;
@@ -24,6 +22,7 @@ public class RegisterServices
         services.AddScoped<ISalonService, SalonService>();
         services.AddScoped<IWarehouseService, WarehouseService>();
         services.AddScoped<IJobService, JobService>();
+        services.AddScoped<IShiftService, ShiftService>();
 
 
         services.AddScoped<IValidator<ProductCategory.CreateProductLevel>, CategoryPrdValidator>();

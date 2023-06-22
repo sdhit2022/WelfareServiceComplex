@@ -1,5 +1,4 @@
-using Application.BaseInfo.Salon;
-using Application.BaseInfo.Warehouse;
+using Application.BaseInfo;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,7 +10,7 @@ namespace ServiceComplex.Pages.BaseData
     {
         private readonly ISalonService _salonService;
         private readonly IWarehouseService _warehouseService;
-        public List<Domain.ComplexModels.Salon> Salons;
+        public List<Salon> Salons;
         public List<WareHouse> WareHouses;
 
         public SalonModel(ISalonService salonService, IWarehouseService warehouseService)
@@ -37,7 +36,7 @@ namespace ServiceComplex.Pages.BaseData
             Domain.ComplexModels.Salon salon;
             if (FrWarHosUid == Guid.Empty)
             {
-                salon = new Domain.ComplexModels.Salon
+                salon = new Salon
                 {
                     SlnName = SlnName,
                     SlnType = SlnType,
@@ -45,7 +44,7 @@ namespace ServiceComplex.Pages.BaseData
             }
             else
             {
-                salon = new Domain.ComplexModels.Salon
+                salon = new Salon
                 {
                     SlnName = SlnName,
                     SlnType = SlnType,
@@ -53,21 +52,21 @@ namespace ServiceComplex.Pages.BaseData
                 };
             }
             _salonService.InsertSalon(salon);
-            return Redirect("/Salon/Salon");
+            return Redirect("/BaseData/Salon");
 
         }
 
         public IActionResult OnGetEdit(long SLN_ID)
         {
-            Domain.ComplexModels.Salon salon = _salonService.GetSalon(SLN_ID);
+            Salon salon = _salonService.GetSalon(SLN_ID);
             return new JsonResult(JsonConvert.SerializeObject(salon));
         }
         public IActionResult OnPostEdit(long SlnId, string SlnName, short SlnType, Guid FrWarHosUid) 
         {
-            Domain.ComplexModels.Salon salon;
+            Salon salon;
             if (FrWarHosUid == Guid.Empty)
             {
-                salon = new Domain.ComplexModels.Salon
+                salon = new Salon
                 {
                     SlnId = SlnId,
                     SlnName = SlnName,
@@ -75,7 +74,7 @@ namespace ServiceComplex.Pages.BaseData
                 };
                 }
             else {
-                salon = new Domain.ComplexModels.Salon
+                salon = new Salon
                 {
                     SlnId = SlnId,
                     SlnName = SlnName,
@@ -85,7 +84,7 @@ namespace ServiceComplex.Pages.BaseData
                 };
             }
             _salonService.UpdateSalon(salon);
-            return Redirect("/Salon/Salon");
+            return Redirect("/BaseData/Salon");
 
         }
 
