@@ -272,6 +272,11 @@ function CheckControl(value) {
 
 
 
+//if ($("#hasTiming").prop('checked') == true) { }
+
+
+
+
 function readURL(input) {
 
     if (input.files && input.files[0]) {
@@ -386,10 +391,37 @@ $("#second-form").on('click', function (env) {
     var editor_content = quill.container.innerHTML
     $("#Command_WebDescription").val(editor_content);
     notify("top center", "فرم تایید شد", "success");
-    $("#justify-contact-tab").removeClass("disabled");
-    $("#justify-pictures-tab").removeClass("disabled");
+
 
     submitForm2 = true;
+    if (!submitForm1 || !submitForm2) {
+        notify("top center", "ابتدا فرم ها را تایید کنید", "error");
+        return false;
+    }
+
+    $.ajax({
+        url: '',
+        data: new FormData(document.forms.createForm),
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+
+        success: function (result) {
+            debugger
+            if (result.isSucceeded) {
+                notify("top center", "اطلاعات با موفقیت ثبت شد", "success");
+                window.location.href = "/Products/Index";
+            } else {
+                notify("top center", result.message, "error");
+            }
+
+        }
+
+    });
 
 });
 

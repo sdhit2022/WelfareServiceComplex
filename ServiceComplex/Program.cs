@@ -5,6 +5,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Connections;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using ServiceComplex;
@@ -62,7 +63,22 @@ try
         if (httpContext == null) return;
         string session = "";
 
+        #region Implement Manual Select Branch
 
+        var connectionString = configuration.GetConnectionString("ComplexConnection");
+        var connection = new SqlConnectionStringBuilder(connectionString)
+        {
+            InitialCatalog = "876812d7-85ec-4706-9eef-fe26f206e794"
+        };
+        httpContext.Session.SetStringText("Branch", connection);
+        var baseConfig = httpContext.Session.GetJson<BaseConfigDto>("BaseConfig") ?? new BaseConfigDto
+        {
+            FisPeriodUId = new Guid("876812d7-85ec-4706-9eef-fe26f206e794"),
+            BusUnitUId = new Guid("c75701ae-e064-4718-a96f-09ae5858b0c2")
+        };
+        httpContext.Session.SetJson("BaseConfig", baseConfig);
+
+        #endregion
         try
         {
             session = httpContext.Session.GetConnectionString("Branch"); //branch connection

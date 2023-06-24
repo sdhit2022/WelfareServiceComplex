@@ -60,5 +60,30 @@ namespace Application.Product.ProductDto
         [BindRequired] public Guid? FkProductUnit { get; set; }
 
         public Guid? FkProductUnit2 { get; set; }
+        public bool PrdHasTiming { get; set; }
+
+        public short? PrdBaseTime { get; set; }
+
+        public decimal? PrdBaseCost { get; set; }
+
+        public short? PrdExtraTime { get; set; }
+
+        public decimal? PrdExtraCost { get; set; }
+
+        public short? PrdMinTime { get; set; }
+
+        public short? PrdMaxTime { get; set; }
+
+        public decimal? PrdMinCharge { get; set; }
+
+        public bool PrdHasPersonel { get; set; }
+
+        public bool PrdIsContonuouse { get; set; }
+
+        public short? PrdContinuouseType { get; set; }
+
+        public decimal? PrdPersonelCommission { get; set; }
+
+        public decimal? PrdPersonelPayment { get; set; }
     }
 }
