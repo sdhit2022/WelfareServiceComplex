@@ -17,10 +17,7 @@ public class CreateProductValidate : AbstractValidator<CreateProduct>
             .WithMessage(ValidateMessage.Required);
         RuleFor(x => x.PrdName).NotEmpty().WithMessage(ValidateMessage.Required);
         RuleFor(x => x.PrdLvlUid3).NotEqual(Guid.Empty).NotEmpty().WithMessage(ValidateMessage.Required);
-        RuleFor(x => x.PrdNameInPrint).NotNull().WithMessage(ValidateMessage.Required);
-      //  RuleFor(x => x.PrdPricePerUnit1).NotNull().WithMessage(ValidateMessage.Required);
-      
-        //RuleFor(x => x.FkProductUnit).NotNull().WithMessage(ValidateMessage.Required);
+        RuleFor(x => x.PrdNameInPrint).NotNull().WithMessage(ValidateMessage.Required);      
     }
 
     private bool CheckLength(string arg)

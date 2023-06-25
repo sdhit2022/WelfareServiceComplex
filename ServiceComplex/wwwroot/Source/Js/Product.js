@@ -1,15 +1,4 @@
 ﻿
-var quill = new Quill('#editor-container', {
-    modules: {
-        toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-        ]
-    },
-    placeholder: 'توضیحات را وارد نمایید...',
-    theme: 'snow'  // or 'bubble'
-});
 
 
 const table = $('#property-dataTable').DataTable({
@@ -270,7 +259,7 @@ function CheckControl(value) {
 }
 
 
-
+var format = true;
 
 function readURL(input) {
    
@@ -289,6 +278,7 @@ function readURL(input) {
          
                 if (this.currentSrc.indexOf('webp') > -1) {
                     $("#validateImg").text("فرمت عکس معتبر نیست")
+                    format = false;
                     return;
                 }
                 if (this.width === 600 && this.height === 600) {
@@ -324,20 +314,31 @@ $("#first-form").on('click', function (env) {
     form.validate();
     if (form.valid() === false) {
 
-        var elements = document.getElementsByClassName("input-validation-error");
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].style.backgroundColor = "ivory";
-            elements[i].style.border = "none";
-            elements[i].style.outline = "1px solid red";
-            elements[i].style.borderRadius = "5px";
-        }
-
+    //    var elements = document.getElementsByClassName("input-validation-error");
+    //    for (var i = 0; i < elements.length; i++) {
+    //        elements[i].style.backgroundColor = "ivory";
+    //        elements[i].style.border = "none";
+    //        elements[i].style.outline = "1px solid red";
+    //        elements[i].style.borderRadius = "5px";
+        //}
+        notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
+        return false;
+    }
+    debugger
+    var unit = $('#ProductUnit').val();
+    if (divunit.style.display == "block" && $('#ProductUnit').val() =="") {
+        notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
         return false;
     }
     var vali = form.validate();
 
     if (!vali.valid()) {
         notify("top center", "فرم را به درستی پر کنید", "error");
+        return false;
+    }
+    if (format == false) {
+        notify("top center", "فرمت عکس صحیح نیست", "error");
+        format = true;
         return false;
     }
 
@@ -389,9 +390,6 @@ $("#second-form").on('click', function (env) {
         return false;
     }
 
-    debugger
-    var editor_content = quill.container.innerHTML
-    $("#Command_WebDescription").val(editor_content);
     notify("top center", "فرم تایید شد", "success");
     $("#justify-contact-tab").removeClass("disabled");
     $("#justify-pictures-tab").removeClass("disabled");
@@ -425,9 +423,6 @@ $("#final-submit").on('click', function (env) {
         return false;
     }
 
-    debugger
-    var editor_content = quill.container.innerHTML
-    $("#Command_WebDescription").val(editor_content);
     notify("top center", "فرم تایید شد", "success");
     $("#justify-contact-tab").removeClass("disabled");
     $("#justify-pictures-tab").removeClass("disabled");
@@ -461,13 +456,14 @@ $("#final-submit").on('click', function (env) {
     });
 });
 
-
+var div = document.querySelector("#isService");
+var divunit2 = document.querySelector("#prdUnit2");
+var divunit = document.querySelector("#prdunit");
+var productUnit = document.getElementById("prdunit");
 var isServiceValue;
 function CheckValue(value) {
 
-    var div = document.querySelector("#isService");
-    var divunit2 = document.querySelector("#prdUnit2");
-    var divunit = document.querySelector("#prdunit");
+   
     isServiceValue = value;
     if (value == 2) {
 

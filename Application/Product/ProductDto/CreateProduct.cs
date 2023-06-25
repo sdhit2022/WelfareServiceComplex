@@ -15,9 +15,9 @@ namespace Application.Product.ProductDto
 
         public string PrdCode { get; set; }
 
-        public string PrdBarcode { get; set; }
+        public string? PrdBarcode { get; set; }
 
-        public string PrdIranCode { get; set; }
+        public string? PrdIranCode { get; set; }
 
         public decimal? PrdCoefficient { get; set; }
 
@@ -47,7 +47,7 @@ namespace Application.Product.ProductDto
         public decimal? PrdDiscount { get; set; }
 
         public string? ShortDescription { get; set; }
-        public string WebDescription { get; set; }
+        public string? WebDescription { get; set; }
         public int? PrdLvlType { get; set; }
         public string? Volume { get; set; }
         public string? Weight { get; set; }
