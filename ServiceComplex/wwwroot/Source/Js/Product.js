@@ -314,18 +314,10 @@ $("#first-form").on('click', function (env) {
     form.validate();
     if (form.valid() === false) {
 
-    //    var elements = document.getElementsByClassName("input-validation-error");
-    //    for (var i = 0; i < elements.length; i++) {
-    //        elements[i].style.backgroundColor = "ivory";
-    //        elements[i].style.border = "none";
-    //        elements[i].style.outline = "1px solid red";
-    //        elements[i].style.borderRadius = "5px";
-        //}
         notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
         return false;
     }
     debugger
-    var unit = $('#ProductUnit').val();
     if (divunit.style.display == "block" && $('#ProductUnit').val() =="") {
         notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
         return false;
