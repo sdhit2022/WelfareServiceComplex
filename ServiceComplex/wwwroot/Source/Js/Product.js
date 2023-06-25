@@ -65,9 +65,9 @@ $("input[name='Command.PrdDiscountType']").change(function () {
 
 function ChangeDiscountValue() {
     debugger
-  
+
     var input = $("input[name='Command.PrdDiscountType']:checked");
-   
+
     if (input.val() == 0)
         input.prop('max', 100);
     else input.prop('max', null);
@@ -272,11 +272,6 @@ function CheckControl(value) {
 
 
 
-//if ($("#hasTiming").prop('checked') == true) { }
-
-
-
-
 function readURL(input) {
 
     if (input.files && input.files[0]) {
@@ -391,50 +386,17 @@ $("#second-form").on('click', function (env) {
     var editor_content = quill.container.innerHTML
     $("#Command_WebDescription").val(editor_content);
     notify("top center", "فرم تایید شد", "success");
-
+    $("#justify-contact-tab").removeClass("disabled");
+    $("#justify-pictures-tab").removeClass("disabled");
 
     submitForm2 = true;
-    if (!submitForm1 || !submitForm2) {
-        notify("top center", "ابتدا فرم ها را تایید کنید", "error");
-        return false;
-    }
-
-    $.ajax({
-        url: '',
-        data: new FormData(document.forms.createForm),
-        contentType: false,
-        processData: false,
-        type: 'POST',
-        headers: {
-            RequestVerificationToken:
-                $('input:hidden[name="__RequestVerificationToken"]').val()
-        },
-
-        success: function (result) {
-            debugger
-            if (result.isSucceeded) {
-                notify("top center", "اطلاعات با موفقیت ثبت شد", "success");
-                window.location.href = "/Products/Index";
-            } else {
-                notify("top center", result.message, "error");
-            }
-
-        }
-
-    });
 
 });
 
 
 $("#final-submit").on('click', function (env) {
     env.preventDefault();
-    
-    if (!submitForm1 || !submitForm2) {
-        notify("top center", "ابتدا فرم ها را تایید کنید", "error");
-        return false;
-    }
-   
-   
+
     var form = $("#createForm");
     form.validate();
     if (form.valid() === false) {
@@ -446,23 +408,59 @@ $("#final-submit").on('click', function (env) {
             elements[i].style.outline = "1px solid red";
             elements[i].style.borderRadius = "5px";
         }
+
         return false;
     }
     var vali = form.validate();
 
     if (!vali.valid()) {
-
-        var elements = document.getElementsByClassName("input-validation-error");
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].style.backgroundColor = "ivory";
-            elements[i].style.border = "none";
-            elements[i].style.outline = "1px solid red";
-            elements[i].style.borderRadius = "5px";
-        }
-
         notify("top center", "فرم را به درستی پر کنید", "error");
         return false;
     }
+
+    debugger
+    var editor_content = quill.container.innerHTML
+    $("#Command_WebDescription").val(editor_content);
+    notify("top center", "فرم تایید شد", "success");
+    $("#justify-contact-tab").removeClass("disabled");
+    $("#justify-pictures-tab").removeClass("disabled");
+
+    submitForm2 = true;
+
+    //if (!submitForm1 || !submitForm2) {
+    //    notify("top center", "ابتدا فرم ها را تایید کنید", "error");
+    //    return false;
+    //}
+
+
+    //var form = $("#createForm");
+    //form.validate();
+    //if (form.valid() === false) {
+
+    //    var elements = document.getElementsByClassName("input-validation-error");
+    //    for (var i = 0; i < elements.length; i++) {
+    //        elements[i].style.backgroundColor = "ivory";
+    //        elements[i].style.border = "none";
+    //        elements[i].style.outline = "1px solid red";
+    //        elements[i].style.borderRadius = "5px";
+    //    }
+    //    return false;
+    //}
+    //var vali = form.validate();
+
+    //if (!vali.valid()) {
+
+    //    var elements = document.getElementsByClassName("input-validation-error");
+    //    for (var i = 0; i < elements.length; i++) {
+    //        elements[i].style.backgroundColor = "ivory";
+    //        elements[i].style.border = "none";
+    //        elements[i].style.outline = "1px solid red";
+    //        elements[i].style.borderRadius = "5px";
+    //    }
+
+    //    notify("top center", "فرم را به درستی پر کنید", "error");
+    //    return false;
+    //}
 
     $.ajax({
         url: '',

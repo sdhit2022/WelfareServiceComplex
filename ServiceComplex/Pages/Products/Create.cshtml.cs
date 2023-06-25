@@ -38,7 +38,7 @@ public class CreateModel : PageModel
         GenerateCode = _authHelper.AutoCodeProduct();
         Properties = _product.PropertySelectOption();
         //HttpContext.Session.Remove("Product-Property");
-        Unit = _product.UnitOfMeasurement().ToList();
+        Unit = _product.UnitOfMeasurement();
     }
 
     public IActionResult OnPost(CreateProduct command)

@@ -37,8 +37,8 @@ namespace Application.Product.ProductDto
 
         public decimal? PrdPricePerUnit5 { get; set; }
 
-        public string PrdImage { get; set; }
-        public byte[] Image { get; set; }
+        public string? PrdImage { get; set; }
+        public byte[]? Image { get; set; }
 
         public string PrdNameInPrint { get; set; }
 
@@ -49,15 +49,15 @@ namespace Application.Product.ProductDto
         public string ShortDescription { get; set; }
         public string WebDescription { get; set; }
         public int? PrdLvlType { get; set; }
-        public string Volume { get; set; }
-        public string Weight { get; set; }
+        public string? Volume { get; set; }
+        public string? Weight { get; set; }
         public bool? PrdIsUnit1Bigger { get; set; }
         public int Type { get; set; }
 
         public List<IFormFile> Files { get; set; } = new();
-        public IFormFile Images { get; set; }
+        public IFormFile? Images { get; set; }
 
-        [BindRequired] public Guid? FkProductUnit { get; set; }
+       /* [BindRequired]*/ public Guid? FkProductUnit { get; set; }
 
         public Guid? FkProductUnit2 { get; set; }
         public bool PrdHasTiming { get; set; }

@@ -35,8 +35,8 @@
     <li class="nav-item  ">
         <a class="nav-link disabled" id="justify-profile-tab" data-toggle="tab" href="#justify-profile" role="tab" aria-controls="justify-profile" aria-selected="false">سایر اطلاعات </a>
     </li>
-   @* <li class="nav-item">
-        <a class="nav-link " id="justify-contact-tab" data-toggle="tab" href="#justify-contact" role="tab" aria-controls="justify-contact" aria-selected="false">ویژگی ها </a>
+  @*  <li class="nav-item">
+        <a class="nav-link disabled" id="justify-contact-tab" data-toggle="tab" href="#justify-contact" role="tab" aria-controls="justify-contact" aria-selected="false">ویژگی ها </a>
     </li>
 
     <li class="nav-item">
@@ -51,7 +51,7 @@
             <div class=" br-6">
                 @if (ViewData["ErrorMessage"] != null)
                 {
-                    <span class="alert alert-danger text-center">فرم هارا به درستی پر نکرده اید.</span>
+                     <span class="alert alert-danger text-center">فرم هارا به درستی پر نکرده اید.</span>
                 }
                 <div class="row">
                     <div class=" col-lg-8 col-sm-12">
@@ -103,13 +103,11 @@
                         </div>
                          <div class="form-row mb-8">
                              <div class="form-group col-md-4" id="prdunit" style="display:none"> 
-                                <label for=""> واحد شمارش <span class="error">*</span></label>
-                                <select asp-for="Command.FkProductUnit"  type="text" class="form-control" id="">
-                                    <option value="0">انتخاب...</option>
-                                     @for(int i=0;i<Model.Unit.Count;i++)
-                                {
-                                        <option value="@Model.Unit[i].Id">@Model.Unit[i].Name</option>
-                                }
+                                <label for=""> واحد شمارش </label>
+                                
+                                <select asp-for="Command.FkProductUnit"  type="text" class="form-control" id="" asp-items="@(new SelectList(Model.Unit,"Id","Name"))">
+                                    <option value="">انتخاب...</option>
+                                     
                                 </select>
 @*                                <span asp-validation-for="Command.FkProductUnit" class="error"></span>
 *@                            </div>
@@ -265,24 +263,24 @@
 
                                 <label for="">زمان پایه ارائه خدمت <span class="error">*</span></label>
                                 <input asp-for="Command.PrdBaseTime" type="number" class="form-control" id="" placeholder="دقیقه">
-                                <span asp-validation-for="Command.PrdPricePerUnit1" class="error"></span>
+                                <span asp-validation-for="Command.PrdBaseTime" class="error"></span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="">نرخ زمان پایه</label>
-                                                                <input asp-for="Command.PrdBaseCost" type="number" class="form-control" id="" placeholder="نرخ زمان پایه">
-                                <span asp-validation-for="Command.PrdPricePerUnit2" class="error"></span>
+                                <label for="">نرخ زمان پایه<span class="error">*</span></label>
+                                <input asp-for="Command.PrdBaseCost" type="number" class="form-control" id="" placeholder="نرخ زمان پایه">
+                                <span asp-validation-for="Command.PrdBaseCost" class="error"></span>
                             </div>
                               <div class="form-group col-md-3">
-                                 <label for="">زمان مازاد ارائه خدمت</label>
+                                 <label for="">زمان مازاد ارائه خدمت<span class="error">*</span></label>
                                   <input asp-for="Command.PrdExtraTime" type="number" class="form-control" id="" placeholder="دقیقه">
-                                  <span asp-validation-for="Command.PrdPricePerUnit3" class="error"></span>
+                                  <span asp-validation-for="Command.PrdExtraTime" class="error"></span>
                               </div>
                                                       
 
                              <div class="form-group col-md-3">
-                                <label for="">نرخ زمان مازاد</label>
+                                <label for="">نرخ زمان مازاد<span class="error">*</span></label>
                                 <input asp-for="Command.PrdExtraCost" type="number" class="form-control" id="" placeholder="نرخ زمان مازاد">
-                                <span asp-validation-for="Command.PrdPricePerUnit4" class="error"></span>
+                                <span asp-validation-for="Command.PrdExtraCost" class="error"></span>
                             </div>
                         </div>
                         <div class="form-row mb-4">
@@ -290,17 +288,17 @@
 
                                 <label for="">حداقل زمان حضور <span class="error">*</span></label>
                                 <input asp-for="Command.PrdMinTime" type="number" class="form-control" id="" placeholder="دقیقه">
-                                <span asp-validation-for="Command.PrdPricePerUnit1" class="error"></span>
+                                <span asp-validation-for="Command.PrdMinTime" class="error"></span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="">حداکثر زمان حضور</label>
+                                <label for="">حداکثر زمان حضور<span class="error">*</span></label>
                                 <input asp-for="Command.PrdMaxTime" type="number" class="form-control" id="" placeholder="دقیقه">
-                                <span asp-validation-for="Command.PrdPricePerUnit2" class="error"></span>
+                                <span asp-validation-for="Command.PrdMaxTime" class="error"></span>
                             </div>
                               <div class="form-group col-md-3">
-                                 <label for="">حداقل شارژ</label>
+                                 <label for="">حداقل شارژ<span class="error">*</span></label>
                                   <input asp-for="Command.PrdMinCharge" type="number" class="form-control" id="" placeholder="حداقل شارژ">
-                                  <span asp-validation-for="Command.PrdPricePerUnit3" class="error"></span>
+                                  <span asp-validation-for="Command.PrdMinCharge" class="error"></span>
                               </div>
                
                         </div>
@@ -363,11 +361,11 @@
 
             </div>
         </div>
-        <button style="margin-right:90%" id="second-form" type="submit" class="btn btn-info btn-sm btn-rounded pull-left">تایید فرم</button>
-    </div>
+            <button id="final-submit" type="submit" class="btn btn-success btn-sm btn-rounded pull-left">تایید نهایی</button>
+@*        <button style="margin-right:90%" id="second-form" type="submit" class="btn btn-info btn-sm btn-rounded pull-left">تایید فرم</button>
+*@    </div>
 </div>
-@*
-<div class="tab-pane fade" id="justify-contact" role="tabpanel" aria-labelledby="justify-contact-tab">
+@*<div class="tab-pane fade" id="justify-contact" role="tabpanel" aria-labelledby="justify-contact-tab">
     <div class="row layout-top-spacing" id="cancel-row">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class=" br-6">
@@ -428,6 +426,68 @@
     </div>
 </div>
 <partial name="Partial/Pictures" model="new List<ProductPicturesDto>()"/>*@
+
+<div class="tab-pane fade" id="justify-contact" role="tabpanel" aria-labelledby="justify-contact-tab">
+    <div class="row layout-top-spacing" id="cancel-row">
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class=" br-6">
+                <form method="get" id="submitProperty" name="submitProperty">
+                    <div class="row">
+                        <div class=" col-lg-12 col-sm-12">
+                            <div class="form-row mb-4">
+                                <div class="form-group col-md-4">
+                                    <label for=""> نام ویژگی</label>
+                                    <select asp-for="Property.Id" id="propertyName" asp-items="@(new SelectList(Model.Properties, "Id", "Name"))" class="form-control" id="">
+                                        <option value="">انتخاب...</option>
+                                    </select>
+                                    <span asp-validation-for="Property.Id" class="error"></span>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for=""> مقدار ویژگی</label>
+                                    <input asp-for="Property.Value" id="propertyValue" type="text" class="form-control" id="" placeholder=" مقدار ویژگی">
+                                    <span asp-validation-for="Property.Value" class="error"></span>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <button type="submit" id="submit-property" class="btn btn-info btn-sm btn-rounded mt-35">افزودن به لیست</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
+                                        <table id="property-dataTable" class="Current-color table table-striped table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>نام ویژگی</th>
+                                                <th>مقدار ویژگی</th>
+                                                <th>عملیات</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="Partial/Pictures" model="new List<ProductPicturesDto>()"/>
 
 
 <div class="modal fade" id="related-products" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
