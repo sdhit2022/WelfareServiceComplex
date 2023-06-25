@@ -46,7 +46,7 @@ namespace Application.Product.ProductDto
 
         public decimal? PrdDiscount { get; set; }
 
-        public string ShortDescription { get; set; }
+        public string? ShortDescription { get; set; }
         public string WebDescription { get; set; }
         public int? PrdLvlType { get; set; }
         public string? Volume { get; set; }
@@ -54,8 +54,7 @@ namespace Application.Product.ProductDto
         public bool? PrdIsUnit1Bigger { get; set; }
         public int Type { get; set; }
 
-        public List<IFormFile> Files { get; set; } = new();
-        public IFormFile? Images { get; set; }
+        public IFormFile Images { get; set; }
 
        /* [BindRequired]*/ public Guid? FkProductUnit { get; set; }
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Drawing.Imaging;
 
 namespace Application.Product
 {
@@ -261,40 +262,40 @@ namespace Application.Product
                         x.PrdName == command.PrdName.Fix() && x.PrdLvlUid3 == command.PrdLvlUid3))
                     return result.Failed(ValidateMessage.Duplicate);
                 if (command.Images != null)
-                    command.PrdImage = ToBase64.Image(command.Images);
+                    command.PrdImage = ToBase64.Image(command.Images, ImageFormat.Jpeg);
                 var product = _mapper.Map<Domain.ComplexModels.Product>(command);
 
                 _complexContext.Products.Add(product);
                 _complexContext.SaveChanges();
 
-                if (command.Files.Any())
-                    foreach (var addPicture in command.Files.Select(picture => ToBase64.Image(picture)).Select(image =>
-                                 new ProductPicture
-                                 {
-                                     Id = Guid.NewGuid(),
-                                     Image = image,
-                                     ProductId = product.PrdUid
-                                 }))
-                    {
-                        _complexContext.ProductPictures.Add(addPicture);
-                        _complexContext.SaveChanges();
-                    }
+                //if (command.Files.Any())
+                //    foreach (var addPicture in command.Files.Select(picture => ToBase64.Image(picture)).Select(image =>
+                //                 new ProductPicture
+                //                 {
+                //                     Id = Guid.NewGuid(),
+                //                     Image = image,
+                //                     ProductId = product.PrdUid
+                //                 }))
+                //    {
+                //        _complexContext.ProductPictures.Add(addPicture);
+                //        _complexContext.SaveChanges();
+                //    }
 
 
-                var getProperty =
-                    _contextAccessor.HttpContext.Session.GetJson<List<PropertySelectOptionDto>>("Product-Property");
-                if (getProperty != null && getProperty.Any())
-                    foreach (var newProp in getProperty.Select(property => new ProductProperty
-                             {
-                                 Id = Guid.NewGuid(),
-                                 Value = property.Value,
-                                 ProductId = product.PrdUid,
-                                 PropertyId = property.Id
-                             }))
-                    {
-                        _complexContext.ProductProperties.Add(newProp);
-                        _complexContext.SaveChanges();
-                    }
+                //var getProperty =
+                //    _contextAccessor.HttpContext.Session.GetJson<List<PropertySelectOptionDto>>("Product-Property");
+                //if (getProperty != null && getProperty.Any())
+                //    foreach (var newProp in getProperty.Select(property => new ProductProperty
+                //             {
+                //                 Id = Guid.NewGuid(),
+                //                 Value = property.Value,
+                //                 ProductId = product.PrdUid,
+                //                 PropertyId = property.Id
+                //             }))
+                //    {
+                //        _complexContext.ProductProperties.Add(newProp);
+                //        _complexContext.SaveChanges();
+                //    }
 
                 transaction.Commit();
                 return result.Succeeded();
@@ -344,7 +345,7 @@ namespace Application.Product
                 _complexContext.Products.Update(productMap).Property(x => x.PrdUniqid).IsModified = false;
                 _complexContext.SaveChanges();
 
-                UpdatePictures(product.PrdUid, command.Files);
+                //UpdatePictures(product.PrdUid, command.Files);
                 UpdateProperties(product.PrdUid);
                 transaction.Commit();
                 return result.Succeeded();

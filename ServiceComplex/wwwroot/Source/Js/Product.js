@@ -273,8 +273,9 @@ function CheckControl(value) {
 
 
 function readURL(input) {
-
+   
     if (input.files && input.files[0]) {
+       
         var reader = new FileReader();
         reader.onload = (function (theFile) {
 
@@ -285,6 +286,11 @@ function readURL(input) {
             preview.src = image.src;
 
             image.onload = function () {
+         
+                if (this.currentSrc.indexOf('webp') > -1) {
+                    $("#validateImg").text("فرمت عکس معتبر نیست")
+                    return;
+                }
                 if (this.width === 600 && this.height === 600) {
                     {
 
@@ -295,6 +301,7 @@ function readURL(input) {
                     $("#validateImg").text("سایز عکس معتبر نیست")
 
                 }
+
             };
         });
         reader.readAsDataURL(input.files[0]);
@@ -427,40 +434,7 @@ $("#final-submit").on('click', function (env) {
 
     submitForm2 = true;
 
-    //if (!submitForm1 || !submitForm2) {
-    //    notify("top center", "ابتدا فرم ها را تایید کنید", "error");
-    //    return false;
-    //}
-
-
-    //var form = $("#createForm");
-    //form.validate();
-    //if (form.valid() === false) {
-
-    //    var elements = document.getElementsByClassName("input-validation-error");
-    //    for (var i = 0; i < elements.length; i++) {
-    //        elements[i].style.backgroundColor = "ivory";
-    //        elements[i].style.border = "none";
-    //        elements[i].style.outline = "1px solid red";
-    //        elements[i].style.borderRadius = "5px";
-    //    }
-    //    return false;
-    //}
-    //var vali = form.validate();
-
-    //if (!vali.valid()) {
-
-    //    var elements = document.getElementsByClassName("input-validation-error");
-    //    for (var i = 0; i < elements.length; i++) {
-    //        elements[i].style.backgroundColor = "ivory";
-    //        elements[i].style.border = "none";
-    //        elements[i].style.outline = "1px solid red";
-    //        elements[i].style.borderRadius = "5px";
-    //    }
-
-    //    notify("top center", "فرم را به درستی پر کنید", "error");
-    //    return false;
-    //}
+ 
 
     $.ajax({
         url: '',
@@ -485,4 +459,46 @@ $("#final-submit").on('click', function (env) {
         }
 
     });
+});
+
+
+var isServiceValue;
+function CheckValue(value) {
+
+    var div = document.querySelector("#isService");
+    var divunit2 = document.querySelector("#prdUnit2");
+    var divunit = document.querySelector("#prdunit");
+    isServiceValue = value;
+    if (value == 2) {
+
+        div.style.display = "block";
+        divunit2.style.display = "none";
+        divunit.style.display = "none";
+    }
+    else {
+        $("#hasTiming").prop('checked', false);
+        div.style.display = "none";
+        divunit2.style.display = "block";
+        divunit.style.display = "block";
+        //document.getElementById("isService").style.display = "none";
+    }
+
+
+
+}
+
+$('#hasTiming').change(function () {
+    var prices = document.querySelector("#prices");
+    var times = document.querySelector("#times");
+
+    if (isServiceValue == 2 && this.checked) {
+        prices.style.display = "none";
+        times.style.display = "block";
+
+    }
+    else {
+        prices.style.display = "block";
+        times.style.display = "none";
+
+    }
 });

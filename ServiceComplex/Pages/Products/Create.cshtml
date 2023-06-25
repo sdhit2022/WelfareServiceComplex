@@ -158,8 +158,8 @@
                             <div class="form-group col-md-12">
                                 <label for=""> توضیحات کوتاه</label>
                                 <textarea asp-for="Command.ShortDescription" type="text" class="form-control" rows="3" id="" placeholder=" توضیحات کوتاه"></textarea>
-                                <span asp-validation-for="Command.ShortDescription" class="error"></span>
-                            </div>
+@*                                <span asp-validation-for="Command.ShortDescription" class="error"></span>
+*@                            </div>
 
                         </div>
 
@@ -572,44 +572,6 @@
 
 
     <script>
-        var isServiceValue;
-        function CheckValue(value) {
-         
-            var div=document.querySelector("#isService"); 
-            var divunit2=document.querySelector("#prdUnit2");
-            var divunit = document.querySelector("#prdunit");
-            isServiceValue=value;
-            if (value == 2) {
-
-                div.style.display = "block";
-                divunit2.style.display = "none";
-                divunit.style.display = "none";
-            }
-            else {
-                div.style.display="none";
-                divunit2.style.display = "block";
-                divunit.style.display = "block";
-                //document.getElementById("isService").style.display = "none";
-            }
-
-            
-
-        }
-
-        $('#hasTiming').change(function () {
-            var prices = document.querySelector("#prices");
-            var times = document.querySelector("#times");
-
-            if (isServiceValue == 2 && this.checked) {
-                prices.style.display = "none";
-                times.style.display = "block";
-
-            }
-            else {
-                prices.style.display = "block";
-                times.style.display = "none";
-
-            }
-        });
+      
     </script>
 }
