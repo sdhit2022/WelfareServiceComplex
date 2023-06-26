@@ -88,11 +88,7 @@
                                         </a>
 
 
-                                        <a title="تصاویر" onclick="pictures('@item.PrdUid')">
-                                            <svg style="color:green" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image">
-                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>
-                                            </svg>
-                                        </a>
+                                        
                                     </td>
                                 </tr>
                             }
@@ -124,10 +120,8 @@
                 <div class="modal-body">
 
                     <div class="widget-content">
+                        <div id="price">
                         <div class="form-row">
-                            <div class="col-md-6 mb-5">
-                                <input id="discount" type="text" class="form-control basic border-none" value="تخفیف:&nbsp;&nbsp; " readonly>
-                            </div>
 
                             <div class="col-md-6 mb-5">
                                 <input id="price2" class="form-control basic border-none" value="قیمت2:&nbsp;&nbsp; " readonly="">
@@ -156,16 +150,6 @@
 
                         <div class="form-row">
                             <div class="col-md-6 mb-5">
-                                <input id="barcCode" type="text" class="form-control basic border-none" value="بارکد:&nbsp;&nbsp; " readonly>
-                            </div>
-
-                            <div class="col-md-6 mb-5">
-                                <input id="iranCode" class="form-control basic border-none" value="ایران کد:&nbsp;&nbsp;" readonly="">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-md-6 mb-5">
                                 <input id="weight" type="text" class="form-control basic border-none" value="وزن:&nbsp;&nbsp; " readonly>
                             </div>
 
@@ -173,33 +157,50 @@
                                 <input id="volume" class="form-control basic border-none" value=" حجم:&nbsp;&nbsp; " readonly="">
                             </div>
                         </div>
-
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                <div class="row">
-
-                                    <div class="col col-md-12">
-                                        <strong class="text-info">ویژگی ها</strong>
-                                        <table id="property-dataTable" class="Current-color table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>نام ویژگی</th>
-                                                <th>مقدار ویژگی</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        </div>
+                        <div id="time">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-5">
+                                    <label>زمان پایه ارائه خدمت</label>
+                                    <input id="PrdBaseTime" type="number" class="form-control basic border-none"  readonly>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label>نرخ زمان پایه</label>
+                                    <input id="PrdBaseCost" type="number" class="form-control basic border-none" readonly="">
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label>زمان مازاد ارائه خدمت</label>
+                                    <input id="PrdExtraTime" type="number" class="form-control basic border-none" readonly="">
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label>نرخ زمان مازاد</label>
+                                    <input id="PrdExtraCost" type="number" class="form-control basic border-none" readonly="">
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label>حداقل شارژ</label>
+                                    <input id="PrdMinCharge" type="number" class="form-control basic border-none" readonly="">
                                 </div>
 
                             </div>
-                        </div>
-                    </div>
 
+
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="col-md-6 mb-5">
+                                <input id="barcCode" type="text" class="form-control basic border-none" value="بارکد:&nbsp;&nbsp; " readonly>
+                            </div>
+
+                            <div class="col-md-6 mb-5">
+                                <input id="iranCode" class="form-control basic border-none" value="ایران کد:&nbsp;&nbsp;" readonly="">
+                            </div>
+
+                            <div class="col-md-6 mb-5">
+                                <input id="discount" type="text" class="form-control basic border-none" value="تخفیف:&nbsp;&nbsp; " readonly>
+                            </div>
+                        </div>
+
+                      
                 </div>
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
@@ -331,75 +332,42 @@
                     if (result.prdDiscountType == 1)
                         discountTotal = result.prdDiscount + "ریال";
 
-                    $("#productName").text(result.prdName);
-                    $("#discount").val($("#discount").val() + discountTotal.toLocaleString() ?? "");
+                     var prices = document.getElementById("price");
+                     var times = document.getElementById("time");
+                     debugger
+                    if(result.Type == 2 && result.PrdHasTiming == true){
+                        times.style.display="block";
+                        prices.style.display="none";
+                        $("#PrdBaseTime").val(result.PrdBaseTime);
+                        $("#PrdBaseCost").val(result.PrdBaseCost);
+                        $("#PrdExtraTime").val(result.PrdExtraTime);
+                        $("#PrdExtraCost").val(result.PrdExtraCost);
+                        $("#PrdMinCharge").val(result.PrdMinCharge);
+                    }
+                    else{
+                        times.style.display = "none";
+                        prices.style.display = "block";
                     $("#price2").val($("#price2").val() + result.prdPricePerUnit2.toLocaleString());
                     $("#price3").val($("#price3").val() + result.prdPricePerUnit3.toLocaleString());
                     $("#price4").val($("#price4").val() + result.prdPricePerUnit4.toLocaleString() ?? "");
                     $("#unit1").val($("#unit1").val() + result.unit1 ?? "");
                     $("#unit2").val($("#unit2").val() + result.unit2 ?? "");
+                     $("#weight").val($("#weight").val() + result.weight ?? "");
+                    $("#volume").val($("#volume").val() + result.volume ?? "");
+                    }
+                    $("#discount").val($("#discount").val() + discountTotal.toLocaleString() ?? "");
                     $("#iranCode").val($("#iranCode").val() + result.iranCode ?? "");
                     $("#barCode").val($("#barCode").val() + result.barCode ?? "");
-                    $("#weight").val($("#weight").val() + result.weight ?? "");
-                    $("#volume").val($("#volume").val() + result.volume ?? "");
-
-
-                    table.clear().draw();
-                    result.properties.forEach(x => {
-                        const list =
-                            `
-                                             <tr>
-                                                 <td>${x.propertyName ?? ""}</td>
-                                                  <td>${x.value ?? ""}</td>
-                                             </tr>
-                                                                                                 `
-                        table.row.add($(list)).draw();
-                    });
-
-                    debugger
-                    pictureTable.clear().draw();
-                    result.pictures.forEach(x => {
-                        const list1 =
-                            `
-                                             <tr>
-                                                 <td>
-                                                      <img src="data:image/png;base64,${x.image ?? ""}" style="max-width:80px;max-height:90px" />
-                                                 </td>
-                                             </tr>
-                                             `
-                        debugger
-                        pictureTable.row.add($(list1)).draw();
-                    });
+                    $("#productName").text(result.prdName);
                 }
-
             });
+
+
+
+            
         }
 
 
-        function pictures(id) {
-            debugger
-            $("#pictureProduct").modal('show')
-            $.ajax({
-                type: "GET",
-                url: "?handler=pictures&id=" + id,
-                success: function (result) {
-
-                    $("#gallery").html("")
-                    result.forEach(x => {
-                        const list1 =
-                            `
-                                                 <div class="col-lg-4 mb-4 mb-lg-0">
-                                                              <img src="data:image/png;base64,${x.image ?? ""}"
-                                                          class="w-100 shadow-1-strong rounded mb-4"
-                                                          alt="Mountains in the Clouds" />
-                                                 </div>
-                                                 `
-                        debugger
-                        $("#gallery").append(list1)
-                    });
-                }
-            });
-        }
 
 
 

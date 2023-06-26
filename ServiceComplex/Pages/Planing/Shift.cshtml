@@ -46,23 +46,12 @@
                                 {
                                     <tr>
                                         <td>@item.ShfName</td>
-                                        <td>@item.ShfStartTime</td>
-                                        <td>@item.ShfEndTime</td>
+                                        <td>@TimeSpan.FromMinutes(@item.ShfStartTime)</td>
+                                        <td>@TimeSpan.FromMinutes(@item.ShfEndTime)</td>
                                         <td>@item.ShfTelorance</td>
                                         <td>
 
-                                           @* <a title="جزییات بیشستر" onclick="showModal('@item.SlnId')">
-                                                <svg style="color:#2196f3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                                                </svg>
-                                            </a>*@
-                                            @*<a asp-page="/Products/Edit" asp-route-productId="@item.SlnId" asp-route-load="true" title="ویرایش" class=" mb-2 mr-2">
-                                                <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
-                                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                                </svg>
-                                            </a>*@
+                                          
 
                                             <a class="" onclick="Edit('@item.ShfId')" title="ویرایش">
                                                <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
@@ -81,13 +70,7 @@
                                             </a>
 
 
-                                            @*<a title="تصاویر" onclick="pictures('@item.SlnId')">
-                                                <svg style="color:green" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image">
-                                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                                    <polyline points="21 15 16 10 5 21"></polyline>
-                                                </svg>
-                                            </a>*@
+                                           
                                         </td>
                                     </tr>
                                 }
@@ -115,7 +98,7 @@
                     </svg>
                 </button>
             </div>
-            <form method="post" class="needs-validation" asp-page="/Planing/Shift" asp-page-handler="Create" name="submitForm" id="">
+            <form method="post" class="needs-validation" asp-page="/Planing/Shift" asp-page-handler="Create" name="submitForm" id="CreateForm">
                 <div class="modal-body">
 
                     <div class="widget-content">
@@ -127,19 +110,19 @@
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>زمان شروع:</label>
-                                    <input name="ShfStartTime" type="text" class="form-control basic border-none">
+                                    <input name="ShfStartTime" type="time" class="form-control basic border-none">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>زمان پایان:</label>
-                                    <input name="ShfEndTime" type="text" class="form-control basic border-none">
+                                    <input name="ShfEndTime" type="time" class="form-control basic border-none">
                                 </div>
                             </div> 
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>تلورانس(دقیقه):</label>
-                                    <input name="ShfTelorance" type="text" class="form-control basic border-none">
+                                    <input name="ShfTelorance" type="number" class="form-control basic border-none">
                                 </div>
                             </div>
                            
@@ -152,7 +135,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn" data-dismiss="modal" id="saveChanges" value="ذخیره " />
+                    <input type="submit" class="btn" data-dismiss="modal" onclick="saveNew()"  value="ذخیره " />
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -162,7 +145,7 @@
 </div>
 
 
-<div class="modal fade" id="editSalon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editShift" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
@@ -226,40 +209,6 @@
 </div>
 
 
-<div class="modal fade" id="pictureProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width:700px !Important">
-            <div class="modal-header">
-                <h5 class="modal-title text-center text-center" id="productName"> تصاویر </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            <form method="post" class="needs-validation" name="submitForm" id="submitForm">
-                <div class="modal-body">
-
-                    <div class="widget-content">
-
-                        <!-- Gallery -->
-                        <div class="row" id="gallery">
-                        </div>
-                        <!-- Gallery -->
-
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
 
 
 @section Scripts
@@ -267,7 +216,7 @@
     <script>
 
         function Create(){
-            $("#createSalon").modal('show');
+            $("#createShift").modal('show');
         }
 
         function Remove(id) {
@@ -293,7 +242,7 @@
                                     result.message,
                                     'success'
                                 ).then(function () {
-                                    window.location = "/BaseData/Salon";
+                                    window.location = "/Planing/Shift";
                                 });
                             } else {
                                 swal(
@@ -310,24 +259,28 @@
         }
 
         function Edit(id) {
-            $("#editSalon").modal('show');
+            $("#editShift").modal('show');
             $.ajax({
                 type: "GET",
-                url: "?handler=Edit&SLN_ID=" + id,
+                url: "?handler=Edit&id=" + id,
                 success: function (result) {
-                    var salon = JSON.parse(result);
-                    $("#SlnName").val( salon.SlnName);
-                    $("#SlnType").val(salon.SlnType);
+                    var shift = JSON.parse(result);
+                    $("#ShfName").val(shift.ShfName);
+                    $("#ShfStartTime").val(shift.ShfStartTime);
+                    $("#ShfEndTime").val(shift.ShfEndTime);
                     //if (salon.FrWarHosUid !=null){
-                    $("#FrWarHosUid").val(salon.FrWarHosUid);
+                    $("#ShfTelorance").val(shift.ShfTelorance);
                     //}
-                    $("#SlnId").val(salon.SlnId);                
+                    $("#ShfId").val(shift.ShfId);
                 }
             });           
         }
         function saveEdit()
         {
             document.getElementById("EditForm").submit();
+        }
+        function saveNew() {
+            document.getElementById("CreateForm").submit();
         }
         $('#saveChanges').click(function () {
             $("#editSalon").modal('hide');

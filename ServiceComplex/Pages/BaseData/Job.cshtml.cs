@@ -51,7 +51,7 @@ namespace ServiceComplex.Pages.BaseData
                 JobId = JobId
             };
             _jobService.Update(newJob);
-            return Redirect("BaseDate/Job");
+            return Redirect("/BaseData/Job");
 
         }
 
