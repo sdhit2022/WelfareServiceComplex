@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Application.Common;
+using Domain.ComplexModels;
 using Application.Interfaces.Context;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Http;
@@ -123,7 +124,7 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<InvoiceDetails2> InvoiceDetails2s { get; set; }
 
-    public virtual DbSet<Domain.ComplexModels.Job> Jobs { get; set; }
+    public virtual DbSet<Job> Jobs { get; set; }
 
     public virtual DbSet<Language> Languages { get; set; }
 
@@ -195,6 +196,8 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<SalonDetail> SalonDetails { get; set; }
 
+    public virtual DbSet<SalonProduct> SalonProducts { get; set; }
+
     public virtual DbSet<SelectDeliverer> SelectDeliverers { get; set; }
 
     public virtual DbSet<SerialDetail> SerialDetails { get; set; }
@@ -245,6 +248,9 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<WorkYear> WorkYears { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=192.168.20.87\\saleinstore;User Id=salein;Password=dbkitsalein1394;Initial Catalog=876812d7-85ec-4706-9eef-fe26f206e794;Integrated Security=false;Multiple Active Result Sets=True;Encrypt=False;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -4242,8 +4248,7 @@ public partial class ComplexContext : DbContext,IComplexContext
 
             entity.ToTable("Salon");
 
-            entity.Property(e => e.SlnId)
-                .HasColumnName("SLN_ID");
+            entity.Property(e => e.SlnId).HasColumnName("SLN_ID");
             entity.Property(e => e.FrWarHosUid).HasColumnName("FR_WAR_HOS_UID");
             entity.Property(e => e.SlnName)
                 .HasMaxLength(150)
@@ -4274,6 +4279,29 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasForeignKey(d => d.SdFrSalon)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SalonDetail_Salon");
+        });
+
+        modelBuilder.Entity<SalonProduct>(entity =>
+        {
+            entity.HasKey(e => e.SpId).HasName("PK_SalonProduct_1");
+
+            entity.ToTable("SalonProduct");
+
+            entity.Property(e => e.SpId)
+                .ValueGeneratedNever()
+                .HasColumnName("SP_ID");
+            entity.Property(e => e.SpFrProduct).HasColumnName("SP_FR_PRODUCT");
+            entity.Property(e => e.SpFrSalon).HasColumnName("SP_FR_SALON");
+
+            entity.HasOne(d => d.SpFrProductNavigation).WithMany(p => p.SalonProducts)
+                .HasForeignKey(d => d.SpFrProduct)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SalonProduct_Product");
+
+            entity.HasOne(d => d.SpFrSalonNavigation).WithMany(p => p.SalonProducts)
+                .HasForeignKey(d => d.SpFrSalon)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SalonProduct_Salon");
         });
 
         modelBuilder.Entity<SelectDeliverer>(entity =>
