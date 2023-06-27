@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Domain.ComplexModels;
 
 public partial class Salon
 {
-    
     public long SlnId { get; set; }
 
     public string SlnName { get; set; } = null!;
@@ -22,6 +20,8 @@ public partial class Salon
     public virtual WareHouse? FrWarHosU { get; set; }
 
     public virtual ICollection<SalonDetail> SalonDetails { get; set; } = new List<SalonDetail>();
+
+    public virtual ICollection<SalonProduct> SalonProducts { get; set; } = new List<SalonProduct>();
 
     public virtual ICollection<ServiceTransaction> ServiceTransactions { get; set; } = new List<ServiceTransaction>();
 

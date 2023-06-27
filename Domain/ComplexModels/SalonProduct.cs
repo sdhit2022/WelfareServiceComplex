@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain.ComplexModels
+namespace Domain.ComplexModels;
+
+public partial class SalonProduct
 {
-    internal class SalonProduct
-    {
-    }
+    public Guid SpId { get; set; }
+
+    public Guid SpFrProduct { get; set; }
+
+    public long SpFrSalon { get; set; }
+
+    public virtual Product SpFrProductNavigation { get; set; } = null!;
+
+    public virtual Salon SpFrSalonNavigation { get; set; } = null!;
 }

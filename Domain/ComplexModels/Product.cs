@@ -127,7 +127,9 @@ public partial class Product
 
     public string? WebDescription { get; set; }
 
-    public bool PrdHasTiming { get; set; }
+    public int? Type { get; set; }
+
+    public bool? PrdHasTiming { get; set; }
 
     public short? PrdBaseTime { get; set; }
 
@@ -143,9 +145,9 @@ public partial class Product
 
     public decimal? PrdMinCharge { get; set; }
 
-    public bool PrdHasPersonel { get; set; }
+    public bool? PrdHasPersonel { get; set; }
 
-    public bool PrdIsContonuouse { get; set; }
+    public bool? PrdIsContonuouse { get; set; }
 
     public short? PrdContinuouseType { get; set; }
 
@@ -180,6 +182,8 @@ public partial class Product
     public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
 
     public virtual ICollection<QuoteDetail> QuoteDetails { get; set; } = new List<QuoteDetail>();
+
+    public virtual ICollection<SalonProduct> SalonProducts { get; set; } = new List<SalonProduct>();
 
     public virtual ICollection<ServiceTransaction> ServiceTransactions { get; set; } = new List<ServiceTransaction>();
 
