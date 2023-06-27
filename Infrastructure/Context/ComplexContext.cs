@@ -17,6 +17,9 @@ public partial class ComplexContext : DbContext,IComplexContext
     {
         _httpContext = httpContext;
     }
+    public ComplexContext(DbContextOptions options) : base(options)
+    {
+    }
 
     public virtual DbSet<Account> Accounts { get; set; }
 
@@ -242,9 +245,6 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<WorkYear> WorkYears { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=.\\MSSQL2019;Initial Catalog=876812d7-85ec-4706-9eef-fe26f206e794;Integrated Security=True;Multiple Active Result Sets=True;Encrypt=False;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
