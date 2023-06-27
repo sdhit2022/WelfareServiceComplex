@@ -351,44 +351,22 @@ $("#first-form").on('click', function (env) {
         }
     };
     notify("top center", "فرم تایید شد", "success");
-    $("#justify-profile-tab").removeClass("disabled");
+    //$("#justify-profile-tab").removeClass("disabled");
+    document.getElementById("justify-profile-tab").classList.remove("disabled");
+
+    //document.getElementById("justify-home-tab").style.display = "none";
+    //document.getElementById("justify-profile-tab").style.display = "block";
+
+    //document.getElementById("justify-home-tab").classList.remove("active");
+    //document.getElementById("justify-profile-tab").classList.add("active");
+
+
+
+   
     submitForm1 = true;
 
 });
 
-
-
-$("#second-form").on('click', function (env) {
-    env.preventDefault();
-
-    var form = $("#createForm");
-    form.validate();
-    if (form.valid() === false) {
-
-        var elements = document.getElementsByClassName("input-validation-error");
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].style.backgroundColor = "ivory";
-            elements[i].style.border = "none";
-            elements[i].style.outline = "1px solid red";
-            elements[i].style.borderRadius = "5px";
-        }
-
-        return false;
-    }
-    var vali = form.validate();
-
-    if (!vali.valid()) {
-        notify("top center", "فرم را به درستی پر کنید", "error");
-        return false;
-    }
-
-    notify("top center", "فرم تایید شد", "success");
-    $("#justify-contact-tab").removeClass("disabled");
-    $("#justify-pictures-tab").removeClass("disabled");
-
-    submitForm2 = true;
-
-});
 
 
 $("#final-submit").on('click', function (env) {
@@ -398,15 +376,23 @@ $("#final-submit").on('click', function (env) {
     form.validate();
     if (form.valid() === false) {
 
-        var elements = document.getElementsByClassName("input-validation-error");
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].style.backgroundColor = "ivory";
-            elements[i].style.border = "none";
-            elements[i].style.outline = "1px solid red";
-            elements[i].style.borderRadius = "5px";
+        notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
+        return false;
+    }
+    debugger
+    if (times.style.display = "block" && hastiming ==true) {
+        if ($('#PrdBaseTime').val() == "" || $('#PrdBaseCost').val() == "" || $('#PrdExtraTime').val() == "" ||
+            $('#PrdExtraCost').val() == "" || $('#PrdMinTime').val() == "" || $('#PrdMaxTime').val() == "" ||
+            $('#PrdMinCharge').val() == "") {
+            notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
+            return false;
+        }
+    } else {
+        if ($('#PrdPricePerUnit1').val() == "") {
+            notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
+            return false;
         }
 
-        return false;
     }
     var vali = form.validate();
 
@@ -452,6 +438,8 @@ var div = document.querySelector("#isService");
 var divunit2 = document.querySelector("#prdUnit2");
 var divunit = document.querySelector("#prdunit");
 var productUnit = document.getElementById("prdunit");
+var prices = document.querySelector("#prices");
+var times = document.querySelector("#times");
 var isServiceValue;
 function CheckValue(value) {
 
@@ -465,6 +453,8 @@ function CheckValue(value) {
     }
     else {
         $("#hasTiming").prop('checked', false);
+        prices.style.display = "block";
+        times.style.display = "none";
         div.style.display = "none";
         divunit2.style.display = "block";
         divunit.style.display = "block";
@@ -474,19 +464,20 @@ function CheckValue(value) {
 
 
 }
-
+var hastiming = false;
 $('#hasTiming').change(function () {
-    var prices = document.querySelector("#prices");
-    var times = document.querySelector("#times");
+  
 
     if (isServiceValue == 2 && this.checked) {
         prices.style.display = "none";
         times.style.display = "block";
+        hastiming = true;
 
     }
     else {
         prices.style.display = "block";
         times.style.display = "none";
+        hastiming = false;
 
     }
 });

@@ -15,12 +15,7 @@
 <link rel="stylesheet" type="text/css" href="~/plugins/editors/quill/quill.snow.css">
 
 
-@*<style>
-    .valid {
-        border: none;
-        outline: green solid 1px !important;
-    }
-</style>*@
+
 <div id="content" class="main-content">
 <div class="layout-px-spacing">
 
@@ -33,7 +28,7 @@
         <a class="nav-link active" id="justify-home-tab" data-toggle="tab" href="#justify-home" role="tab" aria-controls="justify-home" aria-selected="true">اطلاعات اصلی</a>
     </li>
     <li class="nav-item  ">
-        <a class="nav-link " id="justify-profile-tab" data-toggle="tab" href="#justify-profile" role="tab" aria-controls="justify-profile" aria-selected="false">سایر اطلاعات </a>
+        <a class="nav-link disabled" id="justify-profile-tab" data-toggle="tab" href="#justify-profile" role="tab" aria-controls="justify-profile" aria-selected="false">سایر اطلاعات </a>
     </li>
   @*  <li class="nav-item">
         <a class="nav-link disabled" id="justify-contact-tab" data-toggle="tab" href="#justify-contact" role="tab" aria-controls="justify-contact" aria-selected="false">ویژگی ها </a>
@@ -198,7 +193,7 @@
                             <div class="form-group col-md-3" >
 
                                 <label for="">قیمت 1 <span class="error">*</span></label>
-                                <input asp-for="Command.PrdPricePerUnit1" type="number" class="form-control" id="" placeholder="قیمت 1">
+                                                                <input asp-for="Command.PrdPricePerUnit1" type="number" class="form-control" id="PrdPricePerUnit1" placeholder="قیمت 1">
                                 <span asp-validation-for="Command.PrdPricePerUnit1" class="error"></span>
                             </div>
                             <div class="form-group col-md-3">
@@ -261,24 +256,24 @@
                             <div class="form-group col-md-3" >
 
                                 <label for="">زمان پایه ارائه خدمت <span class="error">*</span></label>
-                                <input asp-for="Command.PrdBaseTime" type="number" class="form-control" id="" placeholder="دقیقه">
+                                <input asp-for="Command.PrdBaseTime" type="number" class="form-control" id="PrdBaseTime" placeholder="دقیقه">
                                 <span asp-validation-for="Command.PrdBaseTime" class="error"></span>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="">نرخ زمان پایه<span class="error">*</span></label>
-                                <input asp-for="Command.PrdBaseCost" type="number" class="form-control" id="" placeholder="نرخ زمان پایه">
+                                <input asp-for="Command.PrdBaseCost" type="number" class="form-control" id="PrdBaseCost" placeholder="نرخ زمان پایه">
                                 <span asp-validation-for="Command.PrdBaseCost" class="error"></span>
                             </div>
                               <div class="form-group col-md-3">
                                  <label for="">زمان مازاد ارائه خدمت<span class="error">*</span></label>
-                                  <input asp-for="Command.PrdExtraTime" type="number" class="form-control" id="" placeholder="دقیقه">
+                                  <input asp-for="Command.PrdExtraTime" type="number" class="form-control" id="PrdExtraTime" placeholder="دقیقه">
                                   <span asp-validation-for="Command.PrdExtraTime" class="error"></span>
                               </div>
                                                       
 
                              <div class="form-group col-md-3">
                                 <label for="">نرخ زمان مازاد<span class="error">*</span></label>
-                                <input asp-for="Command.PrdExtraCost" type="number" class="form-control" id="" placeholder="نرخ زمان مازاد">
+                                <input asp-for="Command.PrdExtraCost" type="number" class="form-control" id="PrdExtraCost" placeholder="نرخ زمان مازاد">
                                 <span asp-validation-for="Command.PrdExtraCost" class="error"></span>
                             </div>
                         </div>
@@ -286,17 +281,17 @@
                             <div class="form-group col-md-3" >
 
                                 <label for="">حداقل زمان حضور <span class="error">*</span></label>
-                                <input asp-for="Command.PrdMinTime" type="number" class="form-control" id="" placeholder="دقیقه">
+                                <input asp-for="Command.PrdMinTime" type="number" class="form-control" id="PrdMinTime" placeholder="دقیقه">
                                 <span asp-validation-for="Command.PrdMinTime" class="error"></span>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="">حداکثر زمان حضور<span class="error">*</span></label>
-                                <input asp-for="Command.PrdMaxTime" type="number" class="form-control" id="" placeholder="دقیقه">
+                                <input asp-for="Command.PrdMaxTime" type="number" class="form-control" id="PrdMaxTime" placeholder="دقیقه">
                                 <span asp-validation-for="Command.PrdMaxTime" class="error"></span>
                             </div>
                               <div class="form-group col-md-3">
                                  <label for="">حداقل شارژ<span class="error">*</span></label>
-                                  <input asp-for="Command.PrdMinCharge" type="number" class="form-control" id="" placeholder="حداقل شارژ">
+                                  <input asp-for="Command.PrdMinCharge" type="number" class="form-control" id="PrdMinCharge" placeholder="حداقل شارژ">
                                   <span asp-validation-for="Command.PrdMinCharge" class="error"></span>
                               </div>
                
@@ -361,7 +356,7 @@
             </div>
         </div>
    </div>
-                                <button id="final-submit" type="submit" class="btn btn-success btn-sm btn-rounded pull-left">تایید نهایی</button>
+   <button id="final-submit" type="submit" class="btn btn-success btn-sm btn-rounded pull-left">تایید نهایی</button>
 
 </div>
 
