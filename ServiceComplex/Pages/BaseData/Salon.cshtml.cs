@@ -33,7 +33,7 @@ namespace ServiceComplex.Pages.BaseData
         }
 
         public IActionResult OnPostCreate( string SlnName, short SlnType, Guid FrWarHosUid) {
-            Domain.ComplexModels.Salon salon;
+            Salon salon;
             if (FrWarHosUid == Guid.Empty)
             {
                 salon = new Salon
@@ -61,7 +61,7 @@ namespace ServiceComplex.Pages.BaseData
             Salon salon = _salonService.GetSalon(SLN_ID);
             return new JsonResult(JsonConvert.SerializeObject(salon));
         }
-        public IActionResult OnPostEdit(long SlnId, string SlnName, short SlnType, Guid FrWarHosUid) 
+        public IActionResult OnPostEdit(long SlnId, string SlnName, short SlnType, Guid FrWarHosUid,Guid WarHosUid) 
         {
             Salon salon;
             if (FrWarHosUid == Guid.Empty)

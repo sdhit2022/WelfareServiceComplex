@@ -141,7 +141,7 @@ $("#submitForm").on("submit", function (evn) {
                 checkFor = checkExistCode(resultCode);
             }
 
-            debugger
+            
             var m = getMaxCode();
             getCode(code + m);
 
@@ -152,7 +152,7 @@ $("#submitForm").on("submit", function (evn) {
     $("#code").val("");
     $("#code").val(code);
     code = parseInt($("#code").val());
-    debugger
+    
     if (group === "0") {
         if (code.length > @Model.MainCodeCount ) {
     notify("top center", "کد کالا باید @Model.MainCodeCount رقمی باشد", "error");
@@ -160,7 +160,7 @@ $("#submitForm").on("submit", function (evn) {
 }
 
 if (code.length !== mainGroup ) {
-    debugger
+    
 
     var setCode = code;
     for (var i = 0, count = 1; i < mainGroup -code.length; i++) {
@@ -203,7 +203,7 @@ $.ajax({
     },
 
     success: function (result) {
-        debugger
+        
         if (result.isSucceeded) {
 
             notify("top center", "عملیات با موفقیت انجام شد", "success")
@@ -222,12 +222,12 @@ $.ajax({
 
 
 function Remove(id) {
-    debugger
+    
     $.ajax({
         url: '?handler=remove&id=' + id,
         type: 'Get',
         success: function (result) {
-            debugger
+            
             if (result.isSucceeded) {
                 notify("top center", "عملیات با موفقیت انجام شد", "success")
                 window.location.href = "/Products/Category";

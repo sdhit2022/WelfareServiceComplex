@@ -164,7 +164,7 @@
                     </svg>
                 </button>
             </div>
-            <form method="post" class="needs-validation" asp-page="/BaseData/Salon" asp-page-handler="Create" name="submitForm" id="">
+            <form method="post" class="needs-validation" asp-page="/BaseData/Salon" asp-page-handler="Create" name="submitForm" id="CreateForm">
                 <div class="modal-body">
 
                     <div class="widget-content">
@@ -215,8 +215,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn" data-dismiss="modal" id="saveChanges" value="ذخیره " />
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
+                    <input type="submit" class="btn" data-dismiss="modal" onclick="saveCreate()" id="saveChanges" value="ذخیره " />
+                    <button class="btn"  data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
 
@@ -266,18 +266,18 @@
 
                             </div>
                             <div class="col-md-6 mb-5">
-                                <label for="FrWarHosUid">انبار:</label>
-                                <select id="FrWarHosUid" name="FrWarHosUid" class="form-control" required>
-                                    <option value="00000000-0000-0000-0000-000000000000" default="" selected="">انتخاب کنید</option>
-                                    @for (int i = 0; i < Model.WareHouses.Count; i++)
+                                <label>انبار:</label>
+                                <select name="FrWarHosUid" id="FrWarHosUid" class="form-control" required>
+                                    <option value="0" default="" selected="">انتخاب کنید</option>
+                                    @for(int i = 0; i < Model.WareHouses.Count; i++)
                                     {
                                         <option value="@Model.WareHouses[i].WarHosUid">@Model.WareHouses[i].WarHosName</option>
                                     }
                                 </select>
 
-                                @*<label for="SlnName">انبار:</label>
-                                <input id="FrWarHosUid" name="FrWarHosUid" type="text" class="form-control basic border-none" >*@
+
                             </div>
+
                             <div class="col-md-6 mb-5" hidden>
                                 <input id="SlnId" name="SlnId" type="number" class="form-control basic border-none" value="آیدی:&nbsp;&nbsp; ">
                             </div>
@@ -319,14 +319,14 @@
                 confirmButtonText: 'حذف',
                 padding: '2em'
             }).then(function (result) {
-                debugger
+                
                 if (result.value) {
-                    debugger
+                    
                     $.ajax({
                         url: "?handler=Remove&id=" + id,
                         type: "get",
                         success: function (result) {
-                            debugger
+                            
                             if (result) {
                                 swal(
                                     'موفق!',
@@ -368,12 +368,12 @@
         function saveEdit()
         {
             document.getElementById("EditForm").submit();
+        } 
+        function saveCreate()
+        {
+            document.getElementById("CreateForm").submit();
         }
-        $('#saveChanges').click(function () {
-            $("#editSalon").modal('hide');
-            $("#createSalon").modal('hide');
-
-        });
+       
         
     </script>
 }

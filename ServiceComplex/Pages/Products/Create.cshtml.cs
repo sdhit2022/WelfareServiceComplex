@@ -48,10 +48,10 @@ public class CreateModel : PageModel
             ViewData["ErrorMessage"] = true;
             return Page();
         }
-
+        var result = _product.CreateProduct(command);
         //if (_authHelper.AutoCodeProduct())
         //    command.PrdCode = _authHelper.AutoGenerateCode(command.PrdLvlUid3);
-        return new JsonResult(_product.CreateProduct(command));
+        return new JsonResult( result);
     }
 
     public IActionResult OnGetProperty(CreateProperty property)

@@ -42,11 +42,12 @@ public class EditModel : PageModel
         return Page();
     }
 
+    [ValidateAntiForgeryToken]
     public IActionResult OnPost(EditProduct command)
     {
-        _product.UpdateProduct(command);
-        //  return new JsonResult(result);
-        return Redirect("/Products/Index");
+        var result= _product.UpdateProduct(command);
+        return new JsonResult(result);
+        //return Redirect("/Products/Index");
     }
 
     public IActionResult OnGetRemovePictures(Guid id)

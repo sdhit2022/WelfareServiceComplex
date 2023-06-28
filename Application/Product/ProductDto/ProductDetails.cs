@@ -7,6 +7,7 @@ public class ProductDetails
     public int PrdMaxSale { get; set; }
     public decimal PrdDiscount { get; set; }
     public decimal PrdDiscountType { get; set; }
+    public decimal PrdPricePerUnit1 { get; set; }
     public decimal PrdPricePerUnit2 { get; set; }
     public decimal PrdPricePerUnit3 { get; set; }
     public decimal PrdPricePerUnit4 { get; set; }

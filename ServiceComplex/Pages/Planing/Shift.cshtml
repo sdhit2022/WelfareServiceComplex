@@ -228,14 +228,14 @@
                 confirmButtonText: 'حذف',
                 padding: '2em'
             }).then(function (result) {
-                debugger
+                
                 if (result.value) {
-                    debugger
+                    
                     $.ajax({
                         url: "?handler=Remove&id=" + id,
                         type: "get",
                         success: function (result) {
-                            debugger
+                            
                             if (result) {
                                 swal(
                                     'موفق!',

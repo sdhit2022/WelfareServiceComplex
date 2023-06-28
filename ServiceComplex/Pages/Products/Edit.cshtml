@@ -33,7 +33,7 @@
         <a class="nav-link" id="justify-pictures-tab" data-toggle="tab" href="#justify-pictures" role="tab" aria-controls="justify-contact" aria-selected="false">عکس های محصول</a>
     </li>*@
 </ul>
-<form method="post" enctype="multipart/form-data" class="needs-validation" id="createForm" name="createForm">
+<form method="post"  enctype="multipart/form-data" class="needs-validation" id="Edit" name="Edit">
 <div class="tab-content" id="justifyTabContent">
 <div class="tab-pane fade show active" id="justify-home" role="tabpanel" aria-labelledby="justify-home-tab">
     <div class="row layout-top-spacing" id="cancel-row">
@@ -62,6 +62,12 @@
                             <div class="form-group col-md-4">
                                 <label title="نمایش در فروشگاه، اپلیکشن موبایل و چاپ" for="">نام نمایشی کالا <span class="error">*</span></label>
                                 <input asp-for="Command.PrdNameInPrint" type="text" class="form-control" id="" placeholder="نام نمایشی">
+@*                                <span asp-validation-for="Command.PrdNameInPrint" class="error"></span>
+*@                            </div>
+
+                                <div class="form-group col-md-4" hidden>
+                                <label title="نمایش در فروشگاه، اپلیکشن موبایل و چاپ" for="">نام نمایشی کالا <span class="error">*</span></label>
+                                <input asp-for="Command.PrdUid" type="text" class="form-control" id="" placeholder="نام نمایشی">
 @*                                <span asp-validation-for="Command.PrdNameInPrint" class="error"></span>
 *@                            </div>
                                                    
@@ -176,7 +182,7 @@
                             <div class="form-group col-md-3" >
 
                                 <label for="">قیمت 1 <span class="error">*</span></label>
-                                                                <input asp-for="Command.PrdPricePerUnit1" type="number" class="form-control" id="PrdPricePerUnit1" placeholder="قیمت 1">
+                                <input asp-for="Command.PrdPricePerUnit1" type="number" class="form-control" id="PrdPricePerUnit1" placeholder="قیمت 1">
                                 <span asp-validation-for="Command.PrdPricePerUnit1" class="error"></span>
                             </div>
                             <div class="form-group col-md-3">
@@ -339,7 +345,7 @@
             </div>
         </div>
    </div>
-   <button id="final-submit" type="submit" class="btn btn-success btn-sm btn-rounded pull-left">تایید نهایی</button>
+   <button id="final-submit_edit" type="button" class="btn btn-success btn-sm btn-rounded pull-left">تایید نهایی</button>
 
 </div>
 
@@ -515,14 +521,14 @@
                      divunit2.style.display = "block";
                      divunit.style.display = "block";
                 }
-                debugger
-            if (type== 2 && hasTiming {
-                debugger
+                 
+            if (type== 2 && hasTiming ){
+                
                      prices.style.display = "none";
                      times.style.display = "block";
                 }
                 else{
-                debugger
+                
                      prices.style.display = "block";
                      times.style.display = "none";
                 }
