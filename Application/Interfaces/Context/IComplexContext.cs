@@ -181,6 +181,7 @@ public interface IComplexContext
     public DbSet<Domain.ComplexModels.Salon> Salons { get; set; }
 
     public DbSet<SalonDetail> SalonDetails { get; set; }
+    public  DbSet<SalonProduct> SalonProducts { get; set; }
 
     public DbSet<SelectDeliverer> SelectDeliverers { get; set; }
 
@@ -229,8 +230,9 @@ public interface IComplexContext
     public DbSet<WarehouseRecieptDetail> WarehouseRecieptDetails { get; set; }
 
     public DbSet<WorkStation> WorkStations { get; set; }
-
     public DbSet<WorkYear> WorkYears { get; set; }
+
+
     int SaveChanges(bool acceptAllChangesOnSuccess);
     int SaveChanges();
 }

@@ -158,7 +158,7 @@
                             </div>
                         </div>
                         </div>
-                        <div id="time">
+                        <div id="time" >
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>زمان پایه ارائه خدمت</label>
@@ -250,7 +250,6 @@
 {
 
     <script>
-       
 
         function Remove(id) {
             debugger
@@ -319,32 +318,38 @@
 
 
         function showModal(id) {
-            $("#detailsProduct").modal('show')
+            debugger;
+            var prices = document.getElementById("price");
+            var times = document.getElementById("time");
             $.ajax({
                 type: "GET",
                 url: "?handler=Details&id=" + id,
                 success: function (result) {
-                    debugger
-
+                    debugger;
+                    debugger;
                     var discountTotal = "";
                     if (result.prdDiscountType == 0)
                         discountTotal = result.prdDiscount + " درصد  ";
                     if (result.prdDiscountType == 1)
                         discountTotal = result.prdDiscount + "ریال";
 
-                     var prices = document.getElementById("price");
-                     var times = document.getElementById("time");
+                   
                      debugger
-                    if(result.Type == 2 && result.PrdHasTiming == true){
+                     debugger
+                    if(result.type == 2 && result.prdHasTiming == true){
                         times.style.display="block";
                         prices.style.display="none";
-                        $("#PrdBaseTime").val(result.PrdBaseTime);
-                        $("#PrdBaseCost").val(result.PrdBaseCost);
-                        $("#PrdExtraTime").val(result.PrdExtraTime);
-                        $("#PrdExtraCost").val(result.PrdExtraCost);
-                        $("#PrdMinCharge").val(result.PrdMinCharge);
+                        //$('#time').fadeIn();
+                        //$('#price').fadeOut();
+                        $("#PrdBaseTime").val(result.prdBaseTime);
+                        $("#PrdBaseCost").val(result.prdBaseCost);
+                        $("#PrdExtraTime").val(result.prdExtraTime);
+                        $("#PrdExtraCost").val(result.prdExtraCost);
+                        $("#PrdMinCharge").val(result.prdMinCharge);
                     }
                     else{
+                        //$('#price').fadeIn();
+                        //$('#time').fadeOut();
                         times.style.display = "none";
                         prices.style.display = "block";
                     $("#price2").val($("#price2").val() + result.prdPricePerUnit2.toLocaleString());
@@ -362,7 +367,7 @@
                 }
             });
 
-
+            $("#detailsProduct").modal('show')
 
             
         }

@@ -35,7 +35,7 @@ public class CreateModel : PageModel
     {
         Category = _category.SelectOptions();
         Tax = _category.TaxSelectOption();
-        GenerateCode = _authHelper.AutoCodeProduct();
+        GenerateCode = false;//_authHelper.AutoCodeProduct();
         Properties = _product.PropertySelectOption();
         //HttpContext.Session.Remove("Product-Property");
         Unit = _product.UnitOfMeasurement();
@@ -49,8 +49,8 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        if (_authHelper.AutoCodeProduct())
-            command.PrdCode = _authHelper.AutoGenerateCode(command.PrdLvlUid3);
+        //if (_authHelper.AutoCodeProduct())
+        //    command.PrdCode = _authHelper.AutoGenerateCode(command.PrdLvlUid3);
         return new JsonResult(_product.CreateProduct(command));
     }
 

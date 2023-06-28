@@ -5,16 +5,20 @@ using Application.Product.ProductDto;
 using AutoMapper;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Drawing.Imaging;
+using System.Text.Json;
 
 namespace Application.Product
 {
     public interface IProductService
     {
         ResultDto CreateProduct(CreateProduct command);
+        JsonResult GetAllProduct(JqueryDatatableParam param);
+
         List<ProductDto.ProductDto> GetAll();
         ProductDetails GetDetails(Guid id);
         List<PropertySelectOptionDto> PropertySelectOption();
@@ -50,6 +54,116 @@ namespace Application.Product
             _contextAccessor = contextAccessor;
             _authHelper = authHelper;
         }
+
+        public JsonResult GetAllProduct(JqueryDatatableParam param)
+        {
+            var list = _complexContext.Products.Include(x => x.PrdLvlUid3Navigation).Include(x => x.TaxU).AsNoTracking().Select(x => new
+            {
+                x.PrdUid,
+                x.PrdName,
+                x.PrdCode,
+                x.PrdLvlUid3,
+                x.PrdImage,
+                x.TaxU.TaxName,
+                x.TaxU.TaxValue,
+                x.PrdStatus,
+                x.PrdPricePerUnit1,
+                x.PrdUnit,
+                x.PrdUnit2,
+                x.PrdIranCode,
+                x.PrdBarcode,
+                x.Weight,
+                x.Volume,
+                x.PrdLvlUid3Navigation.PrdLvlName
+            }).Select(x => new ProductDto.ProductDto
+            {
+                PrdUid = x.PrdUid,
+                PrdName = x.PrdName,
+                PrdCode = x.PrdCode,
+                PrdLevelId = x.PrdLvlName,
+                PrdImage = x.PrdImage,
+                PrdStatus = x.PrdStatus,
+                PrdPricePerUnit1 = x.PrdPricePerUnit1 ?? 0,
+                TaxName = x.TaxName,
+                TaxValue = x.TaxValue,
+                PrdLvlName = x.PrdLvlName,
+                Image64 = Convert.FromBase64String(x.PrdImage ?? ""),
+                IranCode = x.PrdIranCode,
+                Weight = x.Weight,
+                Volume = x.Volume,
+                BarCode = x.PrdBarcode,
+                Unit1 = x.PrdUnit,
+                Unit2 = x.PrdUnit2
+            });
+
+            if (!string.IsNullOrEmpty(param.SSearch))
+            {
+                list = list.Where(x => x.PrdName.ToLower().Contains(param.SSearch.ToLower())
+                || x.PrdName.Contains(param.SSearch.ToLower())
+                || x.PrdLvlName.Contains(param.SSearch.ToLower())
+                || x.TaxName.Contains(param.SSearch.ToLower())
+                || x.PrdCode.Contains(param.SSearch.ToLower())
+                );
+            }
+
+            var sortColumnIndex = Convert.ToInt32(_contextAccessor.HttpContext.Request.Query["iSortCol_0"]);
+            var sortDirection = _contextAccessor.HttpContext.Request.Query["sSortDir_0"];
+
+            switch (sortColumnIndex)
+            {
+                case 0:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.PrdImage) : list.OrderByDescending(c => c.PrdImage);
+                    break;
+
+                case 1:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.PrdName) : list.OrderByDescending(c => c.PrdName);
+                    break;
+                case 2:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.PrdLvlName) : list.OrderByDescending(c => c.PrdLvlName);
+                    break;
+
+                case 3:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.PrdCode) : list.OrderByDescending(c => c.PrdCode);
+                    break;
+
+                case 4:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.TaxName) : list.OrderByDescending(c => c.TaxName);
+                    break;
+
+                case 5:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.PrdStatus) : list.OrderByDescending(c => c.PrdStatus);
+                    break;
+
+
+                default:
+                    {
+                        string OrderingFunction(ProductDto.ProductDto e) => sortColumnIndex == 0 ? e.PrdName : "";
+                        IOrderedEnumerable<ProductDto.ProductDto> rr = null;
+                        rr = sortDirection == "asc" ? list.AsEnumerable().OrderBy((Func<ProductDto.ProductDto, string>)OrderingFunction) : list.AsEnumerable().OrderByDescending((Func<ProductDto.ProductDto, string>)OrderingFunction);
+
+                        list = rr.AsQueryable();
+                        break;
+                    }
+            }
+
+            IQueryable<ProductDto.ProductDto> displayResult;
+            if (param.IDisplayLength != 0)
+                displayResult = list.Skip(param.iDisplayStart)
+                .Take(param.IDisplayLength);
+            else displayResult = list;
+            var totalRecords = list.Count();
+
+            var result1 = (new
+            {
+                param.SEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = displayResult
+            });
+            return new JsonResult(result1, new JsonSerializerOptions { PropertyNamingPolicy = null });
+
+        }
+
 
         public List<ProductPropertiesDto> GetProductProperty(Guid id)
         {
@@ -212,7 +326,15 @@ namespace Application.Product
                     x.PrdIranCode,
                     x.PrdBarcode,
                     x.Weight,
-                    x.Volume
+                    x.Volume,
+                    x.Type,
+                    x.PrdHasTiming,
+                    x.PrdBaseTime,
+                    x.PrdBaseCost,
+                    x.PrdExtraTime,
+                    x.PrdExtraCost,
+                    x.PrdMinCharge
+
                 }).Select(x => new ProductDetails
                 {
                     PrdName = x.PrdName,
@@ -229,7 +351,15 @@ namespace Application.Product
                     Volume = x.Volume ?? "",
                     BarCode = x.PrdBarcode ?? "",
                     Unit1 = x.FkProductUnitNavigation.UomName ?? "",
-                    Unit2 = x.FkProductUnit2Navigation.UomName ?? ""
+                    Unit2 = x.FkProductUnit2Navigation.UomName ?? "",
+                    Type =x.Type,
+                    PrdHasTiming = x.PrdHasTiming,
+                    PrdBaseTime = x.PrdBaseTime,
+                    PrdBaseCost = x.PrdBaseCost,
+                    PrdExtraTime = x.PrdExtraTime,
+                    PrdExtraCost = x.PrdExtraCost,
+                    PrdMinCharge = x.PrdMinCharge
+
                 }).SingleOrDefault(x => x.PrdUid == id);
         }
 

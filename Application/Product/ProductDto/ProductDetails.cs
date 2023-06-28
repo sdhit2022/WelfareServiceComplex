@@ -17,6 +17,13 @@ public class ProductDetails
     public string Volume { get; set; }
     public string IranCode { get; set; }
     public string BarCode { get; set; }
+    public int? Type { get; set; }
+    public bool? PrdHasTiming { get; set; }
+    public short? PrdBaseTime { get; set; }
+    public decimal? PrdBaseCost { get; set; }
+    public short? PrdExtraTime { get; set; }
+    public decimal? PrdExtraCost { get; set; }
+    public decimal? PrdMinCharge { get; set; }
     public List<ProductPropertiesDto> Properties { get; set; }
     public List<ProductPicturesDto> Pictures { get; set; }
 }

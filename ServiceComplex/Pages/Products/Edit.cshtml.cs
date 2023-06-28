@@ -44,8 +44,9 @@ public class EditModel : PageModel
 
     public IActionResult OnPost(EditProduct command)
     {
-        var result = _product.UpdateProduct(command);
-        return new JsonResult(result);
+        _product.UpdateProduct(command);
+        //  return new JsonResult(result);
+        return Redirect("/Products/Index");
     }
 
     public IActionResult OnGetRemovePictures(Guid id)

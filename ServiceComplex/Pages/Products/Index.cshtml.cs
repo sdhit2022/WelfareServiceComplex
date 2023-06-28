@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Product;
 using Application.Product.ProductDto;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,12 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         Products = _productService.GetAll();
+    }
+
+    public IActionResult OnGetData(JqueryDatatableParam param)
+    {
+        var result = _productService.GetAllProduct(param);
+        return result;
     }
 
     public IActionResult OnGetDetails(Guid id)

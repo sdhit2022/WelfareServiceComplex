@@ -371,7 +371,7 @@ $("#first-form").on('click', function (env) {
 
 $("#final-submit").on('click', function (env) {
     env.preventDefault();
-
+    debugger
     var form = $("#createForm");
     form.validate();
     if (form.valid() === false) {

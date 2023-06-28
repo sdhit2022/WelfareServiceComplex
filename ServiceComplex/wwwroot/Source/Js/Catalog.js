@@ -18,7 +18,6 @@ var table = $('#zero-config').DataTable({
 
 
 
-
 function addModal() {
     $("#add-category").modal("show");
 }

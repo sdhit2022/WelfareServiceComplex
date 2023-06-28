@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Application.Common;
 using Application.Interfaces.Context;
 using Domain.ComplexModels;
@@ -17,9 +18,8 @@ public partial class ComplexContext : DbContext,IComplexContext
     {
         _httpContext = httpContext;
     }
-    public ComplexContext(DbContextOptions options) : base(options)
-    {
-    }
+
+
 
     public virtual DbSet<Account> Accounts { get; set; }
 
@@ -123,7 +123,7 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<InvoiceDetails2> InvoiceDetails2s { get; set; }
 
-    public virtual DbSet<Domain.ComplexModels.Job> Jobs { get; set; }
+    public virtual DbSet<Job> Jobs { get; set; }
 
     public virtual DbSet<Language> Languages { get; set; }
 
@@ -195,6 +195,8 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<SalonDetail> SalonDetails { get; set; }
 
+    public virtual DbSet<SalonProduct> SalonProducts { get; set; }
+
     public virtual DbSet<SelectDeliverer> SelectDeliverers { get; set; }
 
     public virtual DbSet<SerialDetail> SerialDetails { get; set; }
@@ -242,8 +244,8 @@ public partial class ComplexContext : DbContext,IComplexContext
     public virtual DbSet<WarehouseRecieptDetail> WarehouseRecieptDetails { get; set; }
 
     public virtual DbSet<WorkStation> WorkStations { get; set; }
+    public DbSet<WorkYear> WorkYears { get; set; }
 
-    public virtual DbSet<WorkYear> WorkYears { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -4242,8 +4244,7 @@ public partial class ComplexContext : DbContext,IComplexContext
 
             entity.ToTable("Salon");
 
-            entity.Property(e => e.SlnId)
-                .HasColumnName("SLN_ID");
+            entity.Property(e => e.SlnId).HasColumnName("SLN_ID");
             entity.Property(e => e.FrWarHosUid).HasColumnName("FR_WAR_HOS_UID");
             entity.Property(e => e.SlnName)
                 .HasMaxLength(150)
@@ -4274,6 +4275,29 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasForeignKey(d => d.SdFrSalon)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SalonDetail_Salon");
+        });
+
+        modelBuilder.Entity<SalonProduct>(entity =>
+        {
+            entity.HasKey(e => e.SpId).HasName("PK_SalonProduct_1");
+
+            entity.ToTable("SalonProduct");
+
+            entity.Property(e => e.SpId)
+                .ValueGeneratedNever()
+                .HasColumnName("SP_ID");
+            entity.Property(e => e.SpFrProduct).HasColumnName("SP_FR_PRODUCT");
+            entity.Property(e => e.SpFrSalon).HasColumnName("SP_FR_SALON");
+
+            entity.HasOne(d => d.SpFrProductNavigation).WithMany(p => p.SalonProducts)
+                .HasForeignKey(d => d.SpFrProduct)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SalonProduct_Product");
+
+            entity.HasOne(d => d.SpFrSalonNavigation).WithMany(p => p.SalonProducts)
+                .HasForeignKey(d => d.SpFrSalon)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SalonProduct_Salon");
         });
 
         modelBuilder.Entity<SelectDeliverer>(entity =>
@@ -5351,7 +5375,6 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnName("WRK_STT_SERIAL_PORT_IRAN_KISH");
             entity.Property(e => e.WrkSttStatus).HasColumnName("WRK_STT_STATUS");
         });
-
         modelBuilder.Entity<WorkYear>(entity =>
         {
             entity.HasKey(e => e.WyId);
