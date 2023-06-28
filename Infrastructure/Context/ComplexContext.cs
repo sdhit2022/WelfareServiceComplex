@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using Application.Common;
+using Domain.ComplexModels;
 using Application.Interfaces.Context;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Http;
@@ -247,6 +248,9 @@ public partial class ComplexContext : DbContext,IComplexContext
     public DbSet<WorkYear> WorkYears { get; set; }
 
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=192.168.20.87\\saleinstore;User Id=salein;Password=dbkitsalein1394;Initial Catalog=876812d7-85ec-4706-9eef-fe26f206e794;Integrated Security=false;Multiple Active Result Sets=True;Encrypt=False;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

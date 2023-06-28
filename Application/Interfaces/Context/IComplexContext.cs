@@ -232,7 +232,7 @@ public interface IComplexContext
     public DbSet<WorkStation> WorkStations { get; set; }
     public DbSet<WorkYear> WorkYears { get; set; }
 
-
+    public DbSet<WorkYear> WorkYears { get; set; }
     int SaveChanges(bool acceptAllChangesOnSuccess);
     int SaveChanges();
 }
