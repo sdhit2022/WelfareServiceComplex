@@ -173,7 +173,7 @@
                                 <label >نام سالن:</label>
                                 <input  name="SlnName" type="text" class="form-control basic border-none">
                             </div>
-                            <div class="form-row">
+                            <div class="form-group col-md-4">
                                 <label >نوع:</label>
                                 <select  name="SlnType" class="form-control" required>
                                     <option value="0" default="" selected="">انتخاب کنید</option>
@@ -190,25 +190,25 @@
                                     <option value="11">کلینیک</option>
                                     <option value="12">سایر</option>
                                 </select>
-
                             </div>
+                        </div>
+                            
+                        <div class="form-row">
                             <div class="col-md-6 mb-5">
-                                <label >انبار:</label>
-                                <select  name="FrWarHosUid" class="form-control" required>
-                                    <option value="0" default="" selected="">انتخاب کنید</option>
-                                @for(int i=0;i<Model.WareHouses.Count;i++)
-                                {
-                                        <option value="@Model.WareHouses[i].WarHosUid">@Model.WareHouses[i].WarHosName</option>
-                                }
-                                </select>
 
+                                <label >انبار:</label>
+                                <select name="FrWarHosUid" asp-Items="@(new SelectList(Model.WareHouses, "Value", "Text"))" class=" form-control" required>
+                                    <option default="" selected="">انتخاب کنید</option>
+                                
+                               
+                                </select>
+                                
 
                                 @*<label for="SlnName">انبار:</label>
                                 <input id="FrWarHosUid" name="FrWarHosUid" type="text" class="form-control basic border-none">*@
                             </div>
                             
-
-                        </div>
+                            </div>
 
 
                     </div>
@@ -237,7 +237,7 @@
                     </svg>
                 </button>
             </div>
-            <form method="post" class="needs-validation" asp-page="/BaseData/Salon" asp-page-handler="Edit" name="submitForm" id="EditForm">
+            <form method="post" class="needs-validation"  asp-page="/BaseData/Salon" asp-page-handler="Edit" name="submitForm" id="EditForm">
                 <div class="modal-body">
 
                     <div class="widget-content">
@@ -246,7 +246,7 @@
                                 <label for="SlnName">نام سالن:</label>
                                 <input id="SlnName" name="SlnName" type="text" class="form-control basic border-none" >
                             </div>
-                        <div class="form-row">
+                            <div class="form-group col-md-4">
                             <label for="SlnName">نوع:</label>
                                 <select id="SlnType" name="SlnType" class="form-control" required>
                                     <option  value="0" default="" selected="">انتخاب کنید</option>
@@ -265,15 +265,18 @@
                                 </select>
 
                             </div>
+                            </div>
+                        <div class="form-row">
+
                             <div class="col-md-6 mb-5">
+
                                 <label>انبار:</label>
-                                <select name="FrWarHosUid" id="FrWarHosUid" class="form-control" required>
-                                    <option value="0" default="" selected="">انتخاب کنید</option>
-                                    @for(int i = 0; i < Model.WareHouses.Count; i++)
-                                    {
-                                        <option value="@Model.WareHouses[i].WarHosUid">@Model.WareHouses[i].WarHosName</option>
-                                    }
+                                <select id="FrWarHosUid" name="FrWarHosUid" asp-Items="@(new SelectList(Model.WareHouses, "Value", "Text"))" class="form-control" required>
+                                    <option default="" selected="">انتخاب کنید</option>
+
+
                                 </select>
+
 
 
                             </div>
@@ -359,6 +362,7 @@
                     $("#SlnName").val( salon.SlnName);
                     $("#SlnType").val(salon.SlnType);
                     //if (salon.FrWarHosUid !=null){
+                    debugger
                     $("#FrWarHosUid").val(salon.FrWarHosUid);
                     //}
                     $("#SlnId").val(salon.SlnId);                

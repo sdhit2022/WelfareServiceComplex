@@ -5,12 +5,18 @@ using AutoMapper;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Identity.Client;
+using Application.Common;
+using Microsoft.EntityFrameworkCore;
+using static Application.Product.Category.ProductCategory;
 
 namespace Application.BaseInfo
 {
     public interface IWarehouseService
     {
         List<WareHouse> GetAll();
+        List<SelectListOption> GetSelectListItems();
     }
 
 
@@ -34,6 +40,19 @@ namespace Application.BaseInfo
         public List<WareHouse> GetAll()
         {
             return _complexContext.WareHouses.ToList();
+        }
+
+        public List<SelectListOption> GetSelectListItems()
+        {
+            return _complexContext.WareHouses.Select(x => new { x.WarHosUid, x.WarHosName })
+           .Select(x => new SelectListOption
+           {
+               Text = x.WarHosName,
+               Value = x.WarHosUid
+           }).ToList();
+
+
+           
         }
     }
 }

@@ -1,7 +1,9 @@
 using Application.BaseInfo;
+using Application.Common;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace ServiceComplex.Pages.BaseData
@@ -11,7 +13,8 @@ namespace ServiceComplex.Pages.BaseData
         private readonly ISalonService _salonService;
         private readonly IWarehouseService _warehouseService;
         public List<Salon> Salons;
-        public List<WareHouse> WareHouses;
+        public List<SelectListOption> WareHouses;
+        
 
         public SalonModel(ISalonService salonService, IWarehouseService warehouseService)
         {
@@ -22,8 +25,9 @@ namespace ServiceComplex.Pages.BaseData
         public void OnGet()
         {
             Salons=_salonService.GetAll();
-            WareHouses=_warehouseService.GetAll();
-
+          //  WareHouses=_warehouseService.GetAll();
+            WareHouses = _warehouseService.GetSelectListItems();
+           
         }
 
 
@@ -34,6 +38,7 @@ namespace ServiceComplex.Pages.BaseData
 
         public IActionResult OnPostCreate( string SlnName, short SlnType, Guid FrWarHosUid) {
             Salon salon;
+
             if (FrWarHosUid == Guid.Empty)
             {
                 salon = new Salon
@@ -61,7 +66,7 @@ namespace ServiceComplex.Pages.BaseData
             Salon salon = _salonService.GetSalon(SLN_ID);
             return new JsonResult(JsonConvert.SerializeObject(salon));
         }
-        public IActionResult OnPostEdit(long SlnId, string SlnName, short SlnType, Guid FrWarHosUid,Guid WarHosUid) 
+        public IActionResult OnPostEdit(long SlnId, string SlnName, short SlnType, Guid FrWarHosUid) 
         {
             Salon salon;
             if (FrWarHosUid == Guid.Empty)
@@ -80,7 +85,7 @@ namespace ServiceComplex.Pages.BaseData
                     SlnName = SlnName,
                     SlnType = SlnType,
 
-                    FrWarHosUid = FrWarHosUid,
+                    FrWarHosUid = FrWarHosUid
                 };
             }
             _salonService.UpdateSalon(salon);
