@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Application.Common;
+using Domain.ComplexModels;
 
 namespace Application.BaseInfo
 {
@@ -15,6 +16,7 @@ namespace Application.BaseInfo
     {
         List<Domain.ComplexModels.Salon> GetAll();
         Domain.ComplexModels.Salon GetSalon(long id);
+        bool GetSalonByName(string name);
         bool UpdateSalon(Domain.ComplexModels.Salon salon);
         void saveChanges();
         bool InsertSalon(Domain.ComplexModels.Salon salon);
@@ -49,6 +51,13 @@ namespace Application.BaseInfo
         public Domain.ComplexModels.Salon GetSalon(long id)
         {
             return _complexContext.Salons.Find(id);
+        }
+
+        public bool GetSalonByName(string name)
+        {
+            var result= _complexContext.Salons.Any(u => u.SlnName == name);
+            return result;
+            
         }
 
         public bool InsertSalon(Domain.ComplexModels.Salon salon)

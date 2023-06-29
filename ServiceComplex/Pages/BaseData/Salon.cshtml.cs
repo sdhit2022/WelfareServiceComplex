@@ -38,7 +38,7 @@ namespace ServiceComplex.Pages.BaseData
 
         public IActionResult OnPostCreate( string SlnName, short SlnType, Guid FrWarHosUid) {
             Salon salon;
-
+          
             if (FrWarHosUid == Guid.Empty)
             {
                 salon = new Salon
@@ -96,6 +96,11 @@ namespace ServiceComplex.Pages.BaseData
         public IActionResult OnGetRemove(long id)
         {
             return new JsonResult(_salonService.RemoveSalon(id));
+        }
+
+        public IActionResult OnGetCheckName(string name)
+        {
+            return new JsonResult(_salonService.GetSalonByName(name));
         }
     }
 }
