@@ -22,10 +22,7 @@
                 <h3>سالن ها</h3>
             </div>
         </div>
-     @*   @if (ViewData["ErrorMessage"] != null && ViewData["Create"]!=null && ViewData["Type"]==1)
-        {
-            <span class="alert alert-danger text-center">سالن با این نام قبلا ایجاد شده است،لطفا مجددا تلاش کنید</span>
-        }*@
+
         <div class="row layout-top-spacing" id="cancel-row">
 
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -159,7 +156,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" > ایجاد سالن جدید : </h5>
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ایجاد سالن جدید : </h5>
+                    <div id="CreateError" style="display:none">
+                        <span id="error" class="alert alert-danger text-center">نام سالن تکراری است</span>
+                    </div>
+                </div>
+               
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -167,9 +170,7 @@
                     </svg>
                 </button>
             </div>
-            <div id="CreateError" style="display:none">
-                <span id="error" class="alert alert-danger text-center">نام سالن تکراری است</span>
-            </div>
+          
             <form method="post" class="needs-validation" asp-page="/BaseData/Salon" asp-page-handler="Create" name="submitForm" id="CreateForm">
                 <div class="modal-body">
 
@@ -177,11 +178,11 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-5">
                                 <label >نام سالن:</label>
-                                <input id="SlnName" name="SlnName" type="text" class="form-control basic border-none">
+                                <input id="SlnName_create" name="SlnName" type="text" class="form-control basic border-none">
                             </div>
                             <div class="form-group col-md-4">
                                 <label >نوع:</label>
-                                <select id="SlnType" name="SlnType" class="form-control" required>
+                                <select id="SlnType_create" name="SlnType" class="form-control" required>
                                     <option value="0" default="" selected="">انتخاب کنید</option>
                                     <option value="1">تالار</option>
                                     <option value="2">ورزشی</option>
@@ -192,8 +193,8 @@
                                     <option value="7">مهمانسرا</option>
                                     <option value="8">بوفه</option>
                                     <option value="9">کافیشاپ</option>
-                                    <option value="10">پارکینگ</option>
-                                    <option value="11">کلینیک</option>
+                                    <option value="10">کلینیک</option>
+                                    <option value="11">پارکینگ</option>
                                     <option value="12">سایر</option>
                                 </select>
                             </div>
@@ -203,15 +204,14 @@
                             <div class="col-md-6 mb-5">
 
                                 <label >انبار:</label>
-                                <select id="FrWarHosUid" name="FrWarHosUid" asp-Items="@(new SelectList(Model.WareHouses, "Value", "Text"))" class=" form-control" required>
+                                <select id="FrWarHosUid_create" name="FrWarHosUid" asp-Items="@(new SelectList(Model.WareHouses, "Value", "Text"))" class=" form-control" required>
                                     <option default="" selected="">انتخاب کنید</option>
                                 
                                
                                 </select>
                                 
 
-                                @*<label for="SlnName">انبار:</label>
-                                <input id="FrWarHosUid" name="FrWarHosUid" type="text" class="form-control basic border-none">*@
+                              
                             </div>
                             
                             </div>
@@ -235,7 +235,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" > ویرایش : </h5>
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ویرایش : </h5>
+                    <div id="EditError" style="display:none">
+                        <span id="editError" class="alert alert-danger text-center">نام سالن تکراری است</span>
+                    </div>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -243,9 +248,7 @@
                     </svg>
                 </button>
             </div>
-            <div id="EditError" style="display:none">
-                <span id="error" class="alert alert-danger text-center">نام سالن تکراری است</span>
-            </div>
+           
             <form method="post" class="needs-validation"  asp-page="/BaseData/Salon" asp-page-handler="Edit" name="submitForm" id="EditForm">
                 <div class="modal-body">
 
@@ -268,8 +271,8 @@
                                     <option  value="7">مهمانسرا</option>
                                     <option  value="8">بوفه</option>
                                     <option  value="9">کافیشاپ</option>
-                                    <option  value="10">پارکینگ</option>
-                                    <option  value="11">کلینیک</option>
+                                    <option value="10">کلینیک</option>
+                                    <option value="11">پارکینگ</option>
                                     <option  value="12">سایر</option>
                                 </select>
 
@@ -301,7 +304,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button onclick="saveEdit()" class="btn" data-dismiss="modal">ذخیره تغییرات</button>  
+                    <button type="button" onclick="saveEdit()" class="btn" >ذخیره تغییرات</button>  
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -385,53 +388,75 @@
         var editError = document.querySelector("#EditError");
         var createError = document.querySelector("#CreateError");
         var error = document.querySelector("#error");
+        var edit_error = document.querySelector("#editError");
         function saveEdit()
         {
+            var checkexist = true;
+            debugger
             $.ajax({
                 type: "get",
-                url: "?handler=CheckName&name=" + $("#SlnName").val(),
+                url: "?handler=CheckSalonNameExists",
+                data: { name: $("#SlnName").val(), id: $("#SlnId").val() },
                 success: function (result) {
                     debugger
                     if (result == true) {
-                        createError.style.display = "block";
-                        return
+                        edit_error.innerHTML = "نام سالن تکراری است";
+                        editError.style.display = "block";
+                        checkexist=false;
                     }
-                    else {
-                        createError.style.display = "none";
-                        if ($("#SlnType").val() == "0") {
-                            error.innerHTML = "نوع سالن را نتخاب کنید";
-                            createError.style.display = "block";
-                            return
-                        }
-                        else
-                            document.getElementById("EditForm").submit();
+                    if ($("#SlnName").val() == "" || $("#SlnName").val() == null) {
+                        edit_error.innerHTML = "نام سالن را وارد کنید";
+                        editError.style.display = "block";
+                        checkexist = false;
+                    }
+                    //editError.style.display = "none";
+                    if ($("#SlnType").val() == "0") {
+                        edit_error.innerHTML = "نوع سالن را نتخاب کنید";
+                        editError.style.display = "block";
+                        checkexist = false;
+                    }
+                    if (checkexist) {
+                        debugger
+                        editError.style.display = "none";
+                        document.getElementById("EditForm").submit();
+                        $("#editSalon").modal('toggle');
                     }
                 }
-            })
+            });
         } 
         function saveCreate()
         {
             $.ajax({
                 type:"get",
-                url: "?handler=CheckName&name=" + $("#SlnName").val(), 
-                 success: function (result) {
+                url: "?handler=CheckName&name=" + $("#SlnName_create").val(),
+                success: function (result) {
                      debugger
                      if(result==true){
                          createError.style.display = "block";
+                        error.innerHTML = "نام سالن تکراری است";
                          return
                      }
                      else{
+                        if ($("#SlnName_create").val() == "" || $("#SlnName_create").val()==null){
+                            createError.style.display = "block";
+                            error.innerHTML = "نام سالن را وارد کنید";
+                            return
+                        }
                         createError.style.display = "none";
-                        if ($("#SlnType").val() == "0") {
+                        if ($("#SlnType_create").val() == "0") {
                             error.innerHTML = "نوع سالن را نتخاب کنید";
                             createError.style.display = "block";
                             return
                         }
-                        else
+                        else{
+                            createError.style.display = "none";
                             document.getElementById("CreateForm").submit();
+                            $("#createSalon").modal('toggle');
+
+                        }
                      }
                  }
-            })
+            });
                 
         }
 

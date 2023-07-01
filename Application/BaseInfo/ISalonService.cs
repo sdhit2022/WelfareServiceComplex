@@ -17,6 +17,7 @@ namespace Application.BaseInfo
         List<Domain.ComplexModels.Salon> GetAll();
         Domain.ComplexModels.Salon GetSalon(long id);
         bool GetSalonByName(string name);
+        bool CheckSalonNameExists(string name,long id);
         bool UpdateSalon(Domain.ComplexModels.Salon salon);
         void saveChanges();
         bool InsertSalon(Domain.ComplexModels.Salon salon);
@@ -41,6 +42,12 @@ namespace Application.BaseInfo
             _logger = logger;
             _mapper = mapper;
             _complexContext = complexContext;
+        }
+
+        public bool CheckSalonNameExists(string name, long id)
+        {
+            var result = _complexContext.Salons.Any(u => u.SlnName == name && u.SlnId!=id);
+            return result;
         }
 
         public List<Domain.ComplexModels.Salon> GetAll()

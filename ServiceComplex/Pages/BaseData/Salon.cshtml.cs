@@ -101,6 +101,10 @@ namespace ServiceComplex.Pages.BaseData
         public IActionResult OnGetCheckName(string name)
         {
             return new JsonResult(_salonService.GetSalonByName(name));
+        } 
+        public IActionResult OnGetCheckSalonNameExists(string name,long id)
+        {
+            return new JsonResult(_salonService.CheckSalonNameExists(name,id));
         }
     }
 }
