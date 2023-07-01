@@ -42,9 +42,13 @@ public class EditModel : PageModel
         return Page();
     }
 
-    [ValidateAntiForgeryToken]
     public IActionResult OnPost(EditProduct command)
     {
+        if (!ModelState.IsValid)
+        {
+            ViewData["ErrorMessage"] = true;
+            return Page();
+        }
         var result= _product.UpdateProduct(command);
         return new JsonResult(result);
         //return Redirect("/Products/Index");

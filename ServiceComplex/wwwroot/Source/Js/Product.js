@@ -134,13 +134,73 @@ $("#imgCourseUp").change(function () {
 
 var submitForm1 = false;
 var submitForm2 = false;
-var submitForm3 = false;
 
+$("#first-form-edit").on('click', function (env) {
+    env.preventDefault();
+
+    debugger
+    var form = $("#ProductForm-edit");
+    form.validate();
+    if (form.valid() === false) {
+
+        notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
+        return false;
+    }
+    
+    if (divunit.style.display == "block" && $('#ProductUnit-edit').val() =="") {
+        notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
+        return false;
+    }
+    var vali = form.validate();
+
+    if (!vali.valid()) {
+        notify("top center", "فرم را به درستی پر کنید", "error");
+        return false;
+    }
+    if (format == false) {
+        notify("top center", "فرمت عکس صحیح نیست", "error");
+        format = true;
+        return false;
+    }
+
+
+    if ($("#productUnit-edit").prop('checked') == true) {
+
+        var unit2 = $("#FkProductUnit2-edit").val();
+        var Coefficient = $("#PrdCoefficient-edit").val();
+        var bigger = $("input[name='inlineRadioOptions-edit']").val();
+
+        $("#Command_FkProductUnit2").val(unit2);
+        $("#Command_PrdCoefficient").val(Coefficient);
+        $("#Command_PrdIsUnit1Bigger").val(bigger);
+
+        if (unit2 === "" || Coefficient === "") {
+            notify("top center", "واحد شمارش 2 و ضریب آن را وارد کنید!", "error")
+            return false;
+        }
+    };
+    debugger
+    notify("top center", "فرم تایید شد", "success");
+    //$("#justify-profile-tab").removeClass("disabled");
+    document.getElementById("justify-profile-tab").classList.remove("disabled");
+
+    //document.getElementById("justify-home-tab").style.display = "none";
+    //document.getElementById("justify-profile-tab").style.display = "block";
+
+    //document.getElementById("justify-home-tab").classList.remove("active");
+    //document.getElementById("justify-profile-tab").classList.add("active");
+
+
+
+   
+    submitForm1 = true;
+
+});
 $("#first-form").on('click', function (env) {
     env.preventDefault();
 
-    
-    var form = $("#createForm");
+    debugger
+    var form = $("#ProductForm");
     form.validate();
     if (form.valid() === false) {
 
@@ -180,6 +240,7 @@ $("#first-form").on('click', function (env) {
             return false;
         }
     };
+    debugger
     notify("top center", "فرم تایید شد", "success");
     //$("#justify-profile-tab").removeClass("disabled");
     document.getElementById("justify-profile-tab").classList.remove("disabled");
@@ -199,10 +260,11 @@ $("#first-form").on('click', function (env) {
 
 
 
+
 $("#final-submit").on('click', function (env) {
     env.preventDefault();
-    
-    var form = $("#createForm");
+    debugger
+    var form = $("#ProductForm");
     form.validate();
     if (form.valid() === false) {
 
@@ -210,7 +272,7 @@ $("#final-submit").on('click', function (env) {
         return false;
     }
     
-    if (times.style.display = "block" && hastiming ==true) {
+    if (times.style.display == "block" && $("#hasTiming").val() =="true") {
         if ($('#PrdBaseTime').val() == "" || $('#PrdBaseCost').val() == "" || $('#PrdExtraTime').val() == "" ||
             $('#PrdExtraCost').val() == "" || $('#PrdMinTime').val() == "" || $('#PrdMaxTime').val() == "" ||
             $('#PrdMinCharge').val() == "") {
@@ -230,7 +292,7 @@ $("#final-submit").on('click', function (env) {
         notify("top center", "فرم را به درستی پر کنید", "error");
         return false;
     }
-
+    debugger
     notify("top center", "فرم تایید شد", "success");
     $("#justify-contact-tab").removeClass("disabled");
     $("#justify-pictures-tab").removeClass("disabled");
@@ -241,7 +303,7 @@ $("#final-submit").on('click', function (env) {
 
     $.ajax({
         url: '',
-        data: new FormData(document.forms.createForm),
+        data: new FormData(document.forms.ProductForm),
         contentType: false,
         processData: false,
         type: 'POST',
@@ -263,12 +325,10 @@ $("#final-submit").on('click', function (env) {
 
     });
 });
-
-$("#final-submit_edit").on('click', function (env) {
-    
+$("#final-submit-edit").on('click', function (env) {
     env.preventDefault();
-    
-    var form = $("#Edit");
+    debugger
+    var form = $("#ProductForm-edit");
     form.validate();
     if (form.valid() === false) {
 
@@ -276,15 +336,15 @@ $("#final-submit_edit").on('click', function (env) {
         return false;
     }
     
-    if (times.style.display = "block" && hastiming == true) {
-        if ($('#PrdBaseTime').val() == "" || $('#PrdBaseCost').val() == "" || $('#PrdExtraTime').val() == "" ||
-            $('#PrdExtraCost').val() == "" || $('#PrdMinTime').val() == "" || $('#PrdMaxTime').val() == "" ||
-            $('#PrdMinCharge').val() == "") {
+    if (times.style.display == "block" && $("#hasTiming-edit").val() =="true") {
+        if ($('#PrdBaseTime-edit').val() == "" || $('#PrdBaseCost-edit').val() == "" || $('#PrdExtraTime-edit').val() == "" ||
+            $('#PrdExtraCost-edit').val() == "" || $('#PrdMinTime-edit').val() == "" || $('#PrdMaxTime-edit').val() == "" ||
+            $('#PrdMinCharge-edit').val() == "") {
             notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
             return false;
         }
     } else {
-        if ($('#PrdPricePerUnit1').val() == "") {
+        if ($('#PrdPricePerUnit1-edit').val() == "") {
             notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
             return false;
         }
@@ -296,15 +356,18 @@ $("#final-submit_edit").on('click', function (env) {
         notify("top center", "فرم را به درستی پر کنید", "error");
         return false;
     }
-
+    debugger
     notify("top center", "فرم تایید شد", "success");
+    $("#justify-contact-tab").removeClass("disabled");
+    $("#justify-pictures-tab").removeClass("disabled");
+
     submitForm2 = true;
 
-
+ 
 
     $.ajax({
         url: '',
-        data: new FormData(document.forms.Edit),
+        data: new FormData(document.forms.ProductForm-edit),
         contentType: false,
         processData: false,
         type: 'POST',
@@ -326,6 +389,7 @@ $("#final-submit_edit").on('click', function (env) {
 
     });
 });
+
 
 var div = document.querySelector("#isService");
 var divunit2 = document.querySelector("#prdUnit2");
