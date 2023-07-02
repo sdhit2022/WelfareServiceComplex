@@ -107,6 +107,7 @@
                                 <label >عنوان شیفت:</label>
                                 <input name="ShfName" type="text" class="form-control basic border-none">
                             </div>
+                        </div>
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>زمان شروع:</label>
@@ -125,15 +126,15 @@
                                     <input name="ShfTelorance" type="number" class="form-control basic border-none">
                                 </div>
                             </div>
+                    </div>
                            
                             
 
-                        </div>
+                 
 
-
-                    </div>
 
                 </div>
+
                 <div class="modal-footer">
                     <input type="submit" class="btn" data-dismiss="modal" onclick="saveNew()"  value="ذخیره " />
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
@@ -166,6 +167,7 @@
                                 <label>عنوان شیفت:</label>
                                 <input id="ShfName" name="ShfName" type="text" class="form-control basic border-none">
                             </div>
+                        </div>
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>زمان شروع:</label>
@@ -192,12 +194,11 @@
 
 
 
-                        </div>
+                     </div>
 
-
-                    </div>
 
                 </div>
+
                 <div class="modal-footer">
                     <button onclick="saveEdit()" class="btn" data-dismiss="modal">ذخیره تغییرات</button>  
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
@@ -211,10 +212,13 @@
 
 
 
+
 @section Scripts
 {
-    <script>
 
+
+    <script>
+      
         function Create(){
             $("#createShift").modal('show');
         }
@@ -287,7 +291,7 @@
             $("#createSalon").modal('hide');
 
         });
-        
+      
     </script>
 }
 
