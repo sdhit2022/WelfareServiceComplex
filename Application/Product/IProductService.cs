@@ -30,11 +30,11 @@ namespace Application.Product
         /// <returns></returns>
         List<ProductPropertiesDto> GetProductProperty(Guid id);
 
-        EditProduct GetDetailsForEdit(Guid id);
+        CreateProduct GetDetailsForEdit(Guid id);
         List<ProductPicturesDto> GetProductPictures(Guid productId);
 
         ResultDto Remove(Guid id);
-        ResultDto UpdateProduct(EditProduct command);
+        ResultDto UpdateProduct(CreateProduct command);
     }
 
     public class ProductService : IProductService
@@ -253,54 +253,55 @@ namespace Application.Product
             return result;
         }
 
-        public EditProduct GetDetailsForEdit(Guid id)
+        public CreateProduct GetDetailsForEdit(Guid id)
         {
             var product = _complexContext.Products.Include(x => x.PrdLvlUid3Navigation).Include(x => x.ProductPictures)
                 .Include(x => x.ProductProperties).ThenInclude(x => x.Property).SingleOrDefault(x => x.PrdUid == id);
-            var map = _mapper.Map<EditProduct>(product);
+            var map = _mapper.Map<CreateProduct>(product);
             map.Image = Convert.FromBase64String(map.PrdImage);
-            var getProperty =
-                _contextAccessor.HttpContext.Session.GetJson<List<PropertySelectOptionDto>>("edit-Property");
-            var getPictures = _contextAccessor.HttpContext.Session.GetJson<List<ProductPicturesDto>>("edit-picture");
-            if (getProperty != null && getPictures != null)
-            {
-                map.ProductPictures = getPictures;
-                map.ProductProperty = getProperty;
-                return map;
-            }
+            
+            //var getProperty =
+            //    _contextAccessor.HttpContext.Session.GetJson<List<PropertySelectOptionDto>>("edit-Property");
+            //var getPictures = _contextAccessor.HttpContext.Session.GetJson<List<ProductPicturesDto>>("edit-picture");
+            //if (getProperty != null && getPictures != null)
+            //{
+            //    map.ProductPictures = getPictures;
+            //    map.ProductProperty = getProperty;
+            //    return map;
+            //}
 
-            map.ProductProperty = map.ProductProperties.Select(x => new PropertySelectOptionDto
-            {
-                Id = x.Id,
-                Name = x.Property.Name,
-                PropertyId = x.PropertyId,
-                Value = x.Value
-            }).ToList();
+            //map.ProductProperty = map.ProductProperties.Select(x => new PropertySelectOptionDto
+            //{
+            //    Id = x.Id,
+            //    Name = x.Property.Name,
+            //    PropertyId = x.PropertyId,
+            //    Value = x.Value
+            //}).ToList();
 
-            _contextAccessor.HttpContext.Session.Remove("edit-Property");
-            _contextAccessor.HttpContext.Session.Remove("edit-picture");
-            getProperty = new List<PropertySelectOptionDto>();
-            getPictures = new List<ProductPicturesDto>();
-            foreach (var property in map.ProductProperty)
-            {
-                getProperty.Add(new PropertySelectOptionDto
-                {
-                    PropertyId = property.PropertyId,
-                    Name = property.Name,
-                    Id = property.Id,
-                    Value = property.Value
-                });
-                _contextAccessor.HttpContext.Session.SetJson("edit-Property", getProperty);
-            }
+            //_contextAccessor.HttpContext.Session.Remove("edit-Property");
+            //_contextAccessor.HttpContext.Session.Remove("edit-picture");
+            //getProperty = new List<PropertySelectOptionDto>();
+            //getPictures = new List<ProductPicturesDto>();
+            //foreach (var property in map.ProductProperty)
+            //{
+            //    getProperty.Add(new PropertySelectOptionDto
+            //    {
+            //        PropertyId = property.PropertyId,
+            //        Name = property.Name,
+            //        Id = property.Id,
+            //        Value = property.Value
+            //    });
+            //    _contextAccessor.HttpContext.Session.SetJson("edit-Property", getProperty);
+            //}
 
-            foreach (var picture in map.ProductPictures)
-                getPictures.Add(new ProductPicturesDto
-                {
-                    ImageBase64 = Convert.FromBase64String(picture.Image),
-                    Id = picture.Id
-                });
+            //foreach (var picture in map.ProductPictures)
+            //    getPictures.Add(new ProductPicturesDto
+            //    {
+            //        ImageBase64 = Convert.FromBase64String(picture.Image),
+            //        Id = picture.Id
+            //    });
 
-            _contextAccessor.HttpContext.Session.SetJson("edit-picture", getPictures);
+            //_contextAccessor.HttpContext.Session.SetJson("edit-picture", getPictures);
 
             return map;
         }
@@ -441,7 +442,7 @@ namespace Application.Product
         }
 
 
-        public ResultDto UpdateProduct(EditProduct command)
+        public ResultDto UpdateProduct(CreateProduct command)
         {
             var result = new ResultDto();
 
@@ -478,7 +479,7 @@ namespace Application.Product
                 _complexContext.SaveChanges();
 
                 //UpdatePictures(product.PrdUid, command.Files);
-                UpdateProperties(product.PrdUid);
+               // UpdateProperties(product.PrdUid);
                 transaction.Commit();
                 return result.Succeeded();
             }
@@ -489,7 +490,6 @@ namespace Application.Product
                 throw new Exception($"حین ثبت سفارش خطای زیر رخ داده است {exception.Message}");
             }
         }
-
 
         private void UpdateProperties(Guid productId)
         {

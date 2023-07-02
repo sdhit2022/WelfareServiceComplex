@@ -139,7 +139,7 @@ $("#first-form-edit").on('click', function (env) {
     env.preventDefault();
 
     debugger
-    var form = $("#ProductForm-edit");
+    var form = $("#EditProduct");
     form.validate();
     if (form.valid() === false) {
 
@@ -292,6 +292,7 @@ $("#final-submit").on('click', function (env) {
         notify("top center", "فرم را به درستی پر کنید", "error");
         return false;
     }
+
     debugger
     notify("top center", "فرم تایید شد", "success");
     $("#justify-contact-tab").removeClass("disabled");
@@ -328,7 +329,7 @@ $("#final-submit").on('click', function (env) {
 $("#final-submit-edit").on('click', function (env) {
     env.preventDefault();
     debugger
-    var form = $("#ProductForm-edit");
+    var form = $("#EditProduct");
     form.validate();
     if (form.valid() === false) {
 
@@ -357,6 +358,12 @@ $("#final-submit-edit").on('click', function (env) {
         return false;
     }
     debugger
+    if ($("#productUnit-edit").is(":checked") == false) {
+        $('#Command_FkProductUnit2').val('');
+        $('#Command_PrdCoefficient').val('');
+        $('#Command_PrdIsUnit1Bigger').val('');
+    }
+    
     notify("top center", "فرم تایید شد", "success");
     $("#justify-contact-tab").removeClass("disabled");
     $("#justify-pictures-tab").removeClass("disabled");
@@ -367,7 +374,7 @@ $("#final-submit-edit").on('click', function (env) {
 
     $.ajax({
         url: '',
-        data: new FormData(document.forms.ProductForm-edit),
+        data: new FormData(document.forms.EditProduct),
         contentType: false,
         processData: false,
         type: 'POST',
@@ -425,6 +432,21 @@ var hastiming = false;
 $('#hasTiming').change(function () {
     
     if (isServiceValue == 2 && this.checked) {
+        prices.style.display = "none";
+        times.style.display = "block";
+        hastiming = true;
+
+    }
+    else {
+        prices.style.display = "block";
+        times.style.display = "none";
+        hastiming = false;
+
+    }
+});
+$('#productUnit-edit').change(function () {
+    
+    if (this.checked==false) {
         prices.style.display = "none";
         times.style.display = "block";
         hastiming = true;

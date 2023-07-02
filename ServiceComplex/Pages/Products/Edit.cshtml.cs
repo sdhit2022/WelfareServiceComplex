@@ -13,7 +13,7 @@ public class EditModel : PageModel
     private readonly IProductCategory _category;
     private readonly IProductService _product;
     public List<SelectOption> Category;
-    public EditProduct Command;
+    public CreateProduct Command;
     public List<ProductPicturesDto> ProductPictures;
     public List<PropertySelectOptionDto> Properties;
     public CreateProperty Property;
@@ -42,7 +42,7 @@ public class EditModel : PageModel
         return Page();
     }
 
-    public IActionResult OnPost(EditProduct command)
+    public IActionResult OnPost(CreateProduct command)
     {
         if (!ModelState.IsValid)
         {

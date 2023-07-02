@@ -1,4 +1,5 @@
 using Application.BaseInfo;
+using Application.Common;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,7 +45,15 @@ namespace ServiceComplex.Pages.Planing
         public IActionResult OnGetEdit(int id)
         {
             var shift = _shiftService.GetShift(id);
-            return new JsonResult(JsonConvert.SerializeObject(shift));
+            var timeShift = new ShiftWithTime()
+            {
+                ShfId = shift.ShfId,
+                ShfName = shift.ShfName,
+                ShfTelorance = shift.ShfTelorance,
+                ShfEndTime = @TimeSpan.FromMinutes(shift.ShfEndTime),
+                ShfStartTime = @TimeSpan.FromMinutes(shift.ShfStartTime)
+            };
+            return new JsonResult(JsonConvert.SerializeObject(timeShift));
         }
 
         public IActionResult OnPostEdit(TimeSpan ShfStartTime, TimeSpan ShfEndTime, int ShfTelorance, string ShfName,int ShfId)

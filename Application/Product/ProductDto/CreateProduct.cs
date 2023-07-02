@@ -54,7 +54,7 @@ namespace Application.Product.ProductDto
         public bool? PrdIsUnit1Bigger { get; set; }
         public int Type { get; set; }
 
-        public IFormFile Images { get; set; }
+        public IFormFile? Images { get; set; }
 
        /* [BindRequired]*/ public Guid? FkProductUnit { get; set; }
 

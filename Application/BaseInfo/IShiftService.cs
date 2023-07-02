@@ -95,6 +95,9 @@ namespace Application.BaseInfo
             if (oldshift != null)
             {
                 oldshift.ShfName = shift.ShfName;
+                oldshift.ShfTelorance= shift.ShfTelorance;
+                oldshift.ShfStartTime = shift.ShfStartTime;
+                oldshift.ShfEndTime = shift.ShfEndTime;
                 try
                 {
                     _complexContext.Shifts.Update(oldshift);

@@ -23,7 +23,7 @@
         <a class="nav-link active" id="justify-home-tab" data-toggle="tab" href="#justify-home" role="tab" aria-controls="justify-home" aria-selected="true">اطلاعات اصلی</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="justify-profile-tab" data-toggle="tab" href="#justify-profile" role="tab" aria-controls="justify-profile" aria-selected="false">سایر اطلاعات </a>
+        <a class="nav-link disabled" id="justify-profile-tab" data-toggle="tab" href="#justify-profile" role="tab" aria-controls="justify-profile" aria-selected="false">سایر اطلاعات </a>
     </li>
   @*  <li class="nav-item">
         <a class="nav-link" id="justify-contact-tab" data-toggle="tab" href="#justify-contact" role="tab" aria-controls="justify-contact" aria-selected="false">ویژگی ها </a>
@@ -33,7 +33,7 @@
         <a class="nav-link" id="justify-pictures-tab" data-toggle="tab" href="#justify-pictures" role="tab" aria-controls="justify-contact" aria-selected="false">عکس های محصول</a>
     </li>*@
 </ul>
-<form method="post"  enctype="multipart/form-data" class="needs-validation" id="ProductForm-edit" name="ProductForm-edit">
+<form method="post"  enctype="multipart/form-data" class="needs-validation" id="EditProduct" name="EditProduct">
 <div class="tab-content" id="justifyTabContent">
 <div class="tab-pane fade show active" id="justify-home" role="tabpanel" aria-labelledby="justify-home-tab">
     <div class="row layout-top-spacing" id="cancel-row">
@@ -48,48 +48,40 @@
                         <div class="form-row mb-8">
                             <div class="form-group col-md-4">
                                 <label >گروه <span class="error">*</span></label>
-                                <select asp-for="Command.PrdLvlUid3" id="group-edit" class="form-control" asp-Items="@(new SelectList(Model.Category, "PrdLvlUId", "PrdLvlName"))" disabled>
+                                <select asp-for="Command.PrdLvlUid3" id="group-edit" class="form-control" asp-Items="@(new SelectList(Model.Category, "PrdLvlUId", "PrdLvlName"))" >
                                     <option value="" selected>انتخاب کنید...</option>
                                 </select>
-@*                                <span asp-validation-for="Command.PrdLvlUid3" class="error"></span>
-*@
                             </div>
                             <div class="form-group col-md-4">
                                 <label> نام <span class="error">*</span></label>
                                 <input asp-for="Command.PrdName" type="text" class="form-control" id="" required="" placeholder="نام">
-@*                                <span asp-validation-for="Command.PrdName" class="error"></span>
-*@                            </div>
+                           </div>
                             <div class="form-group col-md-4">
                                 <label title="نمایش در فروشگاه، اپلیکشن موبایل و چاپ" for="">نام نمایشی کالا <span class="error">*</span></label>
                                 <input asp-for="Command.PrdNameInPrint" type="text" class="form-control" id="" placeholder="نام نمایشی">
-@*                                <span asp-validation-for="Command.PrdNameInPrint" class="error"></span>
-*@                            </div>
+                           </div>
 
                                 <div class="form-group col-md-4" hidden>
                                 <label title="نمایش در فروشگاه، اپلیکشن موبایل و چاپ" for="">نام نمایشی کالا <span class="error">*</span></label>
                                 <input asp-for="Command.PrdUid" type="text" class="form-control" id="" placeholder="نام نمایشی">
                               </div>
-                                                   
-
-                          
-                           
+                                                             
                         </div>
                         <div class="form-row mb-8">
                             <div class="form-group col-md-4">
                                 <label for="">ماهیت <span class="error">*</span></label>
-                                                            <select asp-for="Command.Type" onchange="CheckValue(this.value)" id="selectType-edit" class="form-control" required="" disabled>
+                                                            <select asp-for="Command.Type" onchange="CheckValue(this.value)" id="selectType-edit" class="form-control" required="" >
                                     <option selected value="">انتخاب کنید...</option>
                                     <option value="0">واقعی</option>
                                     <option value="2">خدماتی</option>
                                     <option value="3">مجازی</option>
                                     <option value="1">غرفه</option>
                                 </select>
-@*                                <span asp-validation-for="Command.Type" class="error"></span>
-*@                            </div>
+                            </div>
                              <div class="form-group col-md-4" id="isService" style="display:none">
                                 <div class="n-chk mt-40">
                                     <label class="new-control new-checkbox checkbox-primary Current-color">
-                                        <input id="hasTiming-edit"  asp-for="Command.PrdHasTiming" type="checkbox" class="Current-color new-control-input product-timing"disabled>
+                                        <input id="hasTiming-edit"  asp-for="Command.PrdHasTiming" type="checkbox" class="Current-color new-control-input product-timing">
                                         <span class="new-control-indicator"></span>نحوه محاسبه هزینه بر اساس زمان می باشد
                                     </label>
                                 </div>
@@ -97,12 +89,11 @@
                              <div class="form-group col-md-4" id="prdunit" style="display:none"> 
                                 <label for=""> واحد شمارش <span class="error">*</span></label>
                                 
-                                <select asp-for="Command.FkProductUnit"  type="text" class="form-control" id="ProductUnit-edit" asp-items="@(new SelectList(Model.Unit,"Id","Name"))" disabled>
+                                <select asp-for="Command.FkProductUnit"  type="text" class="form-control" id="ProductUnit-edit" asp-items="@(new SelectList(Model.Unit,"Id","Name"))" >
                                     <option value="">انتخاب...</option>
                                      
                                 </select>
-@*                                <span asp-validation-for="Command.FkProductUnit" class="error"></span>
-*@                            </div>
+                            </div>
                              <div class="form-group col-md-4" id="prdUnit2" style="display:none">
                                 <div class="n-chk mt-40">
                                     <label class="new-control new-checkbox checkbox-primary Current-color">
@@ -124,14 +115,12 @@
                             <div class="form-group col-md-4">
                                 <label for=""> بار کد</label>
                                 <input asp-for="Command.PrdBarcode" type="text" class="form-control" id="" placeholder=" بارکد">
-@*                                <span asp-validation-for="Command.PrdBarcode" class="error"></span>
-*@                            </div>
+                            </div>
 
                             <div class="form-group col-md-4">
                                 <label for=""> ایران کد</label>
                                 <input asp-for="Command.PrdIranCode" type="text" class="form-control" id="" placeholder="ایران کد">
-@*                                <span asp-validation-for="Command.PrdIranCode" class="error"></span>
-*@                            </div>
+                            </div>
                            
                         </div>
 
@@ -140,8 +129,7 @@
                             <div class="form-group col-md-12">
                                 <label for=""> توضیحات کوتاه</label>
                                 <textarea asp-for="Command.ShortDescription" type="text" class="form-control" rows="3" id="" placeholder=" توضیحات کوتاه"></textarea>
-@*                                <span asp-validation-for="Command.ShortDescription" class="error"></span>
-*@                            </div>
+                            </div>
 
                         </div>
 
@@ -154,16 +142,14 @@
                           {
                               <img src="data:image/jpeg;base64,@Model.Command.PrdImage"  id="preViewImg" class="thumbnail" style="max-width:150px" />
                            }
-@*                        <img id="preViewImg" class="thumbnail" src="/defualtImg/10.png" alt="" style="max-width:60%"/>
-*@                        <div class="form-group">
+                        <div class="form-group">
                             <label class="control-label">عکس<span class="text-danger">*</span></label>
-                            <input asp-for="Command.Images" id="imgCourseUp" type="file" class="form-control" accept="image/*" required>
+                            <input asp-for="Command.Images" id="imgCourseUp" type="file" class="form-control" accept="image/*" >
                              
                             <span class="text-danger"></span>
                             <p class="help-block"> مشخصۀ تصویر: width:185px و Height:1200px</p>
                         </div>
-@*                        <span asp-validation-for="Command.Images" class="error"></span>
-*@                    </div>
+                    </div>
 
                 </div>
 
@@ -299,8 +285,7 @@
                                 <select asp-for="Command.TaxUid" asp-items="@(new SelectList(Model.Tax, "Id", "Name"))" class="form-control">
                                     <option value="" selected>انتخاب کنید...</option>
                                 </select>
-@*                                <span asp-validation-for="Command.TaxUid" class="error"></span>
-*@                            </div>
+                            </div>
 
                             <div class="form-group col-md-3 mt-30">
                                 <label class="Current-color " for="">نوع تخفیف:</label>
@@ -313,8 +298,7 @@
                                     <label class="Current-color form-check-label mr-0" for="inlineRadio2">مبلغ</label>
                                 </div>
 
-@*                                <span asp-validation-for="Command.PrdDiscountType" class="error"></span>
-*@                            </div>
+                            </div>
 
 
                             <div class="form-group col-md-3">
@@ -322,27 +306,17 @@
                                 <input asp-for="Command.PrdDiscount" class="form-control" type="number" disabled="">
                                 <span id="dicountDis" class="help-block text-warning"></span>
                                 <br/>
-@*                                <span asp-validation-for="Command.PrdDiscount" class="error"></span>
-*@                            </div>
+                            </div>
 
                           
                         </div>
                        
 
                         <input type="hidden" asp-for="Command.WebDescription"/>
-                        <input type="hidden" asp-for="Command.FkProductUnit2"/>
+                        <input type="hidden"  asp-for="Command.FkProductUnit2"/>
                         <input type="hidden" asp-for="Command.PrdCoefficient"/>
-                        <input type="hidden" asp-for="Command.PrdIsUnit1Bigger"/>
-@*
-                        <div class="form-row col-md-12 mb-4">
+                        <input type="hidden"  asp-for="Command.PrdIsUnit1Bigger"/>
 
-                            <div id="basic" class="col-lg-12 col-md-12 row layout-spacing layout-top-spacing">
-                                <div class="col-lg-12 col-md-12">
-                                    <div id="editor-container">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*@
                     </div>
                 </div>
 
@@ -351,67 +325,6 @@
    </div>
    <button id="final-submit-edit" type="button" class="btn btn-success btn-sm btn-rounded pull-left">تایید نهایی</button>
 
-</div>
-
-<div class="tab-pane fade" id="justify-contact" role="tabpanel" aria-labelledby="justify-contact-tab">
-    <div class="row layout-top-spacing" id="cancel-row">
-        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-            <div class=" br-6">
-                <form method="get" id="submitProperty" name="submitProperty">
-                    <div class="row">
-                        <div class=" col-lg-12 col-sm-12">
-                            <div class="form-row mb-4">
-                                <div class="form-group col-md-4">
-                                    <label for=""> نام ویژگی</label>
-                                    <select asp-for="Property.Id" id="propertyName-edit" asp-items="@(new SelectList(Model.Properties, "Id", "Name"))" class="form-control" id="">
-                                        <option value="">انتخاب...</option>
-                                    </select>
-                                    <span asp-validation-for="Property.Id" class="error"></span>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for=""> مقدار ویژگی</label>
-                                    <input asp-for="Property.Value" id="propertyValue" type="text" class="form-control" id="" placeholder=" مقدار ویژگی">
-                                    <span asp-validation-for="Property.Value" class="error"></span>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <button type="submit" id="submit-property" class="btn btn-info btn-sm btn-rounded mt-35">افزودن به لیست</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <div class="panel panel-default">
-
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                        <table id="property-dataTable" class="Current-color table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>نام ویژگی</th>
-                                                <th>مقدار ویژگی</th>
-                                                <th>عملیات</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
 </div>
 
 
@@ -433,7 +346,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="">2 واحد شمارش <span class="error">*</span></label>
-                                    <select id="FkProductUnit2-edit" asp-items="@(new SelectList(Model.Unit, "Id", "Name"))" type="text" class="form-control">
+                                    <select  id="FkProductUnit2-edit" asp-items="@(new SelectList(Model.Unit, "Id", "Name"))" type="text" class="form-control">
                                         <option value="">انتخاب...</option>
                                     </select>
                                     <span asp-validation-for="Command.FkProductUnit2" class="error"></span>
@@ -441,7 +354,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for=""> ضریب <span class="error">*</span></label>
-                                    <input id="PrdCoefficient-edit" type="number" class="form-control" placeholder="ضریب ">
+                                    <input  id="PrdCoefficient-edit" type="number" class="form-control" placeholder="ضریب ">
                                 </div>
 
                             </div>
@@ -485,11 +398,9 @@
 
 @section Scripts
 {
-
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
     <script src="~/plugins/file-upload/file-upload-with-preview.min.js"></script>
     <script src="~/plugins/select2/custom-select2.js"></script>
     <script src="~/plugins/editors/quill/quill.js"></script>
@@ -510,11 +421,13 @@
                 
                 if (fkUnit==true)
                    {
-                       $("#productUnit").prop("checked", true)
-                       $("#FkProductUnit2").val($("#Command_FkProductUnit2").val());
-                       $("#PrdCoefficient").val($("#Command_PrdCoefficient").val());
-                       $("input[name='inlineRadioOptions']").val($("#Command_PrdIsUnit1Bigger").val());
-                   }
+                       $("#productUnit-edit").prop("checked", true)
+                       $("#FkProductUnit2-edit").val($("#Command_FkProductUnit2").val());
+                       $("#PrdCoefficient-edit").val($("#Command_PrdCoefficient").val());
+                       $("input[name='inlineRadioOptions-edit']").val($("#Command_PrdIsUnit1Bigger").val());
+                }
+
+             
                    
                 if(type==2){
                 div.style.display = "block";
