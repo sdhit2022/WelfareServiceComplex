@@ -23,6 +23,9 @@ namespace Application.BaseInfo
         ResultDto Remove(int id);
 
         void saveChanges();
+
+        bool GetJobByName(string name);
+        bool CheckJobNameExists(string name, int id);
     }
 
 
@@ -116,6 +119,17 @@ namespace Application.BaseInfo
             }
             _logger.LogError($"Don't Any Record width Id {id} of Table Job");
             return result.Failed("شغل وجود ندارد");
+        }
+        public bool CheckJobNameExists(string name, int id)
+        {
+            var result = _complexContext.Jobs.Any(u => u.JobName == name && u.JobId != id);
+            return result;
+        }
+        public bool GetJobByName(string name)
+        {
+            var result = _complexContext.Jobs.Any(u => u.JobName == name);
+            return result;
+
         }
 
     }

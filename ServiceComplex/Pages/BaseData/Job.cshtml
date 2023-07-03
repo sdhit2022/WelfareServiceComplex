@@ -79,7 +79,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" > ایجاد شغل جدید : </h5>
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ایجاد شغل جدید : </h5>
+                    <div id="CreateError" style="display:none">
+                        <span id="error" class="alert alert-danger text-center">نام شغل تکراری است</span>
+                    </div>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -94,7 +99,7 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-5">
                                 <label >عنوان:</label>
-                                <input  name="JobName" type="text" class="form-control basic border-none">
+                                <input id="JobName_create" name="JobName" type="text" class="form-control basic border-none">
                             </div>
                            
 
@@ -104,7 +109,7 @@
                 </div>
                 </div>
                 <div class="modal-footer">
-                        <input type="submit" class="btn" data-dismiss="modal" onclick="saveNew()" value="ذخیره " />
+                    <button type="button" class="btn" onclick="saveNew()">ذخیره</button>
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -118,7 +123,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" > ویرایش : </h5>
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ویرایش : </h5>
+                    <div id="EditError" style="display:none">
+                        <span id="editError" class="alert alert-danger text-center">نام شغل تکراری است</span>
+                    </div>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -147,7 +157,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn" data-dismiss="modal" onclick="saveEdit()" value="ذخیره تغییرات"/>
+                    <button type="button" class="btn"  onclick="saveEdit()">ذخیره تغییرات</button> 
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -216,13 +226,67 @@
                 }
             });           
         }
-        function saveEdit()
-        {
-            document.getElementById("EditForm").submit();
-        }  
-        function saveNew()
-        {
-            document.getElementById("CreateForm").submit();
+        var editError = document.querySelector("#EditError");
+        var createError = document.querySelector("#CreateError");
+        var error = document.querySelector("#error");
+        var edit_error = document.querySelector("#editError");
+
+        function saveNew() {
+            $.ajax({
+                type: "get",
+                url: "?handler=CheckName&name=" + $("#JobName_create").val(),
+                success: function (result) {
+                    debugger
+                    if (result == true) {
+                        createError.style.display = "block";
+                        error.innerHTML = "نام شغل تکراری است";
+                        return
+                    }
+                    else {
+                        if ($("#JobName_create").val() == "") {
+                            createError.style.display = "block";
+                            error.innerHTML = "شغل را وارد کنید";
+                            return
+                        }
+                        else {
+                            createError.style.display = "none";
+                            document.getElementById("CreateForm").submit();
+                            $("#createJob").modal('toggle');
+
+                        }
+                    }
+                }
+            });
+
+        }
+        function saveEdit() {
+            debugger
+            $.ajax({
+                type: "get",
+                url: "?handler=CheckJobNameExists",
+                data: { name: $("#JobName").val(), id: $("#JobId").val() },
+                success: function (result) {
+                    debugger
+                    if (result == true) {
+                        editError.style.display = "block";
+                        edit_error.innerHTML = "نام شغل تکراری است";
+                        return
+                    }
+                    else {
+                        if ($("#JobName").val() == "" ) {
+                            editError.style.display = "block";
+                            edit_error.innerHTML = "شغل را وارد کنید";
+                            return
+                        }
+                        else {
+                            editError.style.display = "none";
+                            document.getElementById("EditForm").submit();
+                            $("#editJob").modal('toggle');
+
+                        }
+                    }
+                }
+            });
         }
       
         

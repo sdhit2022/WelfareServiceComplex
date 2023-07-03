@@ -18,6 +18,9 @@ namespace Application.BaseInfo
         ResultDto Update(Shift shift);
         Shift GetShift(int id);
         void saveChanges();
+
+        bool GetShiftByName(string name);
+        bool CheckShiftNameExists(string name, int id);
     }
 
     public class ShiftService : IShiftService 
@@ -111,6 +114,17 @@ namespace Application.BaseInfo
                 }
             }
             return result.Failed("شیفت پیدا نشد!");
+        }
+        public bool CheckShiftNameExists(string name, int id)
+        {
+            var result = _complexContext.Shifts.Any(u => u.ShfName == name && u.ShfId != id);
+            return result;
+        }
+        public bool GetShiftByName(string name)
+        {
+            var result = _complexContext.Shifts.Any(u => u.ShfName == name);
+            return result;
+
         }
     }
 }

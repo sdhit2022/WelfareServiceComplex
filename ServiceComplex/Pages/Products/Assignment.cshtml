@@ -1,0 +1,101 @@
+﻿@page
+@model ServiceComplex.Pages.Products.AssignmentModel
+@{
+}
+<link href="~/assets/css/elements/custom-tree_view.css" rel="stylesheet" type="text/css" />
+
+<div id="content" class="main-content">
+    <div class="layout-px-spacing layout-top-spacing">
+    <div class="page-header">
+        <div class="page-title">
+            <h3>نمای درختی</h3>
+        </div>
+    </div>
+
+        <div class=" form-row layout-px-spacing layout-top-spacing">
+            <div class="col-lg-5">
+        <div id="treeviewAnimated" class=" layout-spacing">
+
+            <div class="statbox widget box box-shadow">
+
+            <ul class="file-tree">
+                @for(int i = 0; i < Model.List.Count; i++)
+                {
+                    <li id="category-li" class="file-tree-folder ">
+                    <div class="form-group">
+                    <input type="checkbox" id=${@i} onchange="checkboxControl(this)" name="main-category-checkbox"  />
+                     <span id="category-span" class="new-control-indicator"> @Model.List[i].Name</span> 
+                    </div>
+                    <ul>
+                        @for(int j = 0; j < Model.Products[i].products.Count; j++)
+                        {
+                            
+                            <li id="product-li">
+                                <div class="form-group">
+                                <input type="checkbox"  class='mainCheckboxes' id=${@i} name="main-product-checkbox"   /> 
+                                <span id="product-span" class="new-control-indicator"> @Model.Products[i].products[j].PrdName</span> 
+                            </div>
+                            </li>
+                        }
+                    </ul>
+                    </li>
+                }       
+            </ul>
+            </div>
+        </div>
+        </div>
+            <div class="col-lg-2">
+                <div id="navSection" class="align-content-center">
+                    <div class="align-content-center">
+            <button type="button" id="moveSelected"  class=" btn btn-info btn-sm btn-rounded ">></button>
+            <button type="button" id="moveAll" class="  btn btn-info btn-sm btn-rounded ">>></button>
+            </div>
+            </div>
+            </div>
+            <div class="col-lg-5">
+        <div id="treeviewAnimated" class=" layout-spacing">
+
+            <div class="statbox widget box box-shadow">
+
+            <ul class="file-tree">
+                @for(int i = 0; i < Model.List.Count; i++)
+                {
+                    <li class="file-tree-folder">
+                    @Model.List[i].Name
+                    <ul id="productGroup">
+                        @for(int j = 0; j < Model.Products[i].products.Count; j++)
+                        {
+                            <li id="product">@Model.Products[i].products[j].PrdName</li>
+                        }
+                    </ul>
+                    </li>
+                }       
+            </ul>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+
+@section scripts
+{
+      
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <script src="~/plugins/treeview/custom-jstree.js"></script>
+    <script src="~/assets/js/scrollspyNav.js"></script>
+    <script src="~/source/js/assignment.js"></script>
+
+        <script>
+     
+         $(document).ready(function(){
+             $.ajax({
+                url:"?handler=GetProductsByCategory&id=" + value,
+
+             })
+         });
+        </script>
+}

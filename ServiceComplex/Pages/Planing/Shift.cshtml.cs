@@ -71,5 +71,14 @@ namespace ServiceComplex.Pages.Planing
             return Redirect("/Planing/Shift");
 
         }
+
+        public IActionResult OnGetCheckName(string name)
+        {
+            return new JsonResult(_shiftService.GetShiftByName(name));
+        }
+        public IActionResult OnGetCheckShiftNameExists(string name, int id)
+        {
+            return new JsonResult(_shiftService.CheckShiftNameExists(name, id));
+        }
     }
 }

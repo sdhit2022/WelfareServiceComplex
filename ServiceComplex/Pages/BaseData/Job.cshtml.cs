@@ -45,7 +45,7 @@ namespace ServiceComplex.Pages.BaseData
 
         public IActionResult OnPostEdit(string JobName,int JobId)
         {
-            var newJob = new Job
+            var newJob = new Job()
             {
                 JobName = JobName,
                 JobId = JobId
@@ -58,6 +58,15 @@ namespace ServiceComplex.Pages.BaseData
         public IActionResult OnGetRemove(int id)
         {
             return new JsonResult(_jobService.Remove(id));
+        }
+
+        public IActionResult OnGetCheckName(string name)
+        {
+            return new JsonResult(_jobService.GetJobByName(name));
+        }
+        public IActionResult OnGetCheckJobNameExists(string name, int id)
+        {
+            return new JsonResult(_jobService.CheckJobNameExists(name, id));
         }
     }
 }

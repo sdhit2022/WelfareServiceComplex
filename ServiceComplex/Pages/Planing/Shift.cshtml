@@ -90,7 +90,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" > ایجاد شیفت جدید : </h5>
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ایجاد شیفت جدید : </h5>
+                    <div id="CreateError" style="display:none">
+                        <span id="error" class="alert alert-danger text-center">نام شیفت تکراری است</span>
+                    </div>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -105,39 +110,33 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-5">
                                 <label >عنوان شیفت:</label>
-                                <input name="ShfName" type="text" class="form-control basic border-none">
+                                <input id="ShfName_create" name="ShfName" type="text" class="form-control basic border-none">
                             </div>
                         </div>
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>زمان شروع:</label>
-                                    <input name="ShfStartTime" type="time" class="form-control basic border-none">
+                                <input id="ShfStartTime_create" name="ShfStartTime" type="time" class="form-control basic border-none">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>زمان پایان:</label>
-                                    <input name="ShfEndTime" type="time" class="form-control basic border-none">
+                                <input id="ShfEndTime_create" name="ShfEndTime" type="time" class="form-control basic border-none">
                                 </div>
                             </div> 
                             <div class="form-row">
                                 <div class="col-md-6 mb-5">
                                     <label>تلورانس(دقیقه):</label>
-                                    <input name="ShfTelorance" type="number" class="form-control basic border-none">
+                                <input id="ShfTelorance_create" name="ShfTelorance" type="number" class="form-control basic border-none">
                                 </div>
                             </div>
                     </div>
-                           
-                            
-
-                 
-
-
                 </div>
 
                 <div class="modal-footer">
-                    <input type="submit" class="btn" data-dismiss="modal" onclick="saveNew()"  value="ذخیره " />
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
+                    <button type="button" class="btn" onclick="saveNew()">ذخیره</button> 
+                    <button type="button" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
 
@@ -150,7 +149,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:700px !Important">
             <div class="modal-header">
-                <h5 class="modal-title text-center" > ویرایش : </h5>
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ویرایش : </h5>
+                    <div id="EditError" style="display:none">
+                        <span id="editError" class="alert alert-danger text-center">نام شیفت تکراری است</span>
+                    </div>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -200,7 +204,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button onclick="saveEdit()" class="btn" data-dismiss="modal">ذخیره تغییرات</button>  
+                    <button onclick="saveEdit()" class="btn" type="button">ذخیره تغییرات</button>  
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
                 </div>
             </form>
@@ -279,19 +283,72 @@
                 }
             });           
         }
-        function saveEdit()
-        {
-            document.getElementById("EditForm").submit();
-        }
-        function saveNew() {
-            document.getElementById("CreateForm").submit();
-        }
-        $('#saveChanges').click(function () {
-            $("#editSalon").modal('hide');
-            $("#createSalon").modal('hide');
 
-        });
-      
+        var editError = document.querySelector("#EditError");
+        var createError = document.querySelector("#CreateError");
+        var error = document.querySelector("#error");
+        var edit_error = document.querySelector("#editError");
+
+        function saveNew() {
+            $.ajax({
+                type: "get",
+                url: "?handler=CheckName&name=" + $("#ShfName_create").val(),
+                success: function (result) {
+                    debugger
+                    if (result == true) {
+                        createError.style.display = "block";
+                        error.innerHTML = "نام شیفت تکراری است";
+                        return
+                    }
+                    else {
+                        if ($("#ShfStartTime_create").val() == "" || $("#ShfEndTime_create").val() == ""
+                            || $("#ShfTelorance_create").val() == "" || $("#ShfName_create").val() == "") {
+                            createError.style.display = "block";
+                            error.innerHTML = "فیلد ها را پر کنید";
+                            return
+                        }                   
+                        else {
+                            createError.style.display = "none";
+                            document.getElementById("CreateForm").submit();
+                            $("#createShift").modal('toggle');
+
+                        }
+                    }
+                }
+            });
+
+        }
+        function saveEdit() {
+            debugger
+            $.ajax({
+                type: "get",
+                url: "?handler=CheckShiftNameExists",
+                data: { name: $("#ShfName").val(), id: $("#ShfId").val() },
+                success: function (result) {
+                    debugger
+                    if (result == true) {
+                        editError.style.display = "block";
+                        edit_error.innerHTML = "نام شیفت تکراری است";
+                        return
+                    }
+                    else {
+                        if ($("#ShfStartTime").val() == "" || $("#ShfEndTime").val() == ""
+                            || $("#ShfTelorance").val() == "" || $("#ShfName").val() == "") {
+                            editError.style.display = "block";
+                            edit_error.innerHTML = "فیلد ها را پر کنید";
+                            return
+                        }
+                        else {
+                            editError.style.display = "none";
+                            document.getElementById("EditForm").submit();
+                            $("#editShift").modal('toggle');
+
+                        }
+                    }
+                }
+            });
+        }
+
     </script>
 }
 
