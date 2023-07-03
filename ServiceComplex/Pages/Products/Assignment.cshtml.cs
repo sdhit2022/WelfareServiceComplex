@@ -30,11 +30,19 @@ namespace ServiceComplex.Pages.Products
             {
                 Products.Add(new ProductList { Id = List[i].Id, products = _productService.GetProductsByCategory(List[i].Id)});
             }
+            //todo get AssignedProducts by salonid
         }
 
-        //public List<ProductDto> GetProductsByCategory(Guid id)
-        //{
+        public IActionResult OnGetMoveSelectedProducts(List<Guid> products)
+        {
+            AssignedProducts = new List<ProductAssign>();
+            for (int i = 0; i < products.Count; i++)
+            {
+                var product = _productService.GetProductsById(products[i]);
+                AssignedProducts.Add(product);
+            }
+            return Redirect("/Products/Assignment");
 
-        //}
+        }
     }
 }

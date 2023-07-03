@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Collections.Immutable;
 using System.Drawing.Imaging;
 using System.Text.Json;
 
@@ -21,6 +22,7 @@ namespace Application.Product
 
         List<ProductDto.ProductDto> GetAll();
         List<ProductAssign> GetProductsByCategory(Guid id);
+        ProductAssign GetProductsById(Guid id);
         ProductDetails GetDetails(Guid id);
         List<PropertySelectOptionDto> PropertySelectOption();
         List<UnitOfMeasurementDto> UnitOfMeasurement();
@@ -587,6 +589,29 @@ namespace Application.Product
                    PrdLevelId = x.PrdLvlName,
                    Type=x.Type
                }).Where(x => x.PrdLvlUid3 == id).ToList();
+
+            // var products = _mapper.Map<List<ProductDto>>(result);
+            return result;
+        }
+        public ProductAssign GetProductsById(Guid id) { 
+            var result = _complexContext.Products.AsNoTracking().Include(x => x.PrdLvlUid3Navigation)
+               .Select(x => new
+               {
+                   x.PrdUid,
+                   x.PrdName,
+                   x.PrdLvlUid3,
+                   x.PrdStatus,        
+                   x.Type,
+                   x.PrdLvlUid3Navigation.PrdLvlName
+               }).Select(x => new ProductAssign
+               {
+                   PrdUid = x.PrdUid,
+                   PrdName = x.PrdName,
+                   PrdLvlUid3= (Guid)x.PrdLvlUid3,
+                   PrdStatus = x.PrdStatus,
+                   PrdLevelId = x.PrdLvlName,
+                   Type=x.Type
+               }).Where(x => x.PrdUid == id).FirstOrDefault();
 
             // var products = _mapper.Map<List<ProductDto>>(result);
             return result;
