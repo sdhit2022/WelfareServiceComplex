@@ -19,14 +19,14 @@
             <div class="statbox widget box box-shadow">
 
             <ul class="file-tree">
-                @for(int i = 0; i < Model.List.Count; i++)
+              @*  @for(int i = 0; i < Model.List.Count; i++)
                 {
                     <li id="category-li" class="file-tree-folder ">
                     <div class="form-group">
                     <input type="checkbox" id=@i onchange="checkboxControl(this)" name="main-category-checkbox"  />
                      <span id="category-span" class="new-control-indicator"> @Model.List[i].Name</span> 
                     </div>
-                    <ul>
+                            <ul>*@
                         @for(int j = 0; j < Model.Products[i].products.Count; j++)
                         {
                             
@@ -38,9 +38,9 @@
                             </li>
                         }
                     </ul>
-                    </li>
+               @*     </li>
                 }       
-            </ul>
+            </ul>*@
             </div>
         </div>
         </div>
@@ -69,7 +69,6 @@
                                     <ul>
                                         @for (int j = 10000; j < Model.Products[i - 10000].products.Count; j++)
                                         {
-
                                             <li id="product-li">
                                                 <div class="form-group">
                                                     <input type="checkbox" class='mainCheckboxes' id=@i name="product-checkbox" value="@Model.Products[i-10000].products[j-10000].PrdUid" />

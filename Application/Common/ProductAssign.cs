@@ -15,5 +15,7 @@ namespace Application.Common
         public int? Type { get; set; }
         public bool? PrdStatus { get; set; }
         public string? PrdLevelId { get; set; }
+        public int IsNew { get; set; } = 0;
+        public long? Salon { get; set; }
     }
 }

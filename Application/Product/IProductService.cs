@@ -5,6 +5,7 @@ using Application.Product.ProductDto;
 using AutoMapper;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace Application.Product
 
         List<ProductDto.ProductDto> GetAll();
         List<ProductAssign> GetProductsByCategory(Guid id);
+        List<SalonProduct> GetSalonProducts();
         ProductAssign GetProductsById(Guid id);
         ProductDetails GetDetails(Guid id);
         List<PropertySelectOptionDto> PropertySelectOption();
@@ -591,6 +593,9 @@ namespace Application.Product
                }).Where(x => x.PrdLvlUid3 == id).ToList();
 
             // var products = _mapper.Map<List<ProductDto>>(result);
+
+            
+
             return result;
         }
         public ProductAssign GetProductsById(Guid id) { 
@@ -615,6 +620,45 @@ namespace Application.Product
 
             // var products = _mapper.Map<List<ProductDto>>(result);
             return result;
+        }
+
+        public List<SalonProduct> GetSalonProducts()
+        {
+           
+            var list=_complexContext.SalonProducts.ToList();
+            //var result = _contextAccessor?.HttpContext?.Session.GetJson<List<SalonProduct>>("ProductAss");
+
+            //result.AddRange(list);
+            //_contextAccessor.HttpContext.Session.SetJson("ProductAss", result);
+            return list;
+        }
+
+        public List<ProductAssign> GetNotAssignedPrd(List<SalonProduct> products)
+        {
+            List<ProductAssign> list= new List<ProductAssign>();
+            foreach (var product in products)
+            {
+                var result = _complexContext.Products.AsNoTracking().Include(x => x.PrdLvlUid3Navigation)
+                   .Select(x => new
+                   {
+                       x.PrdUid,
+                       x.PrdName,
+                       x.PrdLvlUid3,
+                       x.PrdStatus,
+                       x.Type,
+                       x.PrdLvlUid3Navigation.PrdLvlName
+                   }).Select(x => new ProductAssign
+                   {
+                       PrdUid = x.PrdUid,
+                       PrdName = x.PrdName,
+                       PrdLvlUid3 = (Guid)x.PrdLvlUid3,
+                       PrdStatus = x.PrdStatus,
+                       PrdLevelId = x.PrdLvlName,
+                       Type = x.Type
+                   }).Where(x => x.PrdUid != product.SpFrProduct).FirstOrDefault();
+                list.Add(result);
+            }
+            return list;
         }
     }
 }

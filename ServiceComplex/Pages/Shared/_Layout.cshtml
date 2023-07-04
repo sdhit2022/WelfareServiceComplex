@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Application.BaseInfo;
+@inject ISalonService _salonService;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -70,7 +73,23 @@
             </div>
         </form>
     </li>
+    <li class="nav-item align-self-center">
+                    <div class="col-lg-12">
+                        <div class="btn-group mb-4 mr-2">
+                            <button id="selectSalon" class="btn btn-sm dropdown-toggle btn-sm btn-rounded" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                انتخاب سالن <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                @foreach(var item in _salonService.GetAll())
+                                {
+                                    <a  onclick="selectSalon('@item.SlnId')" id="@item.SlnId" class="dropdown-item">@item.SlnName</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+    </li>
 </ul>
+
 <ul class="navbar-item flex-row navbar-dropdown">
 <li class="nav-item dropdown language-dropdown more-dropdown">
     <div class="dropdown  custom-dropdown-icon">
@@ -369,6 +388,18 @@
             });
         });
 
+
+        function selectSalon(item){
+            debugger
+            $.ajax({
+                url:"/BaseData/Salon?handler=ChangeSalon&salonid=" + item,
+                type: "Get",
+                success: function (result) {
+                    document.getElementById("selectSalon").innerText = result;
+                    alert(result);
+                }
+            })
+        }
     </script>
 </body>
 </html>

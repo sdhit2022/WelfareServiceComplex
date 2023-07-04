@@ -106,5 +106,12 @@ namespace ServiceComplex.Pages.BaseData
         {
             return new JsonResult(_salonService.CheckSalonNameExists(name,id));
         }
+        public IActionResult OnGetChangeSalon(long salonid)
+        {
+            var salon = _salonService.GetSalon(salonid);
+            Global.SalonId["salonId"] = salon.SlnId;
+            Global.SalonName["salonName"] = salon.SlnName;
+            return new JsonResult(salon.SlnName);
+        }
     }
 }
