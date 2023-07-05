@@ -4,80 +4,9 @@
 }
 <link href="~/assets/css/elements/custom-tree_view.css" rel="stylesheet" type="text/css" />
 
-<div id="content" class="main-content">
-    <div class="layout-px-spacing layout-top-spacing">
-    <div class="page-header">
-        <div class="page-title">
-            <h3>نمای درختی</h3>
-        </div>
+    <div id="content">
+    <partial name="Products/Partial/_Assignment" model="@Model.model" />
     </div>
-
-        <div class=" form-row layout-px-spacing layout-top-spacing">
-            <div class="col-lg-5">
-        <div id="treeviewAnimated" class=" layout-spacing">
-
-            <div class="statbox widget box box-shadow">
-
-            <ul class="file-tree">
-              @*  @for(int i = 0; i < Model.List.Count; i++)
-                {
-                    <li id="category-li" class="file-tree-folder ">
-                    <div class="form-group">
-                    <input type="checkbox" id=@i onchange="checkboxControl(this)" name="main-category-checkbox"  />
-                     <span id="category-span" class="new-control-indicator"> @Model.List[i].Name</span> 
-                    </div>
-                            <ul>*@
-                        @for(int j = 0; j < Model.Products.Count; j++)
-                        {
-                            
-                            <li id="product-li">
-                                <div class="form-group">
-                                                    <input type="checkbox" class='mainCheckboxes' id=@j name="main-product-checkbox" value="@Model.Products[j].PrdUid" />
-                                                    <span id="product-span" class="new-control-indicator"> @Model.Products[j].PrdName</span> 
-                            </div>
-                            </li>
-                        }
-                    </ul>
-               @*     </li>
-                }       
-            </ul>*@
-            </div>
-        </div>
-        </div>
-            <div class="col-lg-2">
-                <div id="navSection" class="align-content-center">
-                    <div class="align-content-center">
-            <button type="button" onclick="moveSelected()" id="moveSelected"  class="btn btn-info btn-sm btn-rounded ">></button>
-            <br/>
-            <button type="button" id="moveAll" class="btn btn-info btn-sm btn-rounded ">>></button>
-            </div>
-            </div>
-            </div>
-            <div class="col-lg-5">
-                <div id="treeviewAnimated" class=" layout-spacing">
-
-                    <div class="statbox widget box box-shadow">
-
-                                    <ul>
-                                        @for (int j = 10000; j < Model.AssignedProducts.Count; j++)
-                                        {
-                                            <li id="product-li">
-                                                <div class="form-group">
-                                                    <input type="checkbox" class='mainCheckboxes' id=@j name="product-checkbox" value="@Model.AssignedProducts[j-10000].PrdUid" />
-                                                    <span id="product-span" class="new-control-indicator"> @Model.AssignedProducts[j-10000].PrdName</span>
-                                                </div>
-                                            </li>
-                                        }
-                                    </ul>
-                               
-                    </div>
-                </div>
-            </div>
-
-    </div>
-</div>
-</div>
-
 
 
 @section scripts

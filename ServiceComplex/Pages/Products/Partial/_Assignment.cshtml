@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Application.Common.ProductList
+@{
+}
+<link href="~/assets/css/elements/custom-tree_view.css" rel="stylesheet" type="text/css" />
+
+        <div class=" form-row layout-px-spacing layout-top-spacing">
+            <div class="col-lg-5">
+        <div id="treeviewAnimated" class=" layout-spacing">
+
+            <div class="statbox widget box box-shadow">
+
+            <ul class="file-tree">
+
+                    @for (int j = 0; j < Model.products.Count; j++)
+                    {
+
+                                <li id="product-li">
+                                    <div class="form-group">
+                                <input type="checkbox" class='mainCheckboxes' id=@j name="main-product-checkbox" value="@Model.products[j].PrdUid" />
+                                <span id="product-span" class="new-control-indicator"> @Model.products[j].PrdName</span>
+                            </div>
+                                </li>
+                    }
+            </ul>
+
+            </div>
+        </div>
+        </div>
+            <div class="col-lg-2">
+                <div id="navSection" class="align-content-center">
+                    <div class="align-content-center">
+            <button type="button" onclick="moveSelected()" id="moveSelected"  class="btn btn-info btn-sm btn-rounded ">></button>
+            <br/>
+            <button type="button" onclick="moveAll()" id="moveAll" class="btn btn-info btn-sm btn-rounded ">>></button>           
+            <br/>
+            <button type="button" onclick="removeSelected()" id="moveSelected"  class="btn btn-info btn-sm btn-rounded ">عدم انتساب </button>
+            <br/>
+            <button type="button" onclick="removeAll()" id="moveAll" class="btn btn-info btn-sm btn-rounded ">عدم انتساب همه</button>
+            </div>
+            </div>
+            </div>
+            <div class="col-lg-5">
+                <div id="treeviewAnimated" class=" layout-spacing">
+
+                    <div class="statbox widget box box-shadow">
+
+                        <ul class="file-tree">
+                    @for (int j = 10000; j < Model.salonProducts.Count + 10000; j++)
+                    {
+                                                <li id="product-li">
+                                                    <div class="form-group">
+                                                        <input type="checkbox" class='Checkboxes' id=@j name="product-checkbox" value="@Model.salonProducts[j-10000].PrdUid" />
+                                                        <span id="product-span" class="new-control-indicator"> @Model.salonProducts[j-10000].PrdName</span>
+                                                    </div>
+                                                </li>
+                    }
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+    </div>

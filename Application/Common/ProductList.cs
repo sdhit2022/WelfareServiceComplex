@@ -9,7 +9,7 @@ namespace Application.Common
 {
     public class ProductList
     {
-        public Guid Id { get; set; }
-        public List<ProductAssign>? products { get; set; }
+        public List<ProductAssign> products { get; set; }
+        public List<ProductAssign> salonProducts { get; set; }
     }
 }

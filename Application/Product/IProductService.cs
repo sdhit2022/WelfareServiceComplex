@@ -639,10 +639,11 @@ namespace Application.Product
                 assigned.Add(product);
             }
 
-            var result = _contextAccessor?.HttpContext?.Session.GetJson<List<ProductAssign>>("ProductAss");
-            result.AddRange(assigned);
-            _contextAccessor.HttpContext.Session.SetJson("ProductAss", result);
-            return result;
+            //List<ProductAssign> result = new List<ProductAssign>();
+            //  result  = _contextAccessor?.HttpContext?.Session.GetJson<List<ProductAssign>>("ProductAss");
+            //result.AddRange(assigned);
+            _contextAccessor.HttpContext.Session.SetComplexData("Assigned", assigned);
+            return assigned;
         }
 
         public List<ProductAssign> GetNotAssignedPrd()
@@ -663,7 +664,7 @@ namespace Application.Product
                     PrdStatus = result[i].PrdStatus,
                 });
             }
-           
+            _contextAccessor.HttpContext.Session.SetComplexData("NotAssigned", list);
             return list;
 
           
