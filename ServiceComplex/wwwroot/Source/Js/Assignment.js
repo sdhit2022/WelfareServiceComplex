@@ -43,7 +43,7 @@ function removeAll() {
     
     debugger
     $.ajax({
-        url: "?handler=RemoveSelectedProducts&products=" + JSON.stringify(list),
+        url: "?handler=RemoveSelectedProducts&products=" + list,
         type: "Get",
         success: function (result) {
             debugger
