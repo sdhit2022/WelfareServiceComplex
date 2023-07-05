@@ -16,6 +16,6 @@ namespace Application.Common
         public bool? PrdStatus { get; set; }
         public string? PrdLevelId { get; set; }
         public int IsNew { get; set; } = 0;
-        public long? Salon { get; set; }
+        //public long? Salon { get; set; }
     }
 }

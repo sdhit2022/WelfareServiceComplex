@@ -22,6 +22,8 @@ namespace Application.BaseInfo
         void saveChanges();
         bool InsertSalon(Domain.ComplexModels.Salon salon);
         ResultDto RemoveSalon(long id);
+        List<SelectListOptionLong> GetSelectListItems();
+
     }
 
 
@@ -65,6 +67,16 @@ namespace Application.BaseInfo
             var result= _complexContext.Salons.Any(u => u.SlnName == name);
             return result;
             
+        }
+
+        public List<SelectListOptionLong> GetSelectListItems()
+        {
+            return _complexContext.Salons.Select(x => new { x.SlnId, x.SlnName })
+           .Select(x => new SelectListOptionLong
+           {
+               Text = x.SlnName,
+               Value = x.SlnId
+           }).ToList();
         }
 
         public bool InsertSalon(Domain.ComplexModels.Salon salon)

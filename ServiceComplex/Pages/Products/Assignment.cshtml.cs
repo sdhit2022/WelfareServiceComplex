@@ -1,4 +1,4 @@
-using Application.Common;
+﻿using Application.Common;
 using Application.Product;
 using Application.Product.Category;
 using Application.Product.ProductDto;
@@ -15,10 +15,11 @@ namespace ServiceComplex.Pages.Products
         private readonly IProductService _productService;
         private readonly IProductCategory _category;
         public List<ProductAssign> Products;
-        public List<SalonProduct> SalonProducts;
-        public List<ProductAssign> AssignedProducts;
+        public List<ProductAssign> SalonProducts;
+        public List<ProductAssign> AssignedProducts=new List<ProductAssign>();
         public List<ProductLevelDto> List;
-        public long salonId = Global.SalonId["salonId"];
+
+        public long salonId = 28; //Global.SalonId["salonId"];
 
         public AssignmentModel(IProductService productService, IProductCategory category)
         {
@@ -29,18 +30,11 @@ namespace ServiceComplex.Pages.Products
         public void OnGet()
         {   
             Products = new List<ProductAssign>();
+            //AssignedProducts = new List<ProductAssign>();
             List = _category.GetLevelList();
-            SalonProducts = _productService.GetSalonProducts();
-
-            var notAssigned = _productService.GetNotAssignedPrd(SalonProducts);
-
-            foreach (var item in SalonProducts)
-            {
-                var product = _productService.GetProductsById(item.SpFrProduct);
-                AssignedProducts.Add(product);
-
-            }
-
+            //باید بر اساس ایدی سالن انتخاب شده دریافت شوند
+            SalonProducts = _productService.GetSalonProducts(28);
+            Products = _productService.GetNotAssignedPrd();
 
             //todo get AssignedProducts by salonid
         }
@@ -49,7 +43,7 @@ namespace ServiceComplex.Pages.Products
         {
             //var test = HttpContext?.Session.GetJson<List<ProductAssign>>("ProductAss");
 
-            AssignedProducts = new List<ProductAssign>();
+           // AssignedProducts = new List<ProductAssign>();
             for (int i = 0; i < products.Count; i++)
             {
                 var product = _productService.GetProductsById(products[i]);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain.ComplexModels;
 
-public partial class Product
+public class Product
 {
     public Guid PrdUid { get; set; }
 

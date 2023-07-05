@@ -8,10 +8,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Immutable;
 using System.Drawing.Imaging;
+using System.Net;
 using System.Text.Json;
 
 namespace Application.Product
@@ -23,7 +28,8 @@ namespace Application.Product
 
         List<ProductDto.ProductDto> GetAll();
         List<ProductAssign> GetProductsByCategory(Guid id);
-        List<SalonProduct> GetSalonProducts();
+        List<ProductAssign> GetSalonProducts(long id);
+        List<ProductAssign> GetNotAssignedPrd();
         ProductAssign GetProductsById(Guid id);
         ProductDetails GetDetails(Guid id);
         List<PropertySelectOptionDto> PropertySelectOption();
@@ -213,6 +219,7 @@ namespace Application.Product
 
         public List<ProductDto.ProductDto> GetAll()
         {
+       
             var result = _complexContext.Products.Include(x => x.TaxU).Include(x => x.PrdLvlUid3Navigation)
                 .AsNoTracking().Select(x => new
                 {
@@ -622,43 +629,44 @@ namespace Application.Product
             return result;
         }
 
-        public List<SalonProduct> GetSalonProducts()
-        {
-           
-            var list=_complexContext.SalonProducts.ToList();
-            //var result = _contextAccessor?.HttpContext?.Session.GetJson<List<SalonProduct>>("ProductAss");
+        public List<ProductAssign> GetSalonProducts(long id)
+        {         
+            var list=_complexContext.SalonProducts.Where(p=>p.SpFrSalon==id).ToList();
+            var assigned = new List<ProductAssign>();
+            foreach (var item in list)
+            {
+                var product = GetProductsById(item.SpFrProduct);
+                assigned.Add(product);
+            }
 
-            //result.AddRange(list);
-            //_contextAccessor.HttpContext.Session.SetJson("ProductAss", result);
-            return list;
+            var result = _contextAccessor?.HttpContext?.Session.GetJson<List<ProductAssign>>("ProductAss");
+            result.AddRange(assigned);
+            _contextAccessor.HttpContext.Session.SetJson("ProductAss", result);
+            return result;
         }
 
-        public List<ProductAssign> GetNotAssignedPrd(List<SalonProduct> products)
-        {
-            List<ProductAssign> list= new List<ProductAssign>();
-            foreach (var product in products)
+        public List<ProductAssign> GetNotAssignedPrd()
+        {      
+            var result=_complexContext.Products.FromSqlInterpolated($"select * from Product left outer join SalonProduct on SalonProduct.SP_FR_PRODUCT=Product.PRD_UID where SalonProduct.SP_ID is null").ToList();
+            //var linq = _complexContext.Products.Include(x => x.SalonProducts).ToList();
+            //var linq2 = _complexContext.Products.ToList();
+
+            List<ProductAssign> list = new List<ProductAssign>();
+            for(int i = 0; i < result.Count; i++)
             {
-                var result = _complexContext.Products.AsNoTracking().Include(x => x.PrdLvlUid3Navigation)
-                   .Select(x => new
-                   {
-                       x.PrdUid,
-                       x.PrdName,
-                       x.PrdLvlUid3,
-                       x.PrdStatus,
-                       x.Type,
-                       x.PrdLvlUid3Navigation.PrdLvlName
-                   }).Select(x => new ProductAssign
-                   {
-                       PrdUid = x.PrdUid,
-                       PrdName = x.PrdName,
-                       PrdLvlUid3 = (Guid)x.PrdLvlUid3,
-                       PrdStatus = x.PrdStatus,
-                       PrdLevelId = x.PrdLvlName,
-                       Type = x.Type
-                   }).Where(x => x.PrdUid != product.SpFrProduct).FirstOrDefault();
-                list.Add(result);
+                list.Add(new ProductAssign()
+                {
+                    PrdUid = result[i].PrdUid,
+                    PrdLvlUid3 = (Guid)result[i].PrdLvlUid3,
+                    PrdName = result[i].PrdName,
+                    Type = result[i].Type,
+                    PrdStatus = result[i].PrdStatus,
+                });
             }
+           
             return list;
+
+          
         }
     }
 }

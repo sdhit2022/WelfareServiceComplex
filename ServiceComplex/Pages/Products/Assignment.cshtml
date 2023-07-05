@@ -27,13 +27,13 @@
                      <span id="category-span" class="new-control-indicator"> @Model.List[i].Name</span> 
                     </div>
                             <ul>*@
-                        @for(int j = 0; j < Model.Products[i].products.Count; j++)
+                        @for(int j = 0; j < Model.Products.Count; j++)
                         {
                             
                             <li id="product-li">
                                 <div class="form-group">
-                                                    <input type="checkbox" class='mainCheckboxes' id=@i name="main-product-checkbox" value="@Model.Products[i].products[j].PrdUid" />
-                                                    <span id="product-span" class="new-control-indicator"> @Model.Products[i].products[j].PrdName</span> 
+                                                    <input type="checkbox" class='mainCheckboxes' id=@j name="main-product-checkbox" value="@Model.Products[j].PrdUid" />
+                                                    <span id="product-span" class="new-control-indicator"> @Model.Products[j].PrdName</span> 
                             </div>
                             </li>
                         }
@@ -58,28 +58,18 @@
 
                     <div class="statbox widget box box-shadow">
 
-                        <ul class="file-tree">
-                            @for (int i = 10000; i < Model.List.Count; i++)
-                            {
-                                <li id="category-li" class="file-tree-folder ">
-                                    <div class="form-group">
-                                        <input type="checkbox" id=@i onchange="checkboxControl(this)" name="category-checkbox" />
-                                        <span id="category-span" class="new-control-indicator"> @Model.List[i-10000].Name</span>
-                                    </div>
                                     <ul>
-                                        @for (int j = 10000; j < Model.Products[i - 10000].products.Count; j++)
+                                        @for (int j = 10000; j < Model.AssignedProducts.Count; j++)
                                         {
                                             <li id="product-li">
                                                 <div class="form-group">
-                                                    <input type="checkbox" class='mainCheckboxes' id=@i name="product-checkbox" value="@Model.Products[i-10000].products[j-10000].PrdUid" />
-                                                    <span id="product-span" class="new-control-indicator"> @Model.Products[i-10000].products[j-10000].PrdName</span>
+                                                    <input type="checkbox" class='mainCheckboxes' id=@j name="product-checkbox" value="@Model.AssignedProducts[j-10000].PrdUid" />
+                                                    <span id="product-span" class="new-control-indicator"> @Model.AssignedProducts[j-10000].PrdName</span>
                                                 </div>
                                             </li>
                                         }
                                     </ul>
-                                </li>
-                            }
-                        </ul>
+                               
                     </div>
                 </div>
             </div>
