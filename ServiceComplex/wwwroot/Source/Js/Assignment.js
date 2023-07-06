@@ -103,3 +103,36 @@ function moveAll() {
         });
 
 }
+
+function saveAll() {
+    $.ajax({
+        url: "?handler=SaveChanges" ,
+        type: "Get",
+        success: function (result) {
+            if (result) {
+                notify("top center", "اطلاعات با موفقیت ثبت شد", "success");
+                window.location.href = "/BaseData/Salon";
+            } else
+                notify("top center", "خطا در ثبت اطلاعات", "error");
+        }
+    });
+}
+
+function mainSelection(item) {
+    if (item.value == 0) {
+        $("input:checkbox[name=main-product-checkbox]").prop('checked',false);
+    }
+    if (item.value == 1) {
+        $("input:checkbox[name=main-product-checkbox]").prop('checked',true);
+    }
+    
+}
+function selection(item) {
+    if (item.value == 0) {
+        $("input:checkbox[name=product-checkbox]").prop('checked',false);
+    }
+    if (item.value == 1) {
+        $("input:checkbox[name=product-checkbox]").prop('checked',true);
+    }
+    
+}

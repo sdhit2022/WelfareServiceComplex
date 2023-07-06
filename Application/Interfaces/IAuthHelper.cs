@@ -1,6 +1,7 @@
 ﻿using Application.Common;
 using Application.Interfaces.Context;
 using Domain.SaleInModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Setting = Domain.ComplexModels.Setting;
@@ -33,6 +34,8 @@ public interface IAuthHelper
 
     string AutoGenerateCode(Guid prdLvlId);
     bool AutoCodeProduct();
+    string GetCookie(string name);
+    int? GetInvoiceDiscountStatus();
 }
 
 public class AuthHelper : IAuthHelper
@@ -40,12 +43,13 @@ public class AuthHelper : IAuthHelper
     private readonly IComplexContext _context;
     private readonly ILogger<AuthHelper> _logger;
     private readonly ISaleInContext _saleInContext;
-
-    public AuthHelper(IComplexContext context, ILogger<AuthHelper> logger, ISaleInContext saleInContext)
+    private readonly IHttpContextAccessor _contextAccessor;
+    public AuthHelper(IComplexContext context, ILogger<AuthHelper> logger, ISaleInContext saleInContext, IHttpContextAccessor contextAccessor)
     {
         _context = context;
         _logger = logger;
         _saleInContext = saleInContext;
+        _contextAccessor = contextAccessor;
     }
 
     public void ConfigureSettingTable()
@@ -61,7 +65,7 @@ public class AuthHelper : IAuthHelper
                 var checkGuid = _context.Settings.SingleOrDefault(x => x.SetUid == getSubGroupDigitCountGuid);
                 if (checkGuid != null) getSubGroupDigitCountGuid = new Guid();
                 _context.Settings.Add(new Setting
-                    { SetKey = getSubGroupDigitCountGuid.ToString(), SetValue = getSubGroupDigitCount });
+                { SetKey = getSubGroupDigitCountGuid.ToString(), SetValue = getSubGroupDigitCount });
                 _context.SaveChanges();
             }
 
@@ -220,6 +224,31 @@ public class AuthHelper : IAuthHelper
         }
     }
 
+    public string GetCookie(string name)
+    {
+        _contextAccessor.HttpContext.Request.Headers.TryGetValue("Cookie", out var values);
+        var cookies = values.ToString().Split(';').ToList();
+        var result = cookies.Select(c => new { Key = c.Split('=')[0].Trim(), 
+            Value = c.Split('=')[1].Trim() }).ToList();
+        var cookie = result.FirstOrDefault(r => r.Key == name)?.Value;
+        return cookie;
+    }
+
+    public int? GetInvoiceDiscountStatus()
+    {
+        var value = _context.Settings
+            .FirstOrDefault(x => x.SetKey == ConstantParameter.InvoiceDetDiscountStatus)?.SetValue;
+        if (value == null) return null;
+        var status = int.Parse(value);
+        return status switch
+        {
+            0 => InvoiceDetDiscountStatus.Product,
+            1 => InvoiceDetDiscountStatus.AccountClubType,
+            2 => InvoiceDetDiscountStatus.Both,
+            _ => null
+        };
+    }
+
     /// <summary>
     ///     Branch Database
     /// </summary>
@@ -243,28 +272,31 @@ public class AuthHelper : IAuthHelper
         #region for First Product
 
         //TODo Test Tis
-        //if (!product.Any())
-        //{
-        //    var z = "";
-        //    for (var i = 0; i < generateLength; i++)
-        //    {
-        //        z += "0";
-        //    }
-
-        //    return z + "1";
-        //}
+        if (!product.Any())
+        {
+            var z = "";
+            for (var i = 0; i < generateLength; i++)
+            {
+                z += "0";
+            }
+            return z + "1";
+        }
 
         #endregion
 
         var numbers = new List<int>();
         foreach (var p in product)
         {
+            if (p.PrdCode.Length <= generateLength)
+                continue;
             var length = p.PrdCode.Substring(p.PrdCode.Length - generateLength);
             var convertToInt = int.Parse(length);
             numbers.Add(convertToInt);
         }
 
-        var max = numbers.Max();
+        var max = 0;
+        if (numbers.Any())
+            max = numbers.Max();
         var generate = (max + 1).ToString();
         var r = generate.Length;
         var generateZero = Math.Abs(r - generateLength);

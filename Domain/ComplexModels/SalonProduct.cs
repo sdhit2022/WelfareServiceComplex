@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.ComplexModels;
 
 public partial class SalonProduct
 {
+ 
     public Guid SpId { get; set; }
 
     public Guid SpFrProduct { get; set; }

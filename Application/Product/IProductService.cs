@@ -4,10 +4,12 @@ using Application.Interfaces.Context;
 using Application.Product.ProductDto;
 using AutoMapper;
 using Domain.ComplexModels;
+using Domain.SaleInModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -18,6 +20,7 @@ using System.Collections.Immutable;
 using System.Drawing.Imaging;
 using System.Net;
 using System.Text.Json;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Product
 {
@@ -29,7 +32,7 @@ namespace Application.Product
         List<ProductDto.ProductDto> GetAll();
         List<ProductAssign> GetProductsByCategory(Guid id);
         List<ProductAssign> GetSalonProducts(long id);
-        List<ProductAssign> GetNotAssignedPrd();
+        List<ProductAssign> GetNotAssignedPrd(long SlnId);
         ProductAssign GetProductsById(Guid id);
         ProductDetails GetDetails(Guid id);
         List<PropertySelectOptionDto> PropertySelectOption();
@@ -46,6 +49,10 @@ namespace Application.Product
 
         ResultDto Remove(Guid id);
         ResultDto UpdateProduct(CreateProduct command);
+
+        void DeleteFromSalonProduct(Guid id,long SlnId);
+        void InsertIntoSalonProduct(ProductAssign product,long SlnId);
+        decimal CalculateDiscount(Guid? productId, Guid? accountClubId, int priceLevel);
     }
 
     public class ProductService : IProductService
@@ -159,7 +166,7 @@ namespace Application.Product
 
             IQueryable<ProductDto.ProductDto> displayResult;
             if (param.IDisplayLength != 0)
-                displayResult = list.Skip(param.iDisplayStart)
+                displayResult = list.Skip(param.IDisplayStart)
                 .Take(param.IDisplayLength);
             else displayResult = list;
             var totalRecords = list.Count();
@@ -646,9 +653,9 @@ namespace Application.Product
             return assigned;
         }
 
-        public List<ProductAssign> GetNotAssignedPrd()
+        public List<ProductAssign> GetNotAssignedPrd(long SlnId)
         {      
-            var result=_complexContext.Products.FromSqlInterpolated($"select * from Product left outer join SalonProduct on SalonProduct.SP_FR_PRODUCT=Product.PRD_UID where SalonProduct.SP_ID is null").ToList();
+            var result=_complexContext.Products.FromSqlInterpolated($"select * from Product left outer join(select * from SalonProduct where  SalonProduct.SP_FR_SALON={SlnId})as Salon on Salon.SP_FR_PRODUCT=Product.PRD_UID where Salon.SP_ID is null \r\n").ToList();
             //var linq = _complexContext.Products.Include(x => x.SalonProducts).ToList();
             //var linq2 = _complexContext.Products.ToList();
 
@@ -669,5 +676,113 @@ namespace Application.Product
 
           
         }
+
+        public void DeleteFromSalonProduct(Guid id,long SlnId)
+        {
+            //TODO salon id!!!!!!
+            SalonProduct check = _complexContext.SalonProducts.Where(s => s.SpFrProduct.Equals(id) && s.SpFrSalon== SlnId).First();
+            if (check != null)
+            {
+                _complexContext.SalonProducts.Remove(check);
+                _complexContext.SaveChanges();
+            }
+        }
+
+        public void InsertIntoSalonProduct(ProductAssign product,long SlnId)
+        {
+            var salonProduct = new SalonProduct()
+            {
+                SpId= Guid.NewGuid(),
+            SpFrProduct = product.PrdUid,
+                //TODO ایدی سالن باید بصورت global ست شود
+                SpFrSalon = SlnId
+
+            };
+
+            if (_complexContext.SalonProducts.Where(s => s.SpFrProduct.Equals(salonProduct.SpFrProduct) && s.SpFrSalon.Equals(salonProduct.SpFrSalon)).FirstOrDefault() == null )
+            {
+                _complexContext.SalonProducts.Add(salonProduct);
+                _complexContext.SaveChanges();
+
+            }
+        }
+        public decimal CalculateDiscount(Guid? productId, Guid? accountClubId, int priceLevel)
+        {
+            var discountType = _authHelper.GetInvoiceDiscountStatus();
+            decimal discount = 0;
+            switch (discountType)
+            {
+                case InvoiceDetDiscountStatus.Product:
+                    discount = this.CalculateProductDiscount(productId, priceLevel);
+                    break;
+                case InvoiceDetDiscountStatus.AccountClubType:
+                    discount = this.CalculateAcClubDiscount(accountClubId, priceLevel);
+                    break;
+                case InvoiceDetDiscountStatus.Both:
+                    {
+                        var productDiscount = this.CalculateProductDiscount(productId, priceLevel);
+                        var accClubType = this.CalculateAcClubDiscount(accountClubId, priceLevel);
+                        discount = productDiscount + accClubType;
+                        break;
+                    }
+                case null:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return discount;
+        }
+        private decimal CalculateAcClubDiscount(Guid? accountClubId, int priceLevel)
+        {
+            decimal discount = 0;
+            var clubType = _complexContext.AccountClubTypes
+                .Select(x => new { x.AccClbTypUid, x.AccClbTypDetDiscount, x.AccClbTypPercentDiscount })
+                .SingleOrDefault(x => x.AccClbTypUid == accountClubId);
+            discount = Convert.ToDecimal(clubType.AccClbTypPercentDiscount);
+            return discount;
+        }
+
+        private decimal CalculateProductDiscount(Guid? productId, int priceLevel)
+        {
+            var product = _complexContext.Products
+                .Select(x => new { x.PrdUid, x.PrdDiscountType, x.PrdDiscount, x.PrdPercentDiscount, x.PrdPricePerUnit1, x.PrdPricePerUnit2, x.PrdPricePerUnit3, x.PrdPricePerUnit4, x.PrdPricePerUnit5, })
+                .AsNoTracking().SingleOrDefault(x => x.PrdUid == productId);
+
+            decimal discount = 0;
+            if (product == null) return discount;
+            var productDiscount = product.PrdDiscount;
+            if (product.PrdDiscountType == ConstantParameter.Percent)
+                discount = product.PrdDiscount ?? 0;
+            else if (product.PrdDiscountType == ConstantParameter.Amount)
+            {
+                discount = priceLevel switch
+                {
+                    PriceInvoiceLevel.Level1 =>
+                        ConvertPercentToAmount(product.PrdPricePerUnit1, productDiscount),
+                    PriceInvoiceLevel.Level2 =>
+                        ConvertPercentToAmount(product.PrdPricePerUnit2, productDiscount),
+                    PriceInvoiceLevel.Level3 =>
+                        ConvertPercentToAmount(product.PrdPricePerUnit3, productDiscount),
+                    PriceInvoiceLevel.Level4 =>
+                        ConvertPercentToAmount(product.PrdPricePerUnit4, productDiscount),
+                    PriceInvoiceLevel.Level5 =>
+                        ConvertPercentToAmount(product.PrdPricePerUnit5, productDiscount),
+
+                    _ => discount
+                };
+            }
+
+            return discount;
+        }
+        private static int ConvertPercentToAmount(decimal? price, decimal? discountPrice)
+        {
+            if (price is 0 or null) return 0;
+            var result = (discountPrice * 100) / price;
+            return Convert.ToInt32(result);
+        }
+
+
+
     }
 }

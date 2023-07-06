@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Application.Common;
@@ -452,6 +453,10 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnType("datetime")
                 .HasColumnName("SYS_USR_MODIFIEDON");
 
+            entity.HasOne(d => d.AccClbTypU).WithMany(p => p.AccountClubs)
+                .HasForeignKey(d => d.AccClbTypUid)
+                .HasConstraintName("FK_AccountClub_AccountClubType");
+
             entity.HasOne(d => d.AccFrContractNavigation).WithMany(p => p.AccountClubs)
                 .HasForeignKey(d => d.AccFrContract)
                 .HasConstraintName("FK_AccountClub_Contract");
@@ -473,6 +478,7 @@ public partial class ComplexContext : DbContext,IComplexContext
 
             entity.Property(e => e.AccId).HasColumnName("ACC_ID");
             entity.Property(e => e.AccCardSerial)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("ACC_CARD_SERIAL");
@@ -480,6 +486,7 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnType("date")
                 .HasColumnName("ACC_CREATE_ON");
             entity.Property(e => e.AccDesc)
+                .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("ACC_DESC");
             entity.Property(e => e.AccFrAccountclub).HasColumnName("ACC_FR_ACCOUNTCLUB");

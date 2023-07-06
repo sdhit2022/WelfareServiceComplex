@@ -7,7 +7,7 @@ public partial class AccountClubType
 {
     public Guid AccClbTypUid { get; set; }
 
-    public string? AccClbTypName { get; set; }
+    public string AccClbTypName { get; set; }
 
     public bool? AccClbTypStatus { get; set; }
 
@@ -26,4 +26,6 @@ public partial class AccountClubType
     public int? AccClbTypDiscountType { get; set; }
 
     public double? AccClbTypDetDiscount { get; set; }
+
+    public virtual ICollection<AccountClub> AccountClubs { get; set; } = new List<AccountClub>();
 }

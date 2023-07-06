@@ -7,7 +7,15 @@
 <link href="~/assets/css/elements/custom-tree_view.css" rel="stylesheet" type="text/css" />
 
         <div class=" form-row layout-px-spacing layout-top-spacing">
-            <div class="col-lg-5">
+            <div class="form-group col-lg-5">
+        <label>انتخاب :</label>
+        <select id="Salon" onchange="mainSelection(this)" name="Salon"  class=" form-control" required>
+                       <option value="0" default="" selected="">هیچکدام</option>
+                       <option value="1">همه</option>
+            
+
+        </select>
+        <br/>
         <div id="treeviewAnimated" class=" layout-spacing">
 
             <div class="statbox widget box box-shadow">
@@ -32,17 +40,26 @@
             <div class="col-lg-2">
                 <div id="navSection" class="align-content-center">
                     <div class="align-content-center">
-            <button type="button" onclick="moveSelected()" id="moveSelected"  class="btn btn-info btn-sm btn-rounded ">></button>
+                        
+            <button type="button" onclick="moveSelected()" id="moveSelected"  class="btn btn-info btn-sm btn-rounded ">انتساب</button>
             <br/>
-            <button type="button" onclick="moveAll()" id="moveAll" class="btn btn-info btn-sm btn-rounded ">>></button>           
-            <br/>
+@*            <button type="button" onclick="moveAll()" id="moveAll" class="btn btn-info btn-sm btn-rounded ">>></button>           
+*@            <br/>
             <button type="button" onclick="removeSelected()" id="moveSelected"  class="btn btn-info btn-sm btn-rounded ">عدم انتساب </button>
             <br/>
-            <button type="button" onclick="removeAll()" id="moveAll" class="btn btn-info btn-sm btn-rounded ">عدم انتساب همه</button>
-            </div>
+@*            <button type="button" onclick="removeAll()" id="moveAll" class="btn btn-info btn-sm btn-rounded ">عدم انتساب همه</button>
+*@            </div>
             </div>
             </div>
             <div class="col-lg-5">
+        <label>انتخاب :</label>
+        <select id="Salon" onchange="selection(this)" name="Salon" class=" form-control" required>
+            <option value="0" default="" selected="">هیچکدام</option>
+            <option value="1">همه</option>
+
+
+        </select>
+        <br />
                 <div id="treeviewAnimated" class=" layout-spacing">
 
                     <div class="statbox widget box box-shadow">
@@ -50,17 +67,17 @@
                         <ul class="file-tree">
                     @for (int j = 10000; j < Model.salonProducts.Count + 10000; j++)
                     {
-                                                <li id="product-li">
-                                                    <div class="form-group">
-                                                        <input type="checkbox" class='Checkboxes' id=@j name="product-checkbox" value="@Model.salonProducts[j-10000].PrdUid" />
-                                                        <span id="product-span" class="new-control-indicator"> @Model.salonProducts[j-10000].PrdName</span>
-                                                    </div>
-                                                </li>
+                        <li id="product-li">
+                            <div class="form-group">
+                                <input type="checkbox" class='Checkboxes' id=@j name="product-checkbox" value="@Model.salonProducts[j-10000].PrdUid" />
+                                <span id="product-span" class="new-control-indicator"> @Model.salonProducts[j-10000].PrdName</span>
+                            </div>
+                            </li>
                     }
                         </ul>
 
                     </div>
                 </div>
             </div>
-
-    </div>
+        </div>
+    <button type="button" onclick="saveAll()" id="saveAll" class="btn btn-info btn-sm btn-rounded ">تایید نهایی</button>
