@@ -628,7 +628,6 @@ namespace Application.BaseData
 
         #endregion
 
-
         #region Account Club
 
 
