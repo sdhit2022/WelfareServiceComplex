@@ -20,7 +20,7 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        Products = _productService.GetAll();
+      //  Products = _productService.GetAll();
     }
 
     public IActionResult OnGetData(JqueryDatatableParam param)

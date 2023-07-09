@@ -1,5 +1,5 @@
-﻿using Domain.ComplexModels;
-using System.Collections;
+﻿using Application.Common;
+using Domain.ComplexModels;
 using System.ComponentModel.DataAnnotations;
 using Guid = System.Guid;
 

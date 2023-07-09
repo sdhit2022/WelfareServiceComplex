@@ -957,12 +957,12 @@ namespace Application.BaseData
 
         public List<SelectListOption> SelectOptionState()
         {
-            return _complexContext.States.Select(x => new { x.SttName, x.SttUid }).Select(x => new SelectListOption() { Id = x.SttUid, Name = x.SttName }).AsNoTracking().ToList();
+            return _complexContext.States.Select(x => new { x.SttName, x.SttUid }).Select(x => new SelectListOption() { Value = x.SttUid, Text = x.SttName }).AsNoTracking().ToList();
         }
 
         public List<SelectListOption> SelectOptionCities(Guid stateId)
         {
-            return _complexContext.Cities.Where(x => x.SttUid == stateId).Select(x => new { x.CityName, x.CityUid }).Select(x => new SelectListOption() { Id = x.CityUid, Name = x.CityName }).AsNoTracking().ToList();
+            return _complexContext.Cities.Where(x => x.SttUid == stateId).Select(x => new { x.CityName, x.CityUid }).Select(x => new SelectListOption() { Value = x.CityUid, Text = x.CityName }).AsNoTracking().ToList();
         }
     }
 
@@ -973,11 +973,11 @@ namespace Application.BaseData
 
     }
 
-    public class SelectListOption
-    {
-        public string Name { get; set; }
-        public Guid Id { get; set; }
-    }
+    //public class SelectListOption
+    //{
+    //    public string Name { get; set; }
+    //    public Guid Id { get; set; }
+    //}
 
 
 
