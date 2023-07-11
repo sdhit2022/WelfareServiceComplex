@@ -19,16 +19,16 @@ namespace Application.BaseData.Dto
 
             public string AccClbNationalCode { get; set; }
 
-            public string AccClbPostalCode { get; set; }
+            public string? AccClbPostalCode { get; set; }
 
-            public string AccClbPhone1 { get; set; }
+            public string? AccClbPhone1 { get; set; }
 
-            public string AccClbPhone2 { get; set; }
+            public string? AccClbPhone2 { get; set; }
 
             public string AccClbMobile { get; set; }
 
-            public string AccClbMobile2 { get; set; }
-            public string ShamsiBirthDay { get; set; }
+            public string? AccClbMobile2 { get; set; }
+            public string? ShamsiBirthDay { get; set; }
             public DateTime? AccClbBrithday { get; set; }
 
             public Guid? AccClbParentUid { get; set; }
@@ -39,21 +39,25 @@ namespace Application.BaseData.Dto
 
             public int? AccClbSex { get; set; }
 
-            public string AccClbAddress { get; set; }
+            public string? AccClbAddress { get; set; }
 
-            public string AccClbDescribtion { get; set; }
+            public string? AccClbDescribtion { get; set; }
 
-            public string AccClbAddress2 { get; set; }
+            public string? AccClbAddress2 { get; set; }
 
-            public string AccClbPassword { get; set; }
+            //public string? AccClbPassword { get; set; }
 
-            public string AccClbLat { get; set; }
+            public string? AccClbLat { get; set; }
 
-            public string AccClbLong { get; set; }
+            public string? AccClbLong { get; set; }
 
-            [Compare("AccClbPassword", ErrorMessage = "رمز عبور با تکرار آن مغایرت دارد.")]
-            public string AccClbConfirmPassword { get; set; }
-        }
+            //[Compare("AccClbPassword", ErrorMessage = "رمز عبور با تکرار آن مغایرت دارد.")]
+            //public string? AccClbConfirmPassword { get; set; }
+        public Guid? AccFrContract { get; set; }
+        public string? AccCardSerial { get; set; }
+        public int? AccFrJob { get; set; }
+        public string? JobName { get; set; }
+    }
 
 
         public class AccountClubDto
@@ -71,7 +75,6 @@ namespace Application.BaseData.Dto
             public string AccClbNationalCode { get; set; }
             public string AccClbPostalCode { get; set; }
             public string AccClbPhone1 { get; set; }
-            public string AccClbPhone2 { get; set; }
             public string AccClubType { get; set; }
             public double AccClubDiscount { get; set; }
             public string AccRatioText { get; set; }
@@ -81,16 +84,23 @@ namespace Application.BaseData.Dto
             public string AccClbAddress { get; set; }
             public double? InvoiceDiscount { get; set; }
             public decimal TotalPaidAmount { get; }
+        public Guid? AccFrContract { get; set; }
+        public string AccCardSerial { get; set; }
+        public int? AccFrJob { get; set; }
+        public string JobName { get; set; }
 
-        }
 
-        public class EditAccountClub : CreateAccountClub
+    }
+
+    public class EditAccountClub : CreateAccountClub
         {
-            public List<AccountSelectOption> Account { get; set; }
-            public List<AccountRating> Rating { get; set; }
-            public List<AccountClubType> ClupType { get; set; }
-            public List<SelectListOption> States { get; set; }
-            public List<SelectListOption> Cities { get; set; }
+            public List<AccountSelectOption>? Account { get; set; }
+            public List<AccountRating>? Rating { get; set; }
+            public List<AccountClubType>? ClupType { get; set; }
+            public List<SelectListOption>? States { get; set; }
+            public List<SelectListOption>? Cities { get; set; }
+            public List<SelectListOption>? Contracts { get; set; }
+            public List<SelectListOptionInt>? Jobs { get; set; }
         }
     
 }

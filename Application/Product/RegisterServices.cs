@@ -23,7 +23,6 @@ public class RegisterServices
         services.AddScoped<IWarehouseService, WarehouseService>();
         services.AddScoped<IJobService, JobService>();
         services.AddScoped<IShiftService, ShiftService>();
-        services.AddScoped<IAccountClubService, AccountClubService>();
 
         services.AddScoped<IValidator<ProductCategory.CreateProductLevel>, CategoryPrdValidator>();
         services.AddScoped<IValidator<CreateProduct>, CreateProductValidate>();

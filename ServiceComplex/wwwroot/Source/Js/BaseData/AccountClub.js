@@ -1,21 +1,16 @@
 ﻿
 
+function submitEdit(){
 
-
-
-$("#editSubmit").on('click', function (evn) {
-    evn.preventDefault();
-    
-
-    var form = $("#submitEditForm");
+    var form = $("#submitForm");
     form.validate();
     if (form.valid() === false) {
         return false;
     }
 
     $.ajax({
-        url: "?handler=Edit",
-        data: new FormData(document.forms.submitEditForm),
+        url: "/BaseData/AccountClub?handler=Edit",
+        data: new FormData(document.forms.submitForm),
         contentType: false,
         processData: false,
         type: 'POST',
@@ -25,10 +20,10 @@ $("#editSubmit").on('click', function (evn) {
         },
 
         success: function (result) {
-            
+
             if (result.isSucceeded) {
                 notify("top center", "عملیات با موفقیت انجام شد", "success")
-                window.location.href = "/BaseData/AccountClupType";
+                window.location.href = "/BaseData/AccountClub";
             } else {
                 notify("top center", result.message, "error")
                 return false;
@@ -37,7 +32,44 @@ $("#editSubmit").on('click', function (evn) {
         }
     })
 
-})
+}
+
+
+//$("#editSubmit").on('click', function (evn) {
+//    evn.preventDefault();
+    
+
+//    var form = $("#submitEditForm");
+//    form.validate();
+//    if (form.valid() === false) {
+//        return false;
+//    }
+
+//    $.ajax({
+//        url: "?handler=Edit",
+//        data: new FormData(document.forms.submitEditForm),
+//        contentType: false,
+//        processData: false,
+//        type: 'POST',
+//        headers: {
+//            RequestVerificationToken:
+//                $('input:hidden[name="__RequestVerificationToken"]').val()
+//        },
+
+//        success: function (result) {
+            
+//            if (result.isSucceeded) {
+//                notify("top center", "عملیات با موفقیت انجام شد", "success")
+//                window.location.href = "/BaseData/AccountClupType";
+//            } else {
+//                notify("top center", result.message, "error")
+//                return false;
+//            }
+
+//        }
+//    })
+
+//})
 
 
 $("#addSubmit").on('click', function (evn) {
@@ -128,15 +160,28 @@ function Remove(id) {
     })
 };
 
-function Edit(id, name, discountType, priceInvoice, percentDiscount, detDiscount) {
+//function Edit(id, name, discountType, priceInvoice, percentDiscount, detDiscount) {
+//    debugger
+//    $("#edit").modal("show");
+//    $("#Command_Name").val(name);
+//    $("#Command_DiscountType").val(discountType);
+//    $("#Command_PriceInvoice").val(priceInvoice);
+//    $("#Command_PercentDiscount").val(percentDiscount);
+//    $("#Command_DetDiscount").val(detDiscount);
+//    $("#Command_Id").val(id);
+//}
+
+function Edit(id) {
     debugger
-    $("#edit").modal("show");
-    $("#Command_Name").val(name);
-    $("#Command_DiscountType").val(discountType);
-    $("#Command_PriceInvoice").val(priceInvoice);
-    $("#Command_PercentDiscount").val(percentDiscount);
-    $("#Command_DetDiscount").val(detDiscount);
-    $("#Command_Id").val(id);
+    $.ajax({
+        url: "?handler=Edit&id=" + id,
+        type: "Get",
+        success: function (result) {
+            debugger
+            $("#content").html("");
+            $("#content").html(result);
+        }
+    });
 }
 
 //function bindDatatable() {

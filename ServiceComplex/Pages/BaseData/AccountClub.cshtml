@@ -14,7 +14,7 @@
 
     <script src="~/assets/js/datepicker/persian-datepicker.min.js"></script>
     <script src="~/assets/js/datepicker/persian-date.min.js"></script>
-    <script src="~/source/js/basedata/ModifiedAccountClub.js"></script>
+    <script src="~/source/js/basedata/AccountClub.js"></script>
 
     <script>
 
@@ -50,7 +50,7 @@
                             "searchable": true
                         },
                         {
-                            "data": "AccClbBrithday",
+                            "data": "ShamsiBirthDay",
                             "autoWidth": true,
                             "searchable": true
                         },
@@ -76,7 +76,7 @@
                             "searchable": true
                         },
                         {
-                            "data": "AccFrJob",
+                            "data": "JobName",
                             "autoWidth": true,
                             "searchable": true
                         },
@@ -93,7 +93,7 @@
 
             function generateButton(data) {
 
-                return `<a title="جزییات بیشستر" onclick="showModal('${data.AccClbUid}')">
+                return `<a title="جزییات بیشتر" onclick="showModal('${data.AccClbUid}')">
                                                 <svg style="color:#2196f3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
                                                     <circle cx="12" cy="12" r="10"></circle>
                                                     <line x1="12" y1="16" x2="12" y2="12"></line>
@@ -101,7 +101,7 @@
                                                 </svg>
                                             </a>
 
-                                                    <a  asp-page="/BaseData/AccountClub" asp-page-handler="Edit" asp-route-id="${data.AccClbUid}" title="ویرایش" class=" mb-2 mr-2">
+                                                    <a onclick="Edit('${data.AccClbUid}')" asp-page="BaseData/AccountClub" asp-page-handler="Edit" title="ویرایش" class=" mb-2 mr-2">
                                                     <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
                                                       <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                                    </svg>

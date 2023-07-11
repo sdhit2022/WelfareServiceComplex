@@ -44,13 +44,14 @@ namespace Application.BaseData
         List<AccountRating> GetSelectOptionRatings();
         List<SelectListOption> SelectOptionCities(Guid stateId);
         List<SelectListOption> SelectOptionState();
+        List<SelectListOptionInt> SelectOptionJob();
 
-        //ResultDto CreateAccountClub(CreateAccountClub command);
-        //ResultDto UpdateAccountClub(EditAccountClub command);
-        //EditAccountClub GetDetailsAccountClub(Guid id);
-        //JsonResult GetAllAccountClub(JqueryDatatableParam param);
-        //ResultDto RemoveAccountClub(Guid id);
-        //JsonResult GetAllAccountClubProduct(JqueryDatatableParam param, Guid productId);
+        ResultDto CreateAccountClub(CreateAccountClub command);
+        ResultDto UpdateAccountClub(EditAccountClub command);
+        EditAccountClub GetDetailsAccountClub(Guid id);
+        JsonResult GetAllAccountClub(JqueryDatatableParam param);
+        ResultDto RemoveAccountClub(Guid id);
+        JsonResult GetAllAccountClubProduct(JqueryDatatableParam param, Guid productId);
     }
     internal class BaseDataService : IBaseDataService
     {
@@ -628,313 +629,318 @@ namespace Application.BaseData
 
         #endregion
 
-        //#region Account Club
+        #region Account Club
 
 
 
-        //public JsonResult GetAllAccountClub(JqueryDatatableParam param)
-        //{
+        public JsonResult GetAllAccountClub(JqueryDatatableParam param)
+        {
 
-        //    var list = _complexContext.AccountClubs.Include(x => x.AccClbTypU).AsNoTracking();
+            var list = _complexContext.AccountClubs.Include(x => x.AccClbTypU).
+                Include(x=>x.AccFrJobNavigation)
+                .AsNoTracking();
 
-        //    if (!string.IsNullOrEmpty(param.SSearch))
-        //    {
-        //        list = list.Where(x =>
-        //            x.AccClbName.ToLower().Contains(param.SSearch.ToLower())
-        //            || x.AccClbCode.ToLower().Contains(param.SSearch.ToLower())
-        //            || x.AccClbMobile.ToLower().Contains(param.SSearch.ToLower()));
-        //    }
+            if (!string.IsNullOrEmpty(param.SSearch))
+            {
+                list = list.Where(x =>
+                    x.AccClbName.ToLower().Contains(param.SSearch.ToLower())
+                    || x.AccClbCode.ToLower().Contains(param.SSearch.ToLower())
+                    || x.AccClbMobile.ToLower().Contains(param.SSearch.ToLower()));
+            }
 
-        //    var sortColumnIndex = Convert.ToInt32(_contextAccessor.HttpContext.Request.Query["iSortCol_0"]);
-        //    var sortDirection = _contextAccessor.HttpContext.Request.Query["sSortDir_0"];
+            var sortColumnIndex = Convert.ToInt32(_contextAccessor.HttpContext.Request.Query["iSortCol_0"]);
+            var sortDirection = _contextAccessor.HttpContext.Request.Query["sSortDir_0"];
 
-        //    switch (sortColumnIndex)
-        //    {
-        //        case 0:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbName) : list.OrderByDescending(c => c.AccClbName);
-        //            break;
-        //        case 1:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbCode) : list.OrderByDescending(c => c.AccClbCode);
-        //            break;
-        //        case 2:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbBrithday) : list.OrderByDescending(c => c.AccClbBrithday);
-        //            break;
-        //        case 5:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbMobile) : list.OrderByDescending(c => c.AccClbMobile);
-        //            break;
-
-
-        //        default:
-        //            {
-        //                string OrderingFunction(Domain.ComplexModels.AccountClub e) => sortColumnIndex == 0 ? e.AccClbName : "";
-        //                IOrderedEnumerable<Domain.ComplexModels.AccountClub> rr = null;
-
-        //                rr = sortDirection == "asc"
-        //                    ? list.AsEnumerable().OrderBy((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction)
-        //                    : list.AsEnumerable().OrderByDescending((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction);
-
-        //                list = rr.AsQueryable();
-        //                break;
-        //            }
-        //    }
-
-        //    IQueryable<AccountClub> displayResult;
-        //    if (param.IDisplayLength != 0)
-        //        displayResult = list.Skip(param.IDisplayStart)
-        //        .Take(param.IDisplayLength);
-        //    else displayResult = list;
-        //    var totalRecords = list.Count();
-        //    List<AccountClubDto> map;
-
-        //    try
-        //    {
-        //        map = _mapper.Map<List<AccountClubDto>>(displayResult);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //        throw;
-        //    }
+            switch (sortColumnIndex)
+            {
+                case 0:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbName) : list.OrderByDescending(c => c.AccClbName);
+                    break;
+                case 1:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbCode) : list.OrderByDescending(c => c.AccClbCode);
+                    break;
+                case 2:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbBrithday) : list.OrderByDescending(c => c.AccClbBrithday);
+                    break;
+                case 5:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbMobile) : list.OrderByDescending(c => c.AccClbMobile);
+                    break;
 
 
-        //    foreach (var clubTypeDto in map)
-        //    {
-        //        clubTypeDto.AccClbSexText = clubTypeDto.AccClbSex switch
-        //        {
-        //            1 => "زن",
-        //            0 => "مرد",
-        //            _ => clubTypeDto.AccClbSexText
-        //        };
+                default:
+                    {
+                        string OrderingFunction(Domain.ComplexModels.AccountClub e) => sortColumnIndex == 0 ? e.AccClbName : "";
+                        IOrderedEnumerable<Domain.ComplexModels.AccountClub> rr = null;
+
+                        rr = sortDirection == "asc"
+                            ? list.AsEnumerable().OrderBy((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction)
+                            : list.AsEnumerable().OrderByDescending((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction);
+
+                        list = rr.AsQueryable();
+                        break;
+                    }
+            }
+
+            IQueryable<AccountClub> displayResult;
+            if (param.IDisplayLength != 0)
+                displayResult = list.Skip(param.IDisplayStart)
+                .Take(param.IDisplayLength);
+            else displayResult = list;
+            var totalRecords = list.Count();
+            List<AccountClubDto> map;
+
+            try
+            {
+                map = _mapper.Map<List<AccountClubDto>>(displayResult);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
 
-        //        clubTypeDto.AccTypePriceLevelText = clubTypeDto.AccTypePriceLevel switch
-        //        {
-        //            null => string.Empty,
-        //            0 => "صفر",
-        //            1 => "سطح 1",
-        //            2 => "سطح 2",
-        //            3 => "سطح 3",
-        //            4 => "سطح 4",
-        //            5 => "سطح 5",
-        //            _ => throw new ArgumentOutOfRangeException()
-        //        };
-
-        //        if (clubTypeDto.AccClbTypUid != null)
-        //        {
-        //            var accType = _complexContext.AccountClubTypes.Find(clubTypeDto.AccClbTypUid);
-        //            if (accType != null)
-        //            {
-        //                clubTypeDto.AccClubType = accType.AccClbTypName;
-        //                clubTypeDto.AccClubDiscount = accType.AccClbTypDetDiscount ?? 0;
-        //            }
-
-        //        }
-
-        //        if (clubTypeDto.AccRateUid != null)
-        //            clubTypeDto.AccRatioText = _complexContext.AccountRatings.Find(clubTypeDto.AccRateUid)?.AccRateName;
-
-        //    }
-
-        //    var result = (new
-        //    {
-        //        param.SEcho,
-        //        iTotalRecords = totalRecords,
-        //        iTotalDisplayRecords = totalRecords,
-        //        aaData = map
-        //    });
-        //    return new JsonResult(result, new JsonSerializerOptions { PropertyNamingPolicy = null });
-        //}
-
-        //public JsonResult GetAllAccountClubProduct(JqueryDatatableParam param, Guid productId)
-        //{
-
-        //    var list = _complexContext.AccountClubs.Include(x => x.AccClbTypU).AsNoTracking();
-
-        //    if (!string.IsNullOrEmpty(param.SSearch))
-        //    {
-        //        list = list.Where(x =>
-        //            x.AccClbName.ToLower().Contains(param.SSearch.ToLower())
-        //            || x.AccClbCode.ToLower().Contains(param.SSearch.ToLower())
-        //            || x.AccClbMobile.ToLower().Contains(param.SSearch.ToLower()));
-        //    }
-
-        //    var sortColumnIndex = Convert.ToInt32(_contextAccessor.HttpContext.Request.Query["iSortCol_0"]);
-        //    var sortDirection = _contextAccessor.HttpContext.Request.Query["sSortDir_0"];
-
-        //    switch (sortColumnIndex)
-        //    {
-        //        case 0:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbName) : list.OrderByDescending(c => c.AccClbName);
-        //            break;
-        //        case 1:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbCode) : list.OrderByDescending(c => c.AccClbCode);
-        //            break;
-        //        case 2:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbBrithday) : list.OrderByDescending(c => c.AccClbBrithday);
-        //            break;
-        //        case 5:
-        //            list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbMobile) : list.OrderByDescending(c => c.AccClbMobile);
-        //            break;
+            foreach (var clubTypeDto in map)
+            {
+                clubTypeDto.AccClbSexText = clubTypeDto.AccClbSex switch
+                {
+                    1 => "زن",
+                    0 => "مرد",
+                    _ => clubTypeDto.AccClbSexText
+                };
 
 
-        //        default:
-        //            {
-        //                string OrderingFunction(Domain.ComplexModels.AccountClub e) => sortColumnIndex == 0 ? e.AccClbName : "";
-        //                IOrderedEnumerable<Domain.ComplexModels.AccountClub> rr = null;
+                clubTypeDto.AccTypePriceLevelText = clubTypeDto.AccTypePriceLevel switch
+                {
+                    null => string.Empty,
+                    0 => "صفر",
+                    1 => "سطح 1",
+                    2 => "سطح 2",
+                    3 => "سطح 3",
+                    4 => "سطح 4",
+                    5 => "سطح 5",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
 
-        //                rr = sortDirection == "asc"
-        //                    ? list.AsEnumerable().OrderBy((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction)
-        //                    : list.AsEnumerable().OrderByDescending((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction);
+                if (clubTypeDto.AccClbTypUid != null)
+                {
+                    var accType = _complexContext.AccountClubTypes.Find(clubTypeDto.AccClbTypUid);
+                    if (accType != null)
+                    {
+                        clubTypeDto.AccClubType = accType.AccClbTypName;
+                        clubTypeDto.AccClubDiscount = accType.AccClbTypDetDiscount ?? 0;
+                    }
 
-        //                list = rr.AsQueryable();
-        //                break;
-        //            }
-        //    }
+                }
 
-        //    IQueryable<AccountClub> displayResult;
-        //    if (param.IDisplayLength != 0)
-        //        displayResult = list.Skip(param.IDisplayStart)
-        //        .Take(param.IDisplayLength);
-        //    else displayResult = list;
-        //    var totalRecords = list.Count();
-        //    var map = _mapper.Map<List<AccountClubDto>>(displayResult.ToList());
+                if (clubTypeDto.AccRateUid != null)
+                    clubTypeDto.AccRatioText = _complexContext.AccountRatings.Find(clubTypeDto.AccRateUid)?.AccRateName;
 
+            }
 
+            var result = (new
+            {
+                param.SEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = map
+            });
+            return new JsonResult(result, new JsonSerializerOptions { PropertyNamingPolicy = null });
+        }
 
-        //    foreach (var clubTypeDto in map)
-        //    {
+        public JsonResult GetAllAccountClubProduct(JqueryDatatableParam param, Guid productId)
+        {
 
-        //        var discount = Convert.ToDouble(_productService.CalculateDiscount(productId, clubTypeDto.AccClbTypUid,
-        //            clubTypeDto.AccTypePriceLevel ?? 0));
-        //        // clubTypeDto.AccClubType = accType.AccClbTypName;
-        //        clubTypeDto.AccClubDiscount = discount;
+            var list = _complexContext.AccountClubs.Include(x => x.AccClbTypU).AsNoTracking();
 
-        //        if (clubTypeDto.AccRateUid != null)
-        //            clubTypeDto.AccRatioText = _complexContext.AccountRatings.Find(clubTypeDto.AccRateUid)?.AccRateName;
+            if (!string.IsNullOrEmpty(param.SSearch))
+            {
+                list = list.Where(x =>
+                    x.AccClbName.ToLower().Contains(param.SSearch.ToLower())
+                    || x.AccClbCode.ToLower().Contains(param.SSearch.ToLower())
+                    || x.AccClbMobile.ToLower().Contains(param.SSearch.ToLower()));
+            }
 
-        //    }
+            var sortColumnIndex = Convert.ToInt32(_contextAccessor.HttpContext.Request.Query["iSortCol_0"]);
+            var sortDirection = _contextAccessor.HttpContext.Request.Query["sSortDir_0"];
 
-        //    var result = (new
-        //    {
-        //        param.SEcho,
-        //        iTotalRecords = totalRecords,
-        //        iTotalDisplayRecords = totalRecords,
-        //        aaData = map
-        //    });
-        //    return new JsonResult(result, new JsonSerializerOptions { PropertyNamingPolicy = null });
-        //}
-
-        //public ResultDto CreateAccountClub(CreateAccountClub command)
-        //{
-        //    var result = new ResultDto();
-        //    try
-        //    {
-        //        if (_complexContext.AccountClubs.Any(x => x.AccClbName == command.AccClbName.Fix()))
-        //            return result.Failed(ValidateMessage.DuplicateName);
-
-        //        if (_complexContext.AccountClubs.Any(x => x.AccClbCode == command.AccClbCode.Fix()))
-        //            return result.Failed(ValidateMessage.DuplicateCode);
-
-        //        if (command.AccClbMobile != "1" && _complexContext.AccountClubs.Any(x => x.AccClbMobile == command.AccClbMobile.Fix() && x.AccClbMobile != "1"))
-        //            return result.Failed(ValidateMessage.DuplicateMobile);
-
-
-        //        var map = _mapper.Map<AccountClub>(command);
-        //        _complexContext.AccountClubs.Add(map);
-        //        _complexContext.SaveChanges();
-        //        return result.Succeeded();
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _logger.LogError($"حین ثبت کردن مشترک خطای زیر رخ داد {e}");
-        //        return result.Failed("عملیات با خطا مواجه شد، لطفا با پشتیبانی تماس بگیرید.");
-        //    }
-        //}
+            switch (sortColumnIndex)
+            {
+                case 0:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbName) : list.OrderByDescending(c => c.AccClbName);
+                    break;
+                case 1:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbCode) : list.OrderByDescending(c => c.AccClbCode);
+                    break;
+                case 2:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbBrithday) : list.OrderByDescending(c => c.AccClbBrithday);
+                    break;
+                case 5:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.AccClbMobile) : list.OrderByDescending(c => c.AccClbMobile);
+                    break;
 
 
-        //public ResultDto UpdateAccountClub(EditAccountClub command)
-        //{
-        //    var result = new ResultDto();
-        //    try
-        //    {
-        //        var accClub = _complexContext.AccountClubs.Find(command.AccClbUid);
-        //        if (accClub == null)
-        //        {
-        //            _logger.LogError($"هیچ رکوردی با این شناسه {command.AccClbUid} یافت نشد");
-        //            return result.Failed("عملیات با خطا مواجه شد لطفا با پشتیبانی تماس بگیرید.");
-        //        }
+                default:
+                    {
+                        string OrderingFunction(Domain.ComplexModels.AccountClub e) => sortColumnIndex == 0 ? e.AccClbName : "";
+                        IOrderedEnumerable<Domain.ComplexModels.AccountClub> rr = null;
 
-        //        if (_complexContext.AccountClubs.Any(x => x.AccClbName == command.AccClbName.Fix() && x.AccClbUid != command.AccClbUid))
-        //            return result.Failed(ValidateMessage.DuplicateName);
+                        rr = sortDirection == "asc"
+                            ? list.AsEnumerable().OrderBy((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction)
+                            : list.AsEnumerable().OrderByDescending((Func<Domain.ComplexModels.AccountClub, string>)OrderingFunction);
 
-        //        if (_complexContext.AccountClubs.Any(x => x.AccClbCode == command.AccClbCode.Fix() && x.AccClbUid != command.AccClbUid))
-        //            return result.Failed(ValidateMessage.DuplicateCode);
+                        list = rr.AsQueryable();
+                        break;
+                    }
+            }
 
-        //        if (_complexContext.AccountClubs.Any(x => x.AccClbMobile == command.AccClbMobile.Fix() && x.AccClbUid != command.AccClbUid))
-        //            return result.Failed(ValidateMessage.DuplicateMobile);
-
-        //        var map = _mapper.Map(command, accClub);
-        //        _complexContext.AccountClubs.Update(map);
-        //        _complexContext.SaveChanges();
-        //        return result.Succeeded();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _logger.LogError($"حین ثبت کردن مشترک خطای زیر رخ داد {e}");
-        //        return result.Failed("عملیات با خطا مواجه شد، لطفا با پشتیبانی تماس بگیرید.");
-        //    }
-        //}
+            IQueryable<AccountClub> displayResult;
+            if (param.IDisplayLength != 0)
+                displayResult = list.Skip(param.IDisplayStart)
+                .Take(param.IDisplayLength);
+            else displayResult = list;
+            var totalRecords = list.Count();
+            var map = _mapper.Map<List<AccountClubDto>>(displayResult.ToList());
 
 
 
-        //public ResultDto RemoveAccountClub(Guid id)
-        //{
-        //    var result = new ResultDto();
-        //    try
-        //    {
-        //        var accountClub = _complexContext.AccountClubs.Find(id);
-        //        if (accountClub == null)
-        //        {
-        //            _logger.LogWarning($"Don't Find Any Record With Id {id} On Table AccountClub");
-        //            return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
-        //        }
+            foreach (var clubTypeDto in map)
+            {
 
-        //        _complexContext.AccountClubs.Remove(accountClub);
-        //        _complexContext.SaveChanges();
-        //        return result.Succeeded();
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        _logger.LogError($"هنگام حذف واحد شمارش خطای زیر رخ داد {exception}");
-        //        return result.Failed("هنگام ثبت عملیات خطای رخ داد");
-        //    }
-        //}
+                var discount = Convert.ToDouble(_productService.CalculateDiscount(productId, clubTypeDto.AccClbTypUid,
+                    clubTypeDto.AccTypePriceLevel ?? 0));
+                // clubTypeDto.AccClubType = accType.AccClbTypName;
+                clubTypeDto.AccClubDiscount = discount;
 
+                if (clubTypeDto.AccRateUid != null)
+                    clubTypeDto.AccRatioText = _complexContext.AccountRatings.Find(clubTypeDto.AccRateUid)?.AccRateName;
 
-        //public EditAccountClub GetDetailsAccountClub(Guid id)
-        //{
-        //    var accClub = _complexContext.AccountClubs.Find(id);
-        //    if (accClub != null)
-        //    {
-        //        var map = _mapper.Map<EditAccountClub>(accClub);
-        //        map.Account = this.GetSelectOptionAccounts();
-        //        map.ClupType = this.GetSelectOptionClubTypes();
-        //        map.Rating = this.GetSelectOptionRatings();
-        //        map.States = this.SelectOptionState();
-        //        map.SateUid = _complexContext.Cities.Include(x => x.SttU)
-        //            .SingleOrDefault(x => x.CityUid == accClub.CityUid)?.SttUid;
+            }
 
-        //        map.Cities = SelectOptionCities(map.SateUid ?? Guid.Empty);
-        //        return map;
-        //    }
-        //    _logger.LogError($"هیچ رکوردی با این شناسه {id} یافت نشد");
-        //    throw new NullReferenceException("عملیات با خطا مواجه شد لطفا با پشتیبانی تماس بگیرید.");
+            var result = (new
+            {
+                param.SEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = map
+            });
+            return new JsonResult(result, new JsonSerializerOptions { PropertyNamingPolicy = null });
+        }
 
-        //}
+        public ResultDto CreateAccountClub(CreateAccountClub command)
+        {
+            var result = new ResultDto();
+            try
+            {
+                if (_complexContext.AccountClubs.Any(x => x.AccClbName == command.AccClbName.Fix()))
+                    return result.Failed(ValidateMessage.DuplicateName);
+
+                if (_complexContext.AccountClubs.Any(x => x.AccClbCode == command.AccClbCode.Fix()))
+                    return result.Failed(ValidateMessage.DuplicateCode);
+
+                if (command.AccClbMobile != "1" && _complexContext.AccountClubs.Any(x => x.AccClbMobile == command.AccClbMobile.Fix() && x.AccClbMobile != "1"))
+                    return result.Failed(ValidateMessage.DuplicateMobile);
 
 
-        //#endregion
+                var map = _mapper.Map<AccountClub>(command);
+                _complexContext.AccountClubs.Add(map);
+                _complexContext.SaveChanges();
+                return result.Succeeded();
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"حین ثبت کردن مشترک خطای زیر رخ داد {e}");
+                return result.Failed("عملیات با خطا مواجه شد، لطفا با پشتیبانی تماس بگیرید.");
+            }
+        }
+
+
+        public ResultDto UpdateAccountClub(EditAccountClub command)
+        {
+            var result = new ResultDto();
+            try
+            {
+                var accClub = _complexContext.AccountClubs.Find(command.AccClbUid);
+                if (accClub == null)
+                {
+                    _logger.LogError($"هیچ رکوردی با این شناسه {command.AccClbUid} یافت نشد");
+                    return result.Failed("عملیات با خطا مواجه شد لطفا با پشتیبانی تماس بگیرید.");
+                }
+
+                if (_complexContext.AccountClubs.Any(x => x.AccClbName == command.AccClbName.Fix() && x.AccClbUid != command.AccClbUid))
+                    return result.Failed(ValidateMessage.DuplicateName);
+
+                if (_complexContext.AccountClubs.Any(x => x.AccClbCode == command.AccClbCode.Fix() && x.AccClbUid != command.AccClbUid))
+                    return result.Failed(ValidateMessage.DuplicateCode);
+
+                if (_complexContext.AccountClubs.Any(x => x.AccClbMobile == command.AccClbMobile.Fix() && x.AccClbUid != command.AccClbUid))
+                    return result.Failed(ValidateMessage.DuplicateMobile);
+
+                var map = _mapper.Map(command, accClub);
+                _complexContext.AccountClubs.Update(map);
+                _complexContext.SaveChanges();
+                return result.Succeeded();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"حین ثبت کردن مشترک خطای زیر رخ داد {e}");
+                return result.Failed("عملیات با خطا مواجه شد، لطفا با پشتیبانی تماس بگیرید.");
+            }
+        }
+
+
+
+        public ResultDto RemoveAccountClub(Guid id)
+        {
+            var result = new ResultDto();
+            try
+            {
+                var accountClub = _complexContext.AccountClubs.Find(id);
+                if (accountClub == null)
+                {
+                    _logger.LogWarning($"Don't Find Any Record With Id {id} On Table AccountClub");
+                    return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
+                }
+
+                _complexContext.AccountClubs.Remove(accountClub);
+                _complexContext.SaveChanges();
+                return result.Succeeded();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"هنگام حذف واحد شمارش خطای زیر رخ داد {exception}");
+                return result.Failed("هنگام ثبت عملیات خطای رخ داد");
+            }
+        }
+
+
+        public EditAccountClub GetDetailsAccountClub(Guid id)
+        {
+            var accClub = _complexContext.AccountClubs.Find(id);
+            if (accClub != null)
+            {
+                var map = _mapper.Map<EditAccountClub>(accClub);
+                map.Account = this.GetSelectOptionAccounts();
+                map.ClupType = this.GetSelectOptionClubTypes();
+                map.Rating = this.GetSelectOptionRatings();
+                map.States = this.SelectOptionState();
+                // TODO  قرار داد اضافه شود
+                //map.States = this.SelectOptionContract();
+                map.Jobs = this.SelectOptionJob();               
+                map.SateUid = _complexContext.Cities.Include(x => x.SttU)
+                    .SingleOrDefault(x => x.CityUid == accClub.CityUid)?.SttUid;
+
+                map.Cities = SelectOptionCities(map.SateUid ?? Guid.Empty);
+                return map;
+            }
+            _logger.LogError($"هیچ رکوردی با این شناسه {id} یافت نشد");
+            throw new NullReferenceException("عملیات با خطا مواجه شد لطفا با پشتیبانی تماس بگیرید.");
+
+        }
+
+
+        #endregion
 
         public List<AccountSelectOption> GetSelectOptionAccounts()
         {
@@ -971,6 +977,10 @@ namespace Application.BaseData
         public List<SelectListOption> SelectOptionState()
         {
             return _complexContext.States.Select(x => new { x.SttName, x.SttUid }).Select(x => new SelectListOption() { Value = x.SttUid, Text = x.SttName }).AsNoTracking().ToList();
+        }
+        public List<SelectListOptionInt> SelectOptionJob()
+        {
+            return _complexContext.Jobs.Select(x => new { x.JobName, x.JobId }).Select(x => new SelectListOptionInt() { Value = x.JobId, Text = x.JobName }).AsNoTracking().ToList();
         }
 
         public List<SelectListOption> SelectOptionCities(Guid stateId)

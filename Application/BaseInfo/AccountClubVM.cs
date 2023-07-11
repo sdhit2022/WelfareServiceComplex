@@ -15,6 +15,7 @@ namespace Application.BaseInfo
         public Guid AccClbUid { get; set; }
         public DateTime? AccClbBrithday { get; set; }
         public string AccClbName { get; set; }
+        public string ShamsiBirthDay { get; set; }
 
         public string AccClbCode { get; set; }
         public bool? AccClbStatus { get; set; }
