@@ -59,9 +59,9 @@ namespace Application.BaseData
         private readonly ILogger<BaseDataService> _logger;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _contextAccessor;
-        public BaseDataService(IComplexContext shopContext, ILogger<BaseDataService> logger, IMapper mapper, IHttpContextAccessor contextAccessor, IProductService productService)
+        public BaseDataService(IComplexContext complexContext, ILogger<BaseDataService> logger, IMapper mapper, IHttpContextAccessor contextAccessor, IProductService productService)
         {
-            _complexContext = shopContext;
+            _complexContext = complexContext;
             _logger = logger;
             _mapper = mapper;
             _contextAccessor = contextAccessor;
@@ -631,6 +631,7 @@ namespace Application.BaseData
         #region Account Club
 
 
+
         public JsonResult GetAllAccountClub(JqueryDatatableParam param)
         {
 
@@ -683,11 +684,11 @@ namespace Application.BaseData
                 .Take(param.IDisplayLength);
             else displayResult = list;
             var totalRecords = list.Count();
-            var map = new List<AccountClubDto>();
+            List<AccountClubDto> map;
+
             try
             {
                 map = _mapper.Map<List<AccountClubDto>>(displayResult);
-
             }
             catch (Exception e)
             {
@@ -705,15 +706,27 @@ namespace Application.BaseData
                     _ => clubTypeDto.AccClbSexText
                 };
 
+
+                clubTypeDto.AccTypePriceLevelText = clubTypeDto.AccTypePriceLevel switch
+                {
+                    null => string.Empty,
+                    0 => "صفر",
+                    1 => "سطح 1",
+                    2 => "سطح 2",
+                    3 => "سطح 3",
+                    4 => "سطح 4",
+                    5 => "سطح 5",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
                 if (clubTypeDto.AccClbTypUid != null)
                 {
                     var accType = _complexContext.AccountClubTypes.Find(clubTypeDto.AccClbTypUid);
                     if (accType != null)
                     {
                         clubTypeDto.AccClubType = accType.AccClbTypName;
-                        clubTypeDto.AccClubDiscount = accType.AccClbTypPercentDiscount ?? 0;
+                        clubTypeDto.AccClubDiscount = accType.AccClbTypDetDiscount ?? 0;
                     }
-
 
                 }
 
@@ -792,7 +805,7 @@ namespace Application.BaseData
             {
 
                 var discount = Convert.ToDouble(_productService.CalculateDiscount(productId, clubTypeDto.AccClbTypUid,
-                    clubTypeDto.AccTypePriceLevel));
+                    clubTypeDto.AccTypePriceLevel ?? 0));
                 // clubTypeDto.AccClubType = accType.AccClbTypName;
                 clubTypeDto.AccClubDiscount = discount;
 

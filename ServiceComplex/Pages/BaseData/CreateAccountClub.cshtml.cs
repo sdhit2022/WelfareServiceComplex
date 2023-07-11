@@ -1,13 +1,13 @@
-﻿using Application.BaseData.Dto;
 using Application.BaseData;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Domain.ComplexModels;
+using Application.BaseData.Dto;
 using Application.Common;
+using Domain.ComplexModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ServiceComplex.Pages.BaseData
 {
-    public class AccountClubModel : PageModel
+    public class CreateAccountClubModel : PageModel
     {
         private readonly IBaseDataService _service;
         public CreateAccountClub Command;
@@ -15,12 +15,11 @@ namespace ServiceComplex.Pages.BaseData
         public List<AccountRating> Rating;
         public List<AccountClubType> ClupType;
         public List<SelectListOption> States;
-        public List<AccountClubDto> List;
-
-        public AccountClubModel(IBaseDataService service)
+        public CreateAccountClubModel(IBaseDataService service)
         {
-            _service= service;
+            _service = service;
         }
+
         public void OnGet()
         {
             Account = _service.GetSelectOptionAccounts();
@@ -28,25 +27,21 @@ namespace ServiceComplex.Pages.BaseData
             ClupType = _service.GetSelectOptionClubTypes();
             States = _service.SelectOptionState();
         }
-        public IActionResult OnGetData(JqueryDatatableParam param)
-        {
-           return _service.GetAllAccountClub(param);
-        }
-
 
         public IActionResult OnGetCities(Guid stateId)
         {
             return new JsonResult(_service.SelectOptionCities(stateId));
         }
-        //public IActionResult OnGetAccountClub(JqueryDatatableParam param)
-        //{
-        //    return this.Partial("AccountClub", new List<AccountClubDto>());
-        //}
-
-
-        public IActionResult OnPostCreate(CreateAccountClub command)
+        public IActionResult OnGetAccountClub(JqueryDatatableParam param)
         {
-
+            return this.Partial("AccountClub", new List<AccountClubDto>());
+        }
+        
+        public IActionResult OnGetData(JqueryDatatableParam param)=> _service.GetAllAccountClub(param);
+       
+        public IActionResult OnPost(CreateAccountClub command)
+        {
+           
             try
             {
                 if (!string.IsNullOrWhiteSpace(command.ShamsiBirthDay))
@@ -78,7 +73,7 @@ namespace ServiceComplex.Pages.BaseData
                 if (!string.IsNullOrWhiteSpace(command.ShamsiBirthDay))
                 {
                     command.ShamsiBirthDay = command.ShamsiBirthDay[..10];
-                    command.ShamsiBirthDay.ToGeorgianDateTime();
+                     command.ShamsiBirthDay.ToGeorgianDateTime();
                 }
             }
             catch (Exception)

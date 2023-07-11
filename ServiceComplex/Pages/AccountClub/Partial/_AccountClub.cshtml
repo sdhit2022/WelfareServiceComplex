@@ -1,4 +1,9 @@
-﻿@model List<Application.BaseData.Dto.AccountClubDto>
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
 @{
     ViewData["Title"] = "لیست مشترکین";
     Layout = "_Layout";
@@ -17,7 +22,7 @@
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-6">
                     <div class="text-center">
-                        <a asp-page="/BaseData/CreateAccountClub"  class="btn btn-success btn-rounded btn-sm">افزودن مشترک جدید</a>
+                        <a asp-page="/BaseData/AccountClub" class="btn btn-success btn-rounded btn-sm">افزودن مشترک جدید</a>
                     </div>
                     <div class="table-responsive mb-4 mt-4">
                         <table id="dataTable_1" class="table table-hover table-bordered cell-border row-border" style="width:100%">
@@ -46,7 +51,7 @@
 
 
 @section Scripts
-{
+    {
     <script>
 
         $(document).ready(function () {
@@ -56,7 +61,7 @@
         function bindDatatable() {
             datatable = $('#dataTable_1')
                 .DataTable({
-                    "sAjaxSource": "/BaseData/CreateAccountClub?handler=Data",
+                    "sAjaxSource": "/BaseData/AccountClub?handler=Data",
                     "bServerSide": true,
                     "bProcessing": true,
                     "bSearchable": true,
@@ -110,7 +115,7 @@
                             "autoWidth": true,
                             "searchable": true
                         },
-                       
+
                         {
                             data: null,
                             render: function (data, row, full) {
@@ -123,14 +128,14 @@
 
             function generateButton(data) {
 
-                return `<center><a href="/BaseData/CreateAccountClub?handler=Details&id=${data.AccClbUid}" class="btn btn-warning btn-rounded btn-sm">ویرایش</a>&nbsp; <button onclick="Remove('${data.AccClbUid}')" class="btn btn-danger btn-rounded btn-sm"> حذف </button></center>`
+                return `<center><a href="/BaseData/AccountClub?handler=Details&id=${data.AccClbUid}" class="btn btn-warning btn-rounded btn-sm">ویرایش</a>&nbsp; <button onclick="Remove('${data.AccClbUid}')" class="btn btn-danger btn-rounded btn-sm"> حذف </button></center>`
             };
 
         }
 
 
         function Remove(id) {
-    
+
             swal({
                 title: 'آیا مطمئنید؟',
                 text: "این عمل قابل بازگشت نیست!",
@@ -143,7 +148,7 @@
                 if (result.value) {
 
                     $.ajax({
-                        url: "/BaseData/CreateAccountClub?handler=Remove&id=" + id,
+                        url: "/BaseData/AccountClub?handler=Remove&id=" + id,
                         type: "get",
                         success: function (result) {
                             debugger
@@ -153,7 +158,7 @@
                                     result.message,
                                     'success'
                                 ).then(function () {
-                                    window.location = "/BaseData/CreateAccountClub?handler=AccountClub";
+                                    window.location = "/BaseData/AccountClub?handler=AccountClub";
                                 });
                             } else {
                                 swal(
@@ -171,3 +176,4 @@
         };
     </script>
 }
+

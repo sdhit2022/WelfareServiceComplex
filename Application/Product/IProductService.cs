@@ -679,7 +679,6 @@ namespace Application.Product
 
         public void DeleteFromSalonProduct(Guid id,long SlnId)
         {
-            //TODO salon id!!!!!!
             SalonProduct check = _complexContext.SalonProducts.Where(s => s.SpFrProduct.Equals(id) && s.SpFrSalon== SlnId).First();
             if (check != null)
             {
@@ -694,7 +693,6 @@ namespace Application.Product
             {
                 SpId= Guid.NewGuid(),
             SpFrProduct = product.PrdUid,
-                //TODO ایدی سالن باید بصورت global ست شود
                 SpFrSalon = SlnId
 
             };

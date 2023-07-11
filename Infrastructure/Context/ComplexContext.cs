@@ -21,8 +21,6 @@ public partial class ComplexContext : DbContext,IComplexContext
         _httpContext = httpContext;
     }
 
-
-
     public virtual DbSet<Account> Accounts { get; set; }
 
     public virtual DbSet<AccountClub> AccountClubs { get; set; }
@@ -246,10 +244,13 @@ public partial class ComplexContext : DbContext,IComplexContext
     public virtual DbSet<WarehouseRecieptDetail> WarehouseRecieptDetails { get; set; }
 
     public virtual DbSet<WorkStation> WorkStations { get; set; }
-    public DbSet<WorkYear> WorkYears { get; set; }
 
+    public virtual DbSet<WorkYear> WorkYears { get; set; }
 
-  
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=192.168.20.87\\saleinstore;User Id=salein;Password=dbkitsalein1394;Initial Catalog=876812d7-85ec-4706-9eef-fe26f206e794;Integrated Security=false;Multiple Active Result Sets=True;Encrypt=False;Trust Server Certificate=True");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Arabic_CI_AS");
@@ -478,7 +479,6 @@ public partial class ComplexContext : DbContext,IComplexContext
 
             entity.Property(e => e.AccId).HasColumnName("ACC_ID");
             entity.Property(e => e.AccCardSerial)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("ACC_CARD_SERIAL");
@@ -486,7 +486,6 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnType("date")
                 .HasColumnName("ACC_CREATE_ON");
             entity.Property(e => e.AccDesc)
-                .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("ACC_DESC");
             entity.Property(e => e.AccFrAccountclub).HasColumnName("ACC_FR_ACCOUNTCLUB");
@@ -5383,6 +5382,7 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnName("WRK_STT_SERIAL_PORT_IRAN_KISH");
             entity.Property(e => e.WrkSttStatus).HasColumnName("WRK_STT_STATUS");
         });
+
         modelBuilder.Entity<WorkYear>(entity =>
         {
             entity.HasKey(e => e.WyId);
@@ -5396,6 +5396,9 @@ public partial class ComplexContext : DbContext,IComplexContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+
+
     public override int SaveChanges()
     {
         var modifiedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted || x.State == EntityState.Added);

@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\BaseData\AccountClub.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\BaseData\AccountClub.cshtml" />
     <None Include="Pages\Shared\_Layout.cshtml" />
     <None Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
@@ -38,14 +33,6 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Persistent\Persistent.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\BaseData\AccountClub.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\BaseData\AccountClub.cshtml" />
   </ItemGroup>
 
 </Project>
