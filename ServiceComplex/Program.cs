@@ -1,4 +1,5 @@
-﻿using Application.Common;
+﻿using Application.BaseInfo;
+using Application.Common;
 using Application.Interfaces.Context;
 using Application.Product;
 using FluentValidation;

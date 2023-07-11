@@ -1,4 +1,4 @@
-﻿@model Application.BaseData.Dto.EditAccountClub
+﻿@model Application.BaseInfo.EditAccountClub
 @{
     ViewData["Title"] = "ویرایش مشترک";
     Layout = "_Layout";
@@ -19,7 +19,7 @@
                             <div class="tab-pane fade show active" id="justify-home" role="tabpanel" aria-labelledby="justify-home-tab">
                                 <div class="row layout-top-spacing" id="cancel-row">
                                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                                        <div class=" br-6"> b 
+                                        <div class=" br-6">  
                                             @if (ViewData["ErrorMessage"] != null)
                                             {
                                                 <span class="alert alert-danger text-center">فرم هارا به درستی پر نکرده اید.</span>
@@ -41,8 +41,8 @@
 
                                                         <div class="form-group col-md-3">
                                                             <label for=""> تاریخ تولد <span class="error">*</span></label>
-                                                            <input asp-for="ShamsiBirthDay" type="text" class="datePicker form-control flatpickr flatpickr-input active" placeholder="تاریخ تولد">
-                                                            <span asp-validation-for="ShamsiBirthDay" class="error"></span>
+                                                            <input asp-for="AccClbBrithday" type="text" class="datePicker form-control flatpickr flatpickr-input active" placeholder="تاریخ تولد">
+                                                            <span asp-validation-for="AccClbBrithday" class="error"></span>
                                                         </div>
                                                         <div class="form-group col-md-3">
                                                             <label for=""> موبایل </label>
@@ -71,11 +71,11 @@
                                                             <input asp-for="AccClbPhone1" type="number" class="form-control" placeholder="تلفن 1">
                                                             <span asp-validation-for="AccClbPhone1" class="error"></span>
                                                         </div>
-                                                        <div class="form-group col-md-3">
+                                                       @* <div class="form-group col-md-3">
                                                             <label for="">تلفن 2</label>
                                                             <input asp-for="AccClbPhone2" type="number" class="form-control" placeholder="تلفن 2">
                                                             <span asp-validation-for="AccClbPhone2" class="error"></span>
-                                                        </div>
+                                                        </div>*@
                                                     </div>
 
                                                     <div class="form-row mb-8">
@@ -138,16 +138,16 @@
                                                             <input asp-for="AccClbAddress" type="text" class="form-control" placeholder="آدرس 1">
                                                             <span asp-validation-for="AccClbAddress" class="error"></span>
                                                         </div>
-                                                        <div class="form-group col-md-3">
+                                                       @* <div class="form-group col-md-3">
                                                             <label for="">آدرس 2</label>
                                                             <input asp-for="AccClbAddress2" type="text" class="form-control" placeholder="آدرس 2">
                                                             <span asp-validation-for="AccClbAddress2" class="error"></span>
-                                                        </div>
+                                                        </div>*@
 
                                                        
                                                     </div>
 
-                                                    <div class="form-row mb-8">
+                                                    @*<div class="form-row mb-8">
                                                         <div class="form-group col-md-3">
                                                             <label for="">رمز عبور</label>
                                                             <input asp-for="AccClbPassword" type="password" class="form-control" placeholder="رمز عبور">
@@ -159,7 +159,7 @@
                                                             <input asp-for="AccClbConfirmPassword" type="password" class="form-control" placeholder="تکرار رمز عبور">
                                                             <span asp-validation-for="AccClbConfirmPassword" class="error"></span>
                                                         </div>
-                                                    </div>
+                                                    </div>*@
 
                                                     <p><strong class="text-info">موقعیت جغرافیایی</strong></p>
                                                     <div class="form-row mb-8">
@@ -177,7 +177,7 @@
 
 
 
-
+                                                
                                                     <div class="form-row mb-8">
                                                         <div class="form-group col-md-12">
                                                             <label for=""> توضیحات </label>

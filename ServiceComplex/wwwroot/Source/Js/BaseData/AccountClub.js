@@ -1,8 +1,5 @@
 ﻿
 
-$(document).ready(function () {
-    bindDatatable();
-});
 
 
 
@@ -142,67 +139,90 @@ function Edit(id, name, discountType, priceInvoice, percentDiscount, detDiscount
     $("#Command_Id").val(id);
 }
 
-function bindDatatable() {
-    
-    datatable = $('#dataTable_1')
-        .DataTable({
+//function bindDatatable() {
 
-            "sAjaxSource": "?handler=Data",
-            "bServerSide": true,
-            "bProcessing": true,
-            "bSearchable": true,
-            "order": [[1, 'asc']],
-            "language": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
-                "sInfo": "صفحه _PAGE_ از _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "جستجو کنید...",
-                "sLengthMenu": "نتایج :  _MENU_",
-            },
-            "columns": [
-                {
-                    "data": "Name",
-                    "autoWidth": true,
-                    "searchable": true
-                },
-                {
-                    "data": "DiscountTypeText",
-                    "autoWidth": true,
-                    "searchable": true
-                },
-                {
-                    "data": "PriceInvoiceText",
-                    "autoWidth": true,
-                    "searchable": true
-                },
+//    datatable = $('#dataTable_1')
+//        .DataTable({
 
-                {
-                    "data": "PercentDiscount",
-                    "autoWidth": true,
-                    "searchable": true
-                },
-                {
-                    "data": "DetDiscount",
-                    "autoWidth": true,
-                    "searchable": true
-                },
-                {
-                    data: null,
-                    render: function (data, row, full) {
-                        return generateButton(data);
-                    },
-                }
+//            "sAjaxSource": "?handler=Data",
+//            "bServerSide": true,
+//            "bProcessing": true,
+//            "bSearchable": true,
+//            "order": [[1, 'asc']],
+//            "language": {
+//                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' },
+//                "sInfo": "صفحه _PAGE_ از _PAGES_",
+//                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+//                "sSearchPlaceholder": "جستجو کنید...",
+//                "sLengthMenu": "نتایج :  _MENU_",
+//            },
+//            "columns": [
+//                {
+//                    "data": "AccClbName",
+//                    "autoWidth": true,
+//                    "searchable": true
+//                },
+//                {
+//                    "data": "AccClbCode",
+//                    "autoWidth": true,
+//                    "searchable": true
+//                },
+//                //{
+//                //    "data": "AccClbBrithday",
+//                //    "autoWidth": true,
+//                //    "searchable": true
+//                //},
 
-            ]
-        });
+//                //{
+//                //    "data": "AccClubType",
+//                //    "autoWidth": true,
+//                //    "searchable": true
+//                //},
+//                //{
+//                //    "data": "AccRatioType",
+//                //    "autoWidth": true,
+//                //    "searchable": true
+//                //},
+//                {
+//                    "data": "AccClbSex",
+//                    "autoWidth": true,
+//                    "searchable": true
+//                },
+//                {
+//                    "data": "AccClbMobile",
+//                    "autoWidth": true,
+//                    "searchable": true
+//                }
 
-    function generateButton(data) {
-        
-        return `<center><button onclick="Edit('${data.Id}','${data.Name}','${data.DiscountType}','${data.PriceInvoice}','${data.PercentDiscount}','${data.DetDiscount}')" class="btn btn-warning btn-rounded btn-sm">ویرایش</button>&nbsp; <button onclick="Remove('${data.Id}')" class="btn btn-danger btn-rounded btn-sm"> حذف </button></center>`
-    };
+//                //,
+//                //{
+//                //    data: null,
+//                //    render: function (data, row, full) {
+//                //        return generateButton(data);
+//                //    },
+//                //}
 
+//            ]
+//        });
 
+//    function generateButton(data) {
 
+//        return `<center><button onclick="Edit('${data.Id}','${data.Name}','${data.DiscountType}','${data.PriceInvoice}','${data.PercentDiscount}','${data.DetDiscount}')" class="btn btn-warning btn-rounded btn-sm">ویرایش</button>&nbsp; <button onclick="Remove('${data.Id}')" class="btn btn-danger btn-rounded btn-sm"> حذف </button></center>`;
+//    };
 
-}
+//    function generateButton(data) {
+
+//        return `<center><button onclick="Edit('${data.AccClbUid}')" class="btn btn-warning btn-rounded btn-sm">ویرایش</button>&nbsp; <button onclick="Remove('${data.Id}')" class="btn btn-danger btn-rounded btn-sm"> حذف </button></center>`;
+//    };
+//}
+
+//    $(document).ready(function () {
+//        debugger
+//        bindDatatable();
+//    });
+
+  
+
+       
+
 

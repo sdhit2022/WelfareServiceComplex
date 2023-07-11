@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "لیست مشترکین";   
+}
+
+
+        <div class="page-header">
+            <div class="page-title">
+                <h3>لیست مشترکین</h3>
+            </div>
+        </div>
+
+        <div class="row layout-top-spacing" id="cancel-row">
+            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                <div class="widget-content widget-content-area br-6">
+                    <div class="text-center">
+                        <a asp-page="/BaseData/AccountClub" class="btn btn-success btn-rounded btn-sm">افزودن مشترک جدید</a>
+                    </div>
+                    <div class="table-responsive mb-4 mt-4">
+                        <table id="dataTable_1" class="table table-hover table-bordered cell-border row-border" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>شماره اشتراک</th>
+                                    <th>تاریخ تولد</th>
+                                    @*<th>نوع مشترک</th>
+                                    <th>درصد تخفیف</th>
+                                    <th>رتبه مشترک</th>*@
+                                    <th>موبایل</th>
+                                    <th>جنسیت</th>
+                                    <th>شغل</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+

@@ -35,4 +35,8 @@
     <ProjectReference Include="..\Persistent\Persistent.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\AccountClub\" />
+  </ItemGroup>
+
 </Project>

@@ -9,7 +9,7 @@ public partial class AccountRating
 
     public Guid? BusUnitUid { get; set; }
 
-    public string AccRateName { get; set; }
+    public string? AccRateName { get; set; }
 
     public int? AccRatePriority { get; set; }
 
@@ -29,5 +29,5 @@ public partial class AccountRating
 
     public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
-    public virtual BusinessUnit BusUnitU { get; set; }
+    public virtual BusinessUnit? BusUnitU { get; set; }
 }

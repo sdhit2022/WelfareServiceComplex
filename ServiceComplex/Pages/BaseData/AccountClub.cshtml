@@ -1,62 +1,32 @@
-﻿@model List<Application.BaseData.Dto.AccountClubDto>
+﻿@page
+@model ServiceComplex.Pages.BaseData.AccountClubModel
 @{
-    ViewData["Title"] = "لیست مشترکین";
-    Layout = "_Layout";
 }
 
-<div id="content" class="main-content">
-    <div class="layout-px-spacing">
-
-        <div class="page-header">
-            <div class="page-title">
-                <h3>لیست مشترکین</h3>
-            </div>
-        </div>
-
-        <div class="row layout-top-spacing" id="cancel-row">
-            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                <div class="widget-content widget-content-area br-6">
-                    <div class="text-center">
-                        <a asp-page="/BaseData/CreateAccountClub"  class="btn btn-success btn-rounded btn-sm">افزودن مشترک جدید</a>
-                    </div>
-                    <div class="table-responsive mb-4 mt-4">
-                        <table id="dataTable_1" class="table table-hover table-bordered cell-border row-border" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>نام</th>
-                                    <th>شماره اشتراک</th>
-                                    <th>تاریخ تولد</th>
-                                    <th>نوع مشترک</th>
-                                    <th>درصد تخفیف</th>
-                                    <th>رتبه مشترک</th>
-                                    <th>موبایل</th>
-                                    <th>جنسیت</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="content" class="layout-px-spacing">
+    <partial name="BaseData/Partial/_AccountClub" />
 </div>
-
-
 @section Scripts
-{
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/assets/js/datepicker/persian-datepicker.min.js"></script>
+    <script src="~/assets/js/datepicker/persian-date.min.js"></script>
+    <script src="~/source/js/basedata/ModifiedAccountClub.js"></script>
+
     <script>
 
         $(document).ready(function () {
+            debugger
             bindDatatable();
         });
 
         function bindDatatable() {
             datatable = $('#dataTable_1')
                 .DataTable({
-                    "sAjaxSource": "/BaseData/CreateAccountClub?handler=Data",
+                    "sAjaxSource": "?handler=Data",
                     "bServerSide": true,
                     "bProcessing": true,
                     "bSearchable": true,
@@ -80,33 +50,33 @@
                             "searchable": true
                         },
                         {
-                            "data": "ShamsiBirthDay",
+                            "data": "AccClbBrithday",
                             "autoWidth": true,
                             "searchable": true
                         },
 
-                        {
-                            "data": "AccClubType",
-                            "autoWidth": true,
-                            "searchable": true
-                        },
-                        {
-                            "data": "AccClubDiscount",
-                            "autoWidth": true,
-                            "searchable": true
-                        },
-                        {
-                            "data": "AccRatioText",
-                            "autoWidth": true,
-                            "searchable": true
-                        },
-                        {
+                        //{
+                        //    "data": "AccClubType",
+                        //    "autoWidth": true,
+                        //    "searchable": true
+                        //},
+                        //{
+                        //    "data": "AccRatioType",
+                        //    "autoWidth": true,
+                        //    "searchable": true
+                        //},
+                         {
                             "data": "AccClbMobile",
                             "autoWidth": true,
                             "searchable": true
                         },
                         {
-                            "data": "AccClbSexText",
+                            "data": "AccClbSex",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "AccFrJob",
                             "autoWidth": true,
                             "searchable": true
                         },
@@ -123,51 +93,30 @@
 
             function generateButton(data) {
 
-                return `<center><a href="/BaseData/CreateAccountClub?handler=Details&id=${data.AccClbUid}" class="btn btn-warning btn-rounded btn-sm">ویرایش</a>&nbsp; <button onclick="Remove('${data.AccClbUid}')" class="btn btn-danger btn-rounded btn-sm"> حذف </button></center>`
+                return `<a title="جزییات بیشستر" onclick="showModal('${data.AccClbUid}')">
+                                                <svg style="color:#2196f3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                                </svg>
+                                            </a>
+
+                                                    <a  asp-page="/BaseData/AccountClub" asp-page-handler="Edit" asp-route-id="${data.AccClbUid}" title="ویرایش" class=" mb-2 mr-2">
+                                                    <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
+                                                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                                   </svg>
+                                               </a>
+                                                        <a class="" onclick="Remove('${data.AccClbUid}')" title="حذف">
+                                                   <svg style="color:#e7515a" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                       <polyline points="3 6 5 6 21 6"></polyline>
+                                                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                       <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                       <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                   </svg>
+                                               </a>` ;
             };
 
         }
 
-
-        function Remove(id) {
-    
-            swal({
-                title: 'آیا مطمئنید؟',
-                text: "این عمل قابل بازگشت نیست!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'حذف',
-                padding: '2em'
-            }).then(function (result) {
-
-                if (result.value) {
-
-                    $.ajax({
-                        url: "/BaseData/CreateAccountClub?handler=Remove&id=" + id,
-                        type: "get",
-                        success: function (result) {
-                            debugger
-                            if (result.isSucceeded) {
-                                swal(
-                                    'موفق!',
-                                    result.message,
-                                    'success'
-                                ).then(function () {
-                                    window.location = "/BaseData/CreateAccountClub?handler=AccountClub";
-                                });
-                            } else {
-                                swal(
-                                    'خطا!',
-                                    result.message,
-                                    'error'
-                                )
-                            }
-                        }
-
-                    })
-
-                }
-            })
-        };
     </script>
-}
+    }
