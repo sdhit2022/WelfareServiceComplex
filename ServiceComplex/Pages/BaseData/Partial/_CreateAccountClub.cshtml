@@ -1,0 +1,219 @@
+﻿@model Application.BaseData.Dto.CreateAccountClub
+@inject Application.BaseData.IBaseDataService _service;
+@{
+    ViewData["Title"] = "ایجاد مشترک";
+    Layout = null;
+}
+
+<link href="~/assets/css/persian-datepicker.css" rel="stylesheet" />
+
+<link href="~/plugins/flatpickr/custom-flatpickr.css" rel="stylesheet" type="text/css">
+
+
+<div class="row">
+    <div id="tabsAlignments" class="col-lg-12 col-12 layout-spacing">
+        <div class="widget-content widget-content-area justify-tab">
+            <form method="post" enctype="multipart/form-data" class="needs-validation" id="submitAddForm" asp-for="submitAddForm">
+                <div class="tab-content" id="justifyTabContent">
+                    <div class="tab-pane fade show active" id="justify-home" role="tabpanel" aria-labelledby="justify-home-tab">
+                        <div class="row layout-top-spacing" id="cancel-row">
+                            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                <div class=" br-6">
+                                    @if (ViewData["ErrorMessage"] != null)
+                                    {
+                                        <span class="alert alert-danger text-center">فرم هارا به درستی پر نکرده اید.</span>
+                                    }
+                                    <div class="row">
+                                        <div class=" col-lg-12 col-sm-12">
+                                            <div class="form-row mb-8">
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> نام <span class="error">*</span></label>
+                                                    <input asp-for="@Model.AccClbName" type="text" class="form-control" placeholder="نام">
+                                                    <span asp-validation-for="@Model.AccClbName" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> شماره اشتراک <span class="error">*</span></label>
+                                                    <input asp-for="@Model.AccClbCode" type="number" class="form-control" placeholder="شماره اشتراک">
+                                                    <span asp-validation-for="@Model.AccClbCode" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> تاریخ تولد <span class="error">*</span></label>
+                                                    <input asp-for="@Model.ShamsiBirthDay" type="text" class=" form-control flatpickr datePicker flatpickr-input active" placeholder="تاریخ تولد">
+                                                    <span asp-validation-for="@Model.ShamsiBirthDay" class="error"></span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> موبایل </label>
+                                                    <input asp-for="@Model.AccClbMobile" type="number" class="form-control" placeholder="موبایل">
+                                                    <span asp-validation-for="@Model.AccClbMobile" class="error"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row mb-8">
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> نام معرف </label>
+                                                    <select asp-for="@Model.AccClbParentUid" type="text" asp-items="@(new SelectList(_service.GetSelectOptionAccounts(),"Id","Name"))" class="form-control">
+                                                        <option>--انتخاب کنید--</option>
+                                                    </select>
+                                                    <span asp-validation-for="@Model.AccClbParentUid" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> کد ملی </label>
+                                                    <input asp-for="@Model.AccClbNationalCode" type="number" class="form-control" placeholder="کد ملی">
+                                                    <span asp-validation-for="@Model.AccClbNationalCode" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for="">تلفن 1</label>
+                                                    <input asp-for="@Model.AccClbPhone1" type="number" class="form-control" placeholder="تلفن 1">
+                                                    <span asp-validation-for="@Model.AccClbPhone1" class="error"></span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="">تلفن 2</label>
+                                                    <input asp-for="@Model.AccClbPhone2" type="number" class="form-control" placeholder="تلفن 2">
+                                                    <span asp-validation-for="@Model.AccClbPhone2" class="error"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row mb-8">
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> رتبه مشتری </label>
+                                                    <select asp-for="@Model.AccRateUid" asp-items="@(new SelectList(_service.GetSelectOptionRatings(),"AccRateUid","AccRateName"))" type="text" class="form-control">
+                                                        <option>--انتخاب کنید--</option>
+                                                    </select>
+                                                    <span asp-validation-for="@Model.AccRateUid" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> نوع اشتراک </label>
+                                                    <select asp-for="@Model.AccClbTypUid" asp-items="@(new SelectList(_service.GetSelectOptionClubTypes(),"AccClbTypUid","AccClbTypName"))" type="text" class="form-control">
+                                                        <option>--انتخاب کنید--</option>
+                                                    </select>
+                                                    <span asp-validation-for="@Model.AccClbTypUid" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for="">کد پستی </label>
+                                                    <input asp-for="@Model.AccClbPostalCode" type="number" class="form-control" placeholder="کد پستی">
+                                                    <span asp-validation-for="@Model.AccClbPostalCode" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> جنسیت </label>
+                                                    <select asp-for="@Model.AccClbSex" type="text" class="form-control">
+                                                        <option>--انتخاب کنید--</option>
+                                                        <option value="1">زن</option>
+                                                        <option value="0">مرد</option>
+                                                    </select>
+                                                    <span asp-validation-for="@Model.AccClbSex" class="error"></span>
+                                                </div>
+
+
+                                            </div>
+
+                                            <p><strong class="text-info">سایر اطلاعات </strong></p>
+                                            <div class="form-row mb-8">
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> استان </label>
+                                                    <select asp-for="@Model.SateUid" asp-items="@(new SelectList(_service.SelectOptionState(),"Id","Name"))" id="state" type="text" class="form-control">
+                                                        <option>--انتخاب کنید--</option>
+                                                    </select>
+                                                    <span asp-validation-for="@Model.CityUid" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> شهر </label>
+                                                    <select asp-for="@Model.CityUid" id="cities" type="text" class="form-control">
+                                                        <option>--انتخاب کنید--</option>
+                                                    </select>
+                                                    <span asp-validation-for="@Model.CityUid" class="error"></span>
+                                                </div>
+
+
+                                                <div class="form-group col-md-3">
+                                                    <label for="">آدرس 1</label>
+                                                    <input asp-for="@Model.AccClbAddress" type="text" class="form-control" placeholder="آدرس 1">
+                                                    <span asp-validation-for="@Model.AccClbAddress" class="error"></span>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="">آدرس 2</label>
+                                                    <input asp-for="@Model.AccClbAddress2" type="text" class="form-control" placeholder="آدرس 2">
+                                                    <span asp-validation-for="@Model.AccClbAddress2" class="error"></span>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="form-row mb-8">
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> قرارداد <span class="error">*</span></label>
+                                                    @*<select asp-for="AccFrContract" asp-items="@(new SelectList(Model.Jobs,"Value","Text"))" type="text" class="form-control">
+                                                    <option value="@null">--انتخاب کنید--</option>
+                                                    </select>
+                                                    <span asp-validation-for="AccFrContract" class="error"></span>*@
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label for=""> شماره سریال کارت</label>
+                                                    <input asp-for="AccCardSerial" type="text" class="form-control" placeholder="شماره سریال کارت" disabled>
+                                                    <span asp-validation-for="AccCardSerial" class="error"></span>
+                                                </div>
+
+                                            </div>
+
+                                            <p><strong class="text-info">موقعیت جغرافیایی</strong></p>
+                                            <div class="form-row mb-8">
+
+                                                <div class="form-group col-md-3">
+                                                    <input asp-for="@Model.AccClbLong" type="number" class="form-control" placeholder="طول">
+                                                    <span asp-validation-for="@Model.AccClbLong" class="error"></span>
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <input asp-for="@Model.AccClbLat" type="number" class="form-control" placeholder="عرض">
+                                                    <span asp-validation-for="@Model.AccClbLat" class="error"></span>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <div class="form-row mb-8">
+                                                <div class="form-group col-md-12">
+                                                    <label for=""> توضیحات </label>
+                                                    <textarea asp-for="@Model.AccClbDescribtion" type="text" class="form-control" rows="3" placeholder=" توضیحات "></textarea>
+                                                    <span asp-for="@Model.AccClbDescribtion" class="error"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <button id="addSubmit" onclick="addSubmit()" style="margin-right:90%" type="button" class="btn btn-info btn-sm btn-rounded pull-left">تایید فرم</button>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/assets/js/datepicker/persian-date.min.js"></script>
+    <script src="~/assets/js/datepicker/persian-datepicker.min.js"></script>
+    <script>
+
+    </script>
+}

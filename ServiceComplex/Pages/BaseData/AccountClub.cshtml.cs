@@ -64,5 +64,10 @@ namespace ServiceComplex.Pages.BaseData
             return new JsonResult(_service.UpdateAccountClub(command));
         }
 
+        public IActionResult OnGetAccount()
+        {
+            return Partial("BaseData/Partial/_CreateAccountClub");
+        }
+
     }
 }
