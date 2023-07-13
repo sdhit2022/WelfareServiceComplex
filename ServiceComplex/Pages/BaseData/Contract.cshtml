@@ -1,0 +1,230 @@
+﻿@page
+@model ServiceComplex.Pages.BaseData.ContractModel
+@{
+}
+
+<style>
+    .border-none {
+        border: none !important;
+    }
+
+    input[readonly] {
+        background: no-repeat !important;
+        cursor: default !important;
+        color: darkslategrey;
+    }
+</style>
+<div id="content" class="main-content">
+    <div class="layout-px-spacing">
+
+        <div class="page-header">
+            <div class="page-title">
+                <h3>قرارداد ها</h3>
+            </div>
+        </div>
+
+        <div class="row layout-top-spacing" id="cancel-row">
+
+            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                <div class="widget-content widget-content-area br-6">
+                    <div class="text-center">
+                        <a onclick="Create()" class="btn btn-secondary btn-rounded btn-sm">افزودن قرارداد جدید</a>
+                    </div>
+                    <div class="table-responsive mb-4 mt-4">
+                        <table id="dataTable" class="table table-hover table-bordered cell-border row-border" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>عنوان</th>
+                                    <th>شماره </th>
+                                    <th>نوع</th>
+                                    <th>تاریخ شروع</th>                                    
+                                    <th>تاریخ پایان</th>                                    
+                                    <th>تاریخ ثبت</th>                                    
+                                    <th>عملیات</th>
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="createContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:700px !Important">
+            <div class="modal-header">
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ایجاد قرارداد جدید : </h5>
+                    <div id="CreateError" style="display:none">
+                        <span id="error" class="alert alert-danger text-center">عنوان قرارداد تکراری است</span>
+                    </div>
+                </div>
+               
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+          
+            <form method="post" class="needs-validation" asp-page="/BaseData/Contract" asp-page-handler="Create" name="submitForm" id="CreateForm">
+                <div class="modal-body">
+
+                    <div class="widget-content">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-5">
+                                <label >عنوان قرار داد:</label>
+                                <input id="CntTitle_create" name="CntTitle" type="text" class="form-control basic border-none">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label >نوع:</label>
+                                <select id="CntType_create" name="CntType" class="form-control" required>
+                                    <option value="0" default="" selected="">سقف اعتبار</option>
+                                    <option value="1">تخفیف درصدی</option>
+                                    <option value="2">تخفیف ریالی</option>
+                                   
+                                </select>
+                            </div>
+
+                            
+                            <div class="form-group col-md-3">
+                                <label for=""> شماره قرارداد <span class="error">*</span></label>
+                                <input id="CntContractNum_create" name="CntContractNum" type="text" class=" form-control flatpickr datePicker flatpickr-input active" placeholder="تاریخ تولد">
+                            </div>
+
+                        </div>
+                            
+                        <div class="form-row">
+                            <div class="col-md-6 mb-5">
+
+                               <div class="form-group col-md-3">
+                                <label for=""> تاریخ شروع <span class="error">*</span></label>
+                                <input id="CntStartDateShamsi_create" name="CntStartDateShamsi" type="text" class=" form-control flatpickr datePicker flatpickr-input active" placeholder="تاریخ تولد">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for=""> تاریخ پایان <span class="error">*</span></label>
+                                <input id="CntEndDateShamsi_create" name="CntEndDateShamsi" type="text" class=" form-control flatpickr datePicker flatpickr-input active" placeholder="تاریخ تولد">
+                            </div>
+
+                              
+                            </div>
+                            
+                            </div>
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn"  onclick="saveCreate()" id="saveChanges" value="ذخیره " />
+                    <button class="btn"  data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:700px !Important">
+            <div class="modal-header">
+                <div class="form-row">
+                    <h5 class="modal-title text-center"> ویرایش : </h5>
+                    <div id="EditError" style="display:none">
+                        <span id="editError" class="alert alert-danger text-center">نام سالن تکراری است</span>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+           
+            <form method="post" class="needs-validation"  asp-page="/BaseData/Contract" asp-page-handler="Edit" name="submitForm" id="EditForm">
+                <div class="modal-body">
+
+                    <div class="widget-content">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-5">
+                                <label for="SlnName">نام سالن:</label>
+                                <input id="SlnName" name="SlnName" type="text" class="form-control basic border-none" >
+                            </div>
+                            <div class="form-group col-md-4">
+                            <label for="SlnName">نوع:</label>
+                                <select id="SlnType" name="SlnType" class="form-control" required>
+                                    <option  value="0" default="" selected="">انتخاب کنید</option>
+                                    <option  value="1">تالار</option>
+                                    <option  value="2">ورزشی</option>
+                                    <option  value="3">ماساژ</option>
+                                    <option  value="4">بازی</option>
+                                    <option  value="5">استخر</option>
+                                    <option  value="6">رستوران</option>
+                                    <option  value="7">مهمانسرا</option>
+                                    <option  value="8">بوفه</option>
+                                    <option  value="9">کافیشاپ</option>
+                                    <option value="10">کلینیک</option>
+                                    <option value="11">پارکینگ</option>
+                                    <option  value="12">سایر</option>
+                                </select>
+
+                            </div>
+                            </div>
+                        <div class="form-row">
+
+                            <div class="col-md-6 mb-5">
+
+                                <label>انبار:</label>
+                                <select id="FrWarHosUid" name="FrWarHosUid" asp-Items="@(new SelectList(Model.WareHouses, "Value", "Text"))" class="form-control" required>
+                                    <option default="" selected="">انتخاب کنید</option>
+
+
+                                </select>
+
+
+
+                            </div>
+
+                            <div class="col-md-6 mb-5" hidden>
+                                <input id="SlnId" name="SlnId" type="number" class="form-control basic border-none" value="آیدی:&nbsp;&nbsp; ">
+                            </div>
+                           
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="saveEdit()" class="btn" >ذخیره تغییرات</button>  
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> بستن</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/assets/js/datepicker/persian-datepicker.min.js"></script>
+<script src="~/assets/js/datepicker/persian-date.min.js"></script>
+<script src="~/Source/Js/BaseData/Contract.js" ></script>
+
+@section Scripts
+{
+    <script>
+
+    </script>
+}
+
+
+

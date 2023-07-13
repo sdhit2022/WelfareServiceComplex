@@ -13,6 +13,7 @@ using System.Text.Json;
 using ILogger = Microsoft.Build.Framework.ILogger;
 using Application.Product;
 using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.BaseData
 {
@@ -27,6 +28,13 @@ namespace Application.BaseData
         ResultDto CreateWareHouse(CreateWareHouse command);
         ResultDto RemoveWareHouse(Guid id);
         ResultDto UpdateWareHouse(UpdateWareHouse command);
+
+
+        JsonResult GetAllContracts(JqueryDatatableParam param);
+        ResultDto CreateContract(ContractDto contract);
+        ContractDto GetContract(Guid id);
+        //ResultDto RemoveWareHouse(Guid id);
+        ResultDto UpdateContract(ContractDto contract);
 
         JsonResult GetAllAccountClupType(JqueryDatatableParam param);
         ResultDto CreateAccountClubType(CreateAccountClubType command);
@@ -704,8 +712,8 @@ namespace Application.BaseData
             {
                 clubTypeDto.AccClbSexText = clubTypeDto.AccClbSex switch
                 {
-                    1 => "زن",
-                    0 => "مرد",
+                    1 => "مرد",
+                    0 => "زن",
                     _ => clubTypeDto.AccClbSexText
                 };
 
@@ -987,6 +995,109 @@ namespace Application.BaseData
         {
             return _complexContext.Cities.Where(x => x.SttUid == stateId).Select(x => new { x.CityName, x.CityUid }).Select(x => new SelectListOption() { Value = x.CityUid, Text = x.CityName }).AsNoTracking().ToList();
         }
+
+        #region Contracts 
+        public JsonResult GetAllContracts(JqueryDatatableParam param)
+        {
+            var list = _complexContext.Contracts.AsNoTracking();
+
+            if (!string.IsNullOrEmpty(param.SSearch))
+                list = list.Where(x => x.CntTitle.ToLower().Contains(param.SSearch.ToLower()));
+
+            var sortColumnIndex = Convert.ToInt32(_contextAccessor.HttpContext.Request.Query["iSortCol_0"]);
+            var sortDirection = _contextAccessor.HttpContext.Request.Query["sSortDir_0"];
+
+            switch (sortColumnIndex)
+            {
+                case 3:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.CntContractNum) : list.OrderByDescending(c => c.CntContractNum);
+                    break;
+                case 4:
+                    list = sortDirection == "asc" ? list.OrderBy(c => c.CntTitle) : list.OrderByDescending(c => c.CntTitle);
+                    break;
+                default:
+                    {
+                        string OrderingFunction(Contract e) => sortColumnIndex == 0 ? e.CntTitle : e.CntContractNum;
+                        IOrderedEnumerable<Contract> rr = null;
+                        rr = sortDirection == "asc" ? list.AsEnumerable().OrderBy((Func<Contract, string>)OrderingFunction) : list.AsEnumerable().OrderByDescending((Func<Contract, string>)OrderingFunction);
+
+                        list = rr.AsQueryable();
+                        break;
+                    }
+            }
+
+            IQueryable<Contract> displayResult;
+            if (param.IDisplayLength != 0)
+                displayResult = list.Skip(param.IDisplayStart)
+                .Take(param.IDisplayLength);
+            else displayResult = list;
+            var totalRecords = list.Count();
+            var map = _mapper.Map<List<ContractDto>>(displayResult.ToList());
+
+            foreach (var clubTypeDto in map)
+            {
+                clubTypeDto.CntTypeText = clubTypeDto.CntType switch
+                {
+                    0 => "سقف اعتبار",
+                    1 => "تخفیف درصدی",
+                    2 => "تخفیف ریالی",
+                    _ => clubTypeDto.CntTypeText
+                };
+            }
+
+
+                var result = (new
+            {
+                param.SEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = map
+            });
+            return new JsonResult(result, new JsonSerializerOptions { PropertyNamingPolicy = null });
+        }
+
+        public ResultDto CreateContract(ContractDto contract)
+        {
+            var result = new ResultDto();
+            try
+            {
+                if (_complexContext.Contracts.Any(x => x.CntTitle == contract.CntTitle.Fix()))
+                    return result.Failed(ValidateMessage.DuplicateName);
+
+                if (_complexContext.Contracts.Any(x => x.CntContractNum == contract.CntContractNum.Fix()))
+                    return result.Failed(ValidateMessage.DuplicateCode);
+
+                var unit = _mapper.Map<Contract>(contract);
+                _complexContext.Contracts.Add(unit);
+                _complexContext.SaveChanges();
+                return result.Succeeded();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"هنگام ثبت قرارداد خطای زیر رخ داد {exception}");
+                return result.Failed("هنگام ثبت عملیات خطای رخ داد");
+            }
+        }
+
+        public ContractDto GetContract(Guid id)
+        {
+            var contract = _complexContext.Contracts.Find(id);
+            if (contract != null)
+            {
+                var map = _mapper.Map<ContractDto>(contract);
+                return map;
+            }
+            _logger.LogError($"هیچ رکوردی با این شناسه {id} یافت نشد");
+            throw new NullReferenceException("عملیات با خطا مواجه شد لطفا با پشتیبانی تماس بگیرید.");
+        }
+
+        public ResultDto UpdateContract(ContractDto contract)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
     }
 
     public class AccountSelectOption

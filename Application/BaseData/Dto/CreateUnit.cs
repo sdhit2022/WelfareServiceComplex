@@ -39,7 +39,32 @@ namespace Application.BaseData.Dto
         public bool Status { get; set; } = true;
     }
 
+    public class ContractDto
+    {
+        public Guid CntId { get; set; }
 
+        public string CntTitle { get; set; } = null!;
+
+        public string CntStartDateShamsi { get; set; }
+
+        public string CntEndDateShamsi { get; set; }
+
+        public Guid CntFrCreatedby { get; set; }
+
+        public Guid? CntFrModifiedby { get; set; }
+
+        public string CntCreateonShamsi { get; set; }
+        public DateTime CntCreateon { get; set; }
+
+        public DateTime? CntModifiedon { get; set; }
+
+        public string CntTypeText { get; set; }
+        public short CntType { get; set; }
+
+        public string CntContractNum { get; set; } = null!;
+
+        public string CntFrContractName { get; set; }
+    }
     public class CreateAccountClubType
     {
         public Guid Id { get; set; } = Guid.NewGuid();

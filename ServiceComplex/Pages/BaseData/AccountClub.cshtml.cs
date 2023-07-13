@@ -64,10 +64,34 @@ namespace ServiceComplex.Pages.BaseData
             return new JsonResult(_service.UpdateAccountClub(command));
         }
 
-        public IActionResult OnGetAccount()
+        public IActionResult OnGetCreateAccount()
         {
             return Partial("BaseData/Partial/_CreateAccountClub");
         }
+
+        public IActionResult OnPostCreateAccount(CreateAccountClub command)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(command.ShamsiBirthDay))
+                {
+                    command.ShamsiBirthDay = command.ShamsiBirthDay[..10];
+                    command.ShamsiBirthDay.ToGeorgianDateTime();
+                }
+            }
+            catch(Exception)
+            {
+                var operation = new ResultDto();
+                return new JsonResult(operation.Failed("فرمت تاریخ وارد شده درست نمیباشد"));
+            }
+            return new JsonResult(_service.CreateAccountClub(command));
+        }
+
+        public IActionResult OnGetRemove(Guid id)
+        {
+            return new JsonResult(_service.RemoveAccountClub(id));
+        }
+
 
     }
 }

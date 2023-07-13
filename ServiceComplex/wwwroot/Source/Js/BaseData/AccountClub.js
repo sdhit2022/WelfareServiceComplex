@@ -1,7 +1,7 @@
 ﻿
 
 function submitEdit(){
-
+    debugger
     var form = $("#submitForm");
     form.validate();
     if (form.valid() === false) {
@@ -9,7 +9,7 @@ function submitEdit(){
     }
 
     $.ajax({
-        url: "/BaseData/AccountClub?handler=Edit",
+        url: "?handler=Edit",
         data: new FormData(document.forms.submitForm),
         contentType: false,
         processData: false,
@@ -72,18 +72,24 @@ function submitEdit(){
 //})
 
 
-$("#addSubmit").on('click', function (evn) {
-    evn.preventDefault();
-    
-
+function submitAdd() {
+    debugger
     var form = $("#submitAddForm");
     form.validate();
     if (form.valid() === false) {
+        notify("top center", "فیلدهای ستاره دار را پر کنید", "error")
         return false;
     }
 
+    if ($('#AccClbName').val() == "" || $('#AccClbCode').val() == "" || $('#ShamsiBirthDay').val() == "" ||
+        $('#AccClbMobile').val() == "" || $('#AccClbSex').val() == "" || $('#AccClbNationalCode').val() == "") {
+        notify("top center", "فیلدهای ستاره دار را پر کنید", "error");
+        return false;
+    }
+
+
     $.ajax({
-        url: "",
+        url: "?handler=CreateAccount",
         data: new FormData(document.forms.submitAddForm),
         contentType: false,
         processData: false,
@@ -93,30 +99,60 @@ $("#addSubmit").on('click', function (evn) {
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (result) {
-            
+
             if (result.isSucceeded) {
                 notify("top center", "عملیات با موفقیت انجام شد", "success")
-                window.location.href = "/BaseData/AccountClupType";
+                window.location.href = "/BaseData/AccountClub";
             } else {
                 notify("top center", result.message, "error")
                 return false;
             }
 
         }
-    })
+    });
 
-})
+}
+
+//$("#addSubmit").on('click', function (evn) {
+//    evn.preventDefault();
+    
+
+//    var form = $("#submitAddForm");
+//    form.validate();
+//    if (form.valid() === false) {
+//        return false;
+//    }
+
+//    $.ajax({
+//        url: "",
+//        data: new FormData(document.forms.submitAddForm),
+//        contentType: false,
+//        processData: false,
+//        type: 'POST',
+//        headers: {
+//            RequestVerificationToken:
+//                $('input:hidden[name="__RequestVerificationToken"]').val()
+//        },
+//        success: function (result) {
+            
+//            if (result.isSucceeded) {
+//                notify("top center", "عملیات با موفقیت انجام شد", "success")
+//                window.location.href = "/BaseData/AccountClupType";
+//            } else {
+//                notify("top center", result.message, "error")
+//                return false;
+//            }
+
+//        }
+//    })
+
+//})
 
 //function Add() {
 
 //    $("#add").modal("show");
 
 //}
-
-
-
-
-
 
 
 
@@ -146,7 +182,7 @@ function Remove(id) {
                             result.message,
                             'success'
                         ).then(function () {
-                            window.location = "/BaseData/AccountClupType";
+                            window.location = "/BaseData/AccountClub";
                         });
                     } else {
                         swal(
@@ -199,10 +235,8 @@ function AddAccount() {
             $("#content").html(result);
         }
     });
-    //debugger
-    //$("#content").load("/Partial/_CreateAccountClub");
-
 }
+
 //function bindDatatable() {
 
 //    datatable = $('#dataTable_1')
@@ -340,7 +374,7 @@ function bindDatatable() {
                     "searchable": true
                 },
                 {
-                    "data": "AccClbSex",
+                    "data": "AccClbSexText",
                     "autoWidth": true,
                     "searchable": true
                 },
@@ -362,13 +396,7 @@ function bindDatatable() {
 
     function generateButton(data) {
 
-        return `<a title="جزییات بیشتر" onclick="showModal('${data.AccClbUid}')">
-                                                <svg style="color:#2196f3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                                                </svg>
-                                            </a>
+        return `
 
                                                     <a onclick="Edit('${data.AccClbUid}')" asp-page="BaseData/AccountClub" asp-page-handler="Edit" title="ویرایش" class=" mb-2 mr-2">
                                                     <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">

@@ -40,7 +40,15 @@ namespace Application.BaseData
                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.WarHosName))
                .ForMember(x => x.Code, opt => opt.MapFrom(x => x.WarHosCode))
                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.WarHosStatus));
-
+            //Contract
+            this.CreateMap<Contract, ContractDto>()
+                .ForMember(x => x.CntStartDateShamsi, opt => opt.MapFrom(x => x.CntStartDate.ToFarsi()))
+                .ForMember(x => x.CntEndDateShamsi, opt => opt.MapFrom(x => x.CntEndDate.ToFarsi()))
+                .ForMember(x => x.CntCreateonShamsi, opt => opt.MapFrom(x => x.CntCreateon.ToFarsi()));
+            this.CreateMap<ContractDto, Contract>()
+                .ForMember(x => x.CntStartDate, opt => opt.MapFrom(x => x.CntStartDateShamsi.ToGeorgianDateTime()))
+                .ForMember(x => x.CntEndDate, opt => opt.MapFrom(x => x.CntEndDateShamsi.ToGeorgianDateTime()))
+                .ForMember(x => x.CntCreateon, opt => opt.MapFrom(x => x.CntCreateonShamsi.ToGeorgianDateTime()));
 
             //Account Clup
             this.CreateMap<AccountClubType, AccountClubTypeDto>()

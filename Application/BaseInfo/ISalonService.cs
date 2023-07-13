@@ -79,7 +79,7 @@ namespace Application.BaseInfo
            }).ToList();
         }
 
-        public bool InsertSalon(Domain.ComplexModels.Salon salon)
+        public bool InsertSalon(Salon salon)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Application.BaseInfo
         public ResultDto RemoveSalon(long id)
         {
             var result = new ResultDto();
-            Domain.ComplexModels.Salon salon = _complexContext.Salons.Find(id);
+            Salon salon = _complexContext.Salons.Find(id);
             if (salon != null)
             {
                 try
