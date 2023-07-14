@@ -9,9 +9,9 @@ public partial class Menu
 
     public Guid? MnuParentUid { get; set; }
 
-    public string? MnuName { get; set; }
+    public string MnuName { get; set; }
 
-    public string? MnuPeriority { get; set; }
+    public string MnuPeriority { get; set; }
 
     public bool? MnuStatus { get; set; }
 

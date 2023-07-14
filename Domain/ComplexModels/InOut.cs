@@ -23,13 +23,13 @@ public partial class InOut
 
     public Guid IoFrServiceTransactions { get; set; }
 
-    public virtual AccountClub IoFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub IoFrAccountclubNavigation { get; set; }
 
-    public virtual CalenderDetail? IoFrCalenderDetailNavigation { get; set; }
+    public virtual CalenderDetail IoFrCalenderDetailNavigation { get; set; }
 
-    public virtual Calender IoFrCalenderNavigation { get; set; } = null!;
+    public virtual Calender IoFrCalenderNavigation { get; set; }
 
-    public virtual ContinuouseServicesPlaning? IoFrCspNavigation { get; set; }
+    public virtual ContinuouseServicesPlaning IoFrCspNavigation { get; set; }
 
-    public virtual ServiceTransaction IoFrServiceTransactionsNavigation { get; set; } = null!;
+    public virtual ServiceTransaction IoFrServiceTransactionsNavigation { get; set; }
 }

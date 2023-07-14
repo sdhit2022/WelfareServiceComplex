@@ -11,21 +11,21 @@ public partial class ConditionDetail
 
     public int? ConDetRownumber { get; set; }
 
-    public string? ConDetBegin { get; set; }
+    public string ConDetBegin { get; set; }
 
     public Guid? FldUid { get; set; }
 
     public Guid? OprUid { get; set; }
 
-    public string? ConDetParameterValue { get; set; }
+    public string ConDetParameterValue { get; set; }
 
     public Guid? AccLvlUid { get; set; }
 
     public Guid? PrdLvlUid { get; set; }
 
-    public string? ConDetEnd { get; set; }
+    public string ConDetEnd { get; set; }
 
-    public string? ConDetConditionOperator { get; set; }
+    public string ConDetConditionOperator { get; set; }
 
     public bool? ConDetStatus { get; set; }
 
@@ -37,9 +37,9 @@ public partial class ConditionDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Condition? ConU { get; set; }
+    public virtual Condition ConU { get; set; }
 
-    public virtual Field? FldU { get; set; }
+    public virtual Field FldU { get; set; }
 
-    public virtual Operator? OprU { get; set; }
+    public virtual Operator OprU { get; set; }
 }

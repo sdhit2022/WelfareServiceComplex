@@ -7,11 +7,11 @@ public partial class RegardingObject
 {
     public Guid RgdObjUid { get; set; }
 
-    public string? RgdObjUidName { get; set; }
+    public string RgdObjUidName { get; set; }
 
-    public string? RgdObjName { get; set; }
+    public string RgdObjName { get; set; }
 
-    public string? RgdObjCode { get; set; }
+    public string RgdObjCode { get; set; }
 
     public bool? RgdObjStatus { get; set; }
 

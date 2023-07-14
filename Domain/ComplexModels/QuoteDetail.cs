@@ -25,7 +25,7 @@ public partial class QuoteDetail
 
     public decimal? QutDetTotalAmount { get; set; }
 
-    public string? QutDetDescribtion { get; set; }
+    public string QutDetDescribtion { get; set; }
 
     public bool? QutDetStatus { get; set; }
 
@@ -37,11 +37,11 @@ public partial class QuoteDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 
-    public virtual Quote? QutU { get; set; }
+    public virtual Quote QutU { get; set; }
 
-    public virtual UnitOfMeasurement? UomU { get; set; }
+    public virtual UnitOfMeasurement UomU { get; set; }
 
-    public virtual WareHouse? WarHosU { get; set; }
+    public virtual WareHouse WarHosU { get; set; }
 }

@@ -17,7 +17,7 @@ public partial class Order
 
     public Guid? QutUid { get; set; }
 
-    public string? OrdNumber { get; set; }
+    public string OrdNumber { get; set; }
 
     public decimal? OrdTotalAmount { get; set; }
 
@@ -31,7 +31,7 @@ public partial class Order
 
     public DateTime? OrdDate { get; set; }
 
-    public string? OrdDescribtion { get; set; }
+    public string OrdDescribtion { get; set; }
 
     public bool? OrdStatusControl { get; set; }
 
@@ -47,9 +47,9 @@ public partial class Order
 
     public bool? OrdFinalStatusControl { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
@@ -59,7 +59,7 @@ public partial class Order
 
     public virtual ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
 
-    public virtual SalesCategory? SalCatU { get; set; }
+    public virtual SalesCategory SalCatU { get; set; }
 
     public virtual ICollection<WarehouseReciept> WarehouseReciepts { get; set; } = new List<WarehouseReciept>();
 }

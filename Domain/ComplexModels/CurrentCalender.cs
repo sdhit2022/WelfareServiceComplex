@@ -13,5 +13,5 @@ public partial class CurrentCalender
 
     public bool? CcIsFriday { get; set; }
 
-    public string? CcEvents { get; set; }
+    public string CcEvents { get; set; }
 }

@@ -7,7 +7,7 @@ public partial class Country
 {
     public Guid CntUid { get; set; }
 
-    public string? CntName { get; set; }
+    public string CntName { get; set; }
 
     public bool? CntStatus { get; set; }
 

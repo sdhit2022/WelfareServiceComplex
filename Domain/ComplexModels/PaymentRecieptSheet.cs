@@ -17,7 +17,7 @@ public partial class PaymentRecieptSheet
 
     public Guid? AccUid { get; set; }
 
-    public string? PayRciptSheetNumber { get; set; }
+    public string PayRciptSheetNumber { get; set; }
 
     /// <summary>
     /// 1- برگه دریافت 2- برگه پرداخت
@@ -28,7 +28,7 @@ public partial class PaymentRecieptSheet
 
     public DateTime? PayRciptSheetDate { get; set; }
 
-    public string? PayRciptSheetDescribtion { get; set; }
+    public string PayRciptSheetDescribtion { get; set; }
 
     public bool? PayRciptSheetStatus { get; set; }
 
@@ -50,19 +50,19 @@ public partial class PaymentRecieptSheet
 
     public bool? PayRciptSheetStatusControl { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual Invoice? InvU { get; set; }
+    public virtual Invoice InvU { get; set; }
 
-    public virtual Order? OrdU { get; set; }
+    public virtual Order OrdU { get; set; }
 
     public virtual ICollection<PaymentReceiptRelatedPurchaseInvoice> PaymentReceiptRelatedPurchaseInvoices { get; set; } = new List<PaymentReceiptRelatedPurchaseInvoice>();
 
     public virtual ICollection<PaymentRecieptDetail> PaymentRecieptDetails { get; set; } = new List<PaymentRecieptDetail>();
 
-    public virtual Purchase? PurchU { get; set; }
+    public virtual Purchase PurchU { get; set; }
 
-    public virtual StockTransfer? StkTrnsU { get; set; }
+    public virtual StockTransfer StkTrnsU { get; set; }
 
-    public virtual WarehouseReciept? WarHosRecU { get; set; }
+    public virtual WarehouseReciept WarHosRecU { get; set; }
 }

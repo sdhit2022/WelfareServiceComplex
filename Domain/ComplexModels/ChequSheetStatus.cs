@@ -29,11 +29,11 @@ public partial class ChequSheetStatus
 
     public Guid? CheqSheetStusRgdUid { get; set; }
 
-    public virtual Account? AccUidTypeNavigation { get; set; }
+    public virtual Account AccUidTypeNavigation { get; set; }
 
-    public virtual BusinessUnit? BusUnitU { get; set; }
+    public virtual BusinessUnit BusUnitU { get; set; }
 
-    public virtual ChequSheet? CheqSheetU { get; set; }
+    public virtual ChequSheet CheqSheetU { get; set; }
 
-    public virtual DefualtAccountDefinition? DftAccDfinU { get; set; }
+    public virtual DefualtAccountDefinition DftAccDfinU { get; set; }
 }

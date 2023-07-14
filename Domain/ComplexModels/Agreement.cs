@@ -19,19 +19,19 @@ public partial class Agreement
 
     public Guid? TaxUid { get; set; }
 
-    public string? AgtSerialNumber { get; set; }
+    public string AgtSerialNumber { get; set; }
 
-    public string? AgtFromSeller { get; set; }
+    public string AgtFromSeller { get; set; }
 
-    public string? AgtCauseSeller { get; set; }
+    public string AgtCauseSeller { get; set; }
 
-    public string? AgtFromBuyer { get; set; }
+    public string AgtFromBuyer { get; set; }
 
-    public string? AgtCauseBuyer { get; set; }
+    public string AgtCauseBuyer { get; set; }
 
-    public string? AgtToneCar { get; set; }
+    public string AgtToneCar { get; set; }
 
-    public string? AgtCauseCar { get; set; }
+    public string AgtCauseCar { get; set; }
 
     public int? AgtYearMonth { get; set; }
 
@@ -41,37 +41,37 @@ public partial class Agreement
 
     public decimal? AgtSectionedPrice { get; set; }
 
-    public string? AgtOtherPrice { get; set; }
+    public string AgtOtherPrice { get; set; }
 
     public decimal? AgtRemainRentPrice { get; set; }
 
-    public string? AgtRemainPrice { get; set; }
+    public string AgtRemainPrice { get; set; }
 
-    public string? AgtTimeRent { get; set; }
+    public string AgtTimeRent { get; set; }
 
     public decimal? AgtTimeRentPrice { get; set; }
 
     public DateTime? AgtSetDocumentDate { get; set; }
 
-    public string? AgtOfficialDocumentNumber { get; set; }
+    public string AgtOfficialDocumentNumber { get; set; }
 
-    public string? AgtOfficialAddressDocument { get; set; }
+    public string AgtOfficialAddressDocument { get; set; }
 
     public decimal? AgtDamageSellerPrice { get; set; }
 
-    public string? AgtNumberInstallment { get; set; }
+    public string AgtNumberInstallment { get; set; }
 
     public decimal? AgtDamagePrice { get; set; }
 
     public DateTime? AgtDueDate { get; set; }
 
-    public string? AgtDueTime { get; set; }
+    public string AgtDueTime { get; set; }
 
     public DateTime? AgtOtherDueDate { get; set; }
 
     public decimal? AgtDamageTransferDocument { get; set; }
 
-    public string? AgtAdvisorNumberCertificate { get; set; }
+    public string AgtAdvisorNumberCertificate { get; set; }
 
     public decimal? AgtAdvisorSellerPrice { get; set; }
 
@@ -79,13 +79,13 @@ public partial class Agreement
 
     public decimal? AgtAdvisorTaxPrice { get; set; }
 
-    public string? AgtAdvisorDescribtion { get; set; }
+    public string AgtAdvisorDescribtion { get; set; }
 
-    public string? AgtDate { get; set; }
+    public string AgtDate { get; set; }
 
-    public string? AgtTime { get; set; }
+    public string AgtTime { get; set; }
 
-    public string? AgtDescribtion { get; set; }
+    public string AgtDescribtion { get; set; }
 
     public int? AgtType { get; set; }
 
@@ -105,15 +105,15 @@ public partial class Agreement
 
     public int? AgtTaxName { get; set; }
 
-    public virtual Account? AccUidBuyerNavigation { get; set; }
+    public virtual Account AccUidBuyerNavigation { get; set; }
 
-    public virtual Account? AccUidSellerNavigation { get; set; }
+    public virtual Account AccUidSellerNavigation { get; set; }
 
-    public virtual BusinessUnit? BusUnitU { get; set; }
+    public virtual BusinessUnit BusUnitU { get; set; }
 
-    public virtual Car? CarU { get; set; }
+    public virtual Car CarU { get; set; }
 
     public virtual ICollection<ChequeSheet> ChequeSheets { get; set; } = new List<ChequeSheet>();
 
-    public virtual Tax? TaxU { get; set; }
+    public virtual Tax TaxU { get; set; }
 }

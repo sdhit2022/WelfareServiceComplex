@@ -7,13 +7,13 @@ public partial class AccountClubPhoto
 {
     public Guid AccPhtUid { get; set; }
 
-    public string? AccPhtPath { get; set; }
+    public string AccPhtPath { get; set; }
 
     public Guid? AccClbUid { get; set; }
 
-    public string? AccPhtCode { get; set; }
+    public string AccPhtCode { get; set; }
 
-    public string? AccPhtName { get; set; }
+    public string AccPhtName { get; set; }
 
     public DateTime? SysUsrCreatedon { get; set; }
 

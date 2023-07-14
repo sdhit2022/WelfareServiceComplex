@@ -11,7 +11,7 @@ public partial class ExchangeRate
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? ExchRateName { get; set; }
+    public string ExchRateName { get; set; }
 
     public decimal? ExchRatePrice { get; set; }
 
@@ -25,9 +25,9 @@ public partial class ExchangeRate
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public string? ExchRateImage { get; set; }
+    public string ExchRateImage { get; set; }
 
-    public string? ExchRateLatinName { get; set; }
+    public string ExchRateLatinName { get; set; }
 
     public double? ExchRatePercentRisk { get; set; }
 }

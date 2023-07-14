@@ -31,15 +31,15 @@ public partial class CardRechage
 
     public short CrStatus { get; set; }
 
-    public virtual AccountClub CrFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub CrFrAccountclubNavigation { get; set; }
 
-    public virtual Contract CrFrContractNavigation { get; set; } = null!;
+    public virtual Contract CrFrContractNavigation { get; set; }
 
-    public virtual SystemUser CrFrCreatedByNavigation { get; set; } = null!;
+    public virtual SystemUser CrFrCreatedByNavigation { get; set; }
 
-    public virtual SystemUser? CrFrModifiedByNavigation { get; set; }
+    public virtual SystemUser CrFrModifiedByNavigation { get; set; }
 
-    public virtual Salon CrFrSalonNavigation { get; set; } = null!;
+    public virtual Salon CrFrSalonNavigation { get; set; }
 
     public virtual ICollection<ServiceTransaction> ServiceTransactions { get; set; } = new List<ServiceTransaction>();
 }

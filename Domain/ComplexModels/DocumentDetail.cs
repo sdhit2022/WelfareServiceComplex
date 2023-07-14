@@ -21,7 +21,7 @@ public partial class DocumentDetail
 
     public decimal? DocDetCreditoryAmount { get; set; }
 
-    public string? DocDetDescription { get; set; }
+    public string DocDetDescription { get; set; }
 
     public bool? DocDetStatus { get; set; }
 
@@ -35,13 +35,13 @@ public partial class DocumentDetail
 
     public Guid? DftAccDfinUid { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual CostCenter? CstCtrU { get; set; }
+    public virtual CostCenter CstCtrU { get; set; }
 
-    public virtual DefualtAccountDefinition? DftAccDfinU { get; set; }
+    public virtual DefualtAccountDefinition DftAccDfinU { get; set; }
 
-    public virtual Document? DocU { get; set; }
+    public virtual Document DocU { get; set; }
 
-    public virtual RegardingObject? RgdObjU { get; set; }
+    public virtual RegardingObject RgdObjU { get; set; }
 }

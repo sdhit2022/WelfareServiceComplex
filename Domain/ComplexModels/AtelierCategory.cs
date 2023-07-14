@@ -7,9 +7,9 @@ public partial class AtelierCategory
 {
     public Guid AtlCatUid { get; set; }
 
-    public string? AtlCatName { get; set; }
+    public string AtlCatName { get; set; }
 
-    public string? AtlCatCode { get; set; }
+    public string AtlCatCode { get; set; }
 
     public bool? AtlCatStatus { get; set; }
 

@@ -37,7 +37,7 @@ public partial class ConditionLog
 
     public decimal? ExchRatePrice { get; set; }
 
-    public string? FollowupId { get; set; }
+    public string FollowupId { get; set; }
 
     public Guid? BankUid { get; set; }
 
@@ -47,7 +47,7 @@ public partial class ConditionLog
 
     public int? PayRciptDetType { get; set; }
 
-    public virtual Condition? ConU { get; set; }
+    public virtual Condition ConU { get; set; }
 
-    public virtual Invoice? InvU { get; set; }
+    public virtual Invoice InvU { get; set; }
 }

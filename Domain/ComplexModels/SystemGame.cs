@@ -11,7 +11,7 @@ public partial class SystemGame
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? SysNumber { get; set; }
+    public string SysNumber { get; set; }
 
     public DateTime? SysLastStartTime { get; set; }
 
@@ -55,5 +55,5 @@ public partial class SystemGame
 
     public bool? SysReserve { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 }

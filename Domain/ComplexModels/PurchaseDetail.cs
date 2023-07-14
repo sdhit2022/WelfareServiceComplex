@@ -25,7 +25,7 @@ public partial class PurchaseDetail
 
     public decimal? PurchDetTotalAmount { get; set; }
 
-    public string? PurchDetDescribtion { get; set; }
+    public string PurchDetDescribtion { get; set; }
 
     public bool? PurchDetStatus { get; set; }
 
@@ -39,13 +39,13 @@ public partial class PurchaseDetail
 
     public int? PurchDetRowOrder { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 
-    public virtual Purchase? PurchU { get; set; }
+    public virtual Purchase PurchU { get; set; }
 
     public virtual ICollection<SerialDetail> SerialDetails { get; set; } = new List<SerialDetail>();
 
-    public virtual UnitOfMeasurement? UomU { get; set; }
+    public virtual UnitOfMeasurement UomU { get; set; }
 
-    public virtual WareHouse? WarHosU { get; set; }
+    public virtual WareHouse WarHosU { get; set; }
 }

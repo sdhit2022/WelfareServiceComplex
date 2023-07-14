@@ -25,7 +25,7 @@ public partial class OrderDetail
 
     public decimal? OrdDetTotalAmount { get; set; }
 
-    public string? OrdDetDescribtion { get; set; }
+    public string OrdDetDescribtion { get; set; }
 
     public bool? OrdDetStatus { get; set; }
 
@@ -37,11 +37,11 @@ public partial class OrderDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Order? OrdU { get; set; }
+    public virtual Order OrdU { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 
-    public virtual UnitOfMeasurement? UomU { get; set; }
+    public virtual UnitOfMeasurement UomU { get; set; }
 
-    public virtual WareHouse? WarHosU { get; set; }
+    public virtual WareHouse WarHosU { get; set; }
 }

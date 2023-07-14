@@ -11,7 +11,7 @@ public partial class SalonDetail
 
     public Guid SdFrAccountclub { get; set; }
 
-    public virtual AccountClub SdFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub SdFrAccountclubNavigation { get; set; }
 
-    public virtual Salon SdFrSalonNavigation { get; set; } = null!;
+    public virtual Salon SdFrSalonNavigation { get; set; }
 }

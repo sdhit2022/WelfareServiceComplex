@@ -25,7 +25,7 @@ public partial class WarehouseRecieptDetail
 
     public decimal? WarHosRecDetTotalAmount { get; set; }
 
-    public string? WarHosRecDetDescribtion { get; set; }
+    public string WarHosRecDetDescribtion { get; set; }
 
     public bool? WarHosRecDetStatus { get; set; }
 
@@ -37,9 +37,9 @@ public partial class WarehouseRecieptDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 
-    public virtual UnitOfMeasurement? UomU { get; set; }
+    public virtual UnitOfMeasurement UomU { get; set; }
 
-    public virtual WareHouse? WarHosU { get; set; }
+    public virtual WareHouse WarHosU { get; set; }
 }

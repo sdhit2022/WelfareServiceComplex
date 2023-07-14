@@ -33,7 +33,10 @@ namespace Application.BaseData
         JsonResult GetAllContracts(JqueryDatatableParam param);
         ResultDto CreateContract(ContractDto contract);
         ContractDto GetContract(Guid id);
-        //ResultDto RemoveWareHouse(Guid id);
+        bool GetContractByName(string name);
+        bool CheckContractNameExists(string name, Guid id);
+
+        ResultDto RemoveContract(Guid id);
         ResultDto UpdateContract(ContractDto contract);
 
         JsonResult GetAllAccountClupType(JqueryDatatableParam param);
@@ -1093,7 +1096,69 @@ namespace Application.BaseData
 
         public ResultDto UpdateContract(ContractDto contract)
         {
-            throw new NotImplementedException();
+            var result = new ResultDto();
+            try
+            {
+                var contract1 = _complexContext.Contracts.Find(contract.CntId);
+                if (contract1 == null)
+                {
+                    _logger.LogWarning($"Don't Find Any Record With Id {contract.CntId} On Table WareHouse");
+                    return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
+                }
+
+                if (_complexContext.Contracts.Any(x => x.CntTitle == contract.CntTitle.Fix() && x.CntId != contract.CntId))
+                    return result.Failed(ValidateMessage.DuplicateName);
+
+                if (_complexContext.Contracts.Any(x => x.CntContractNum == contract.CntContractNum.Fix() && x.CntId != contract.CntId))
+                    return result.Failed(ValidateMessage.DuplicateCode);
+
+
+                var map = _mapper.Map(contract, contract1);
+                _complexContext.Contracts.Update(map);
+                _complexContext.SaveChanges();
+                return result.Succeeded();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"هنگام ویرایش واحد شمارش خطای زیر رخ داد {exception}");
+                return result.Failed("هنگام ثبت عملیات خطای رخ داد");
+            }
+        }
+
+        public bool GetContractByName(string name)
+        {
+            var result = _complexContext.Contracts.Any(u => u.CntTitle == name);
+            return result;
+
+        }
+
+        public bool CheckContractNameExists(string name, Guid id)
+        {
+            var result = _complexContext.Contracts.Any(u => u.CntTitle == name && u.CntId != id);
+            return result;
+        }
+
+        public ResultDto RemoveContract(Guid id)
+        {
+            var result = new ResultDto();
+            try
+            {
+                var unit = _complexContext.Contracts.Find(id);
+                if (unit == null)
+                {
+                    _logger.LogWarning($"Don't Find Any Record With Id {id} On Table Contracts");
+                    return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
+                }
+
+                _complexContext.Contracts.Remove(unit);
+                _complexContext.SaveChanges();
+                return result.Succeeded();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"هنگام حذف قرارداد خطای زیر رخ داد {exception}");
+                return result.Failed("هنگام ثبت عملیات خطای رخ داد");
+            }
         }
 
         #endregion

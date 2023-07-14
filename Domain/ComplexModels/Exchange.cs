@@ -11,7 +11,7 @@ public partial class Exchange
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? ExchNumber { get; set; }
+    public string ExchNumber { get; set; }
 
     public DateTime? ExchDate { get; set; }
 

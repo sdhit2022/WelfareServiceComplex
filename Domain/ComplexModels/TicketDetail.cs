@@ -9,7 +9,7 @@ public partial class TicketDetail
 
     public long TdFrTicket { get; set; }
 
-    public string TdSerial { get; set; } = null!;
+    public string TdSerial { get; set; }
 
     public DateTime TdExpireDate { get; set; }
 
@@ -17,5 +17,5 @@ public partial class TicketDetail
 
     public virtual ICollection<ServiceTransaction> ServiceTransactions { get; set; } = new List<ServiceTransaction>();
 
-    public virtual Ticket TdFrTicketNavigation { get; set; } = null!;
+    public virtual Ticket TdFrTicketNavigation { get; set; }
 }

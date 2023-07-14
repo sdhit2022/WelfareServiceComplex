@@ -479,6 +479,7 @@ public partial class ComplexContext : DbContext,IComplexContext
 
             entity.Property(e => e.AccId).HasColumnName("ACC_ID");
             entity.Property(e => e.AccCardSerial)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("ACC_CARD_SERIAL");
@@ -486,6 +487,7 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnType("date")
                 .HasColumnName("ACC_CREATE_ON");
             entity.Property(e => e.AccDesc)
+                .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("ACC_DESC");
             entity.Property(e => e.AccFrAccountclub).HasColumnName("ACC_FR_ACCOUNTCLUB");
@@ -1980,6 +1982,7 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .ValueGeneratedNever()
                 .HasColumnName("CNT_ID");
             entity.Property(e => e.CntContractNum)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("CNT_CONTRACT_NUM");
@@ -1999,6 +2002,7 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnType("date")
                 .HasColumnName("CNT_START_DATE");
             entity.Property(e => e.CntTitle)
+                .IsRequired()
                 .HasMaxLength(150)
                 .HasColumnName("CNT_TITLE");
             entity.Property(e => e.CntType).HasColumnName("CNT_TYPE");
@@ -2009,7 +2013,6 @@ public partial class ComplexContext : DbContext,IComplexContext
 
             entity.HasOne(d => d.CntFrCreatedbyNavigation).WithMany(p => p.ContractCntFrCreatedbyNavigations)
                 .HasForeignKey(d => d.CntFrCreatedby)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Contract_SystemUsers_Create");
 
             entity.HasOne(d => d.CntFrModifiedbyNavigation).WithMany(p => p.ContractCntFrModifiedbyNavigations)
@@ -2851,6 +2854,7 @@ public partial class ComplexContext : DbContext,IComplexContext
         {
             entity.Property(e => e.JobId).HasColumnName("JOB_ID");
             entity.Property(e => e.JobName)
+                .IsRequired()
                 .HasMaxLength(150)
                 .HasColumnName("JOB_NAME");
         });
@@ -3709,6 +3713,7 @@ public partial class ComplexContext : DbContext,IComplexContext
         modelBuilder.Entity<ProductPicture>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Image).IsRequired();
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductPictures)
                 .HasForeignKey(d => d.ProductId)
@@ -3722,7 +3727,9 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.ToTable("ProductProperty");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Value).HasMaxLength(200);
+            entity.Property(e => e.Value)
+                .IsRequired()
+                .HasMaxLength(200);
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductProperties)
                 .HasForeignKey(d => d.ProductId)
@@ -3827,8 +3834,12 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.ToTable("Property");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Name).HasMaxLength(200);
-            entity.Property(e => e.Type).HasMaxLength(50);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.Type)
+                .IsRequired()
+                .HasMaxLength(50);
         });
 
         modelBuilder.Entity<Purchase>(entity =>
@@ -4254,6 +4265,7 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.Property(e => e.SlnId).HasColumnName("SLN_ID");
             entity.Property(e => e.FrWarHosUid).HasColumnName("FR_WAR_HOS_UID");
             entity.Property(e => e.SlnName)
+                .IsRequired()
                 .HasMaxLength(150)
                 .HasColumnName("SLN_NAME");
             entity.Property(e => e.SlnType).HasColumnName("SLN_TYPE");
@@ -4468,6 +4480,7 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnName("SET_UID");
             entity.Property(e => e.SetBase).HasColumnName("SET_BASE");
             entity.Property(e => e.SetKey)
+                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("SET_KEY");
@@ -4483,6 +4496,7 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.Property(e => e.ShfId).HasColumnName("SHF_ID");
             entity.Property(e => e.ShfEndTime).HasColumnName("SHF_END_TIME");
             entity.Property(e => e.ShfName)
+                .IsRequired()
                 .HasMaxLength(150)
                 .HasColumnName("SHF_NAME");
             entity.Property(e => e.ShfStartTime).HasColumnName("SHF_START_TIME");
@@ -4943,6 +4957,7 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.Property(e => e.TktFrCreateBy).HasColumnName("TKT_FR_CREATE_BY");
             entity.Property(e => e.TktFrSalon).HasColumnName("TKT_FR_SALON");
             entity.Property(e => e.TktName)
+                .IsRequired()
                 .HasMaxLength(150)
                 .HasColumnName("TKT_NAME");
             entity.Property(e => e.TktNumber).HasColumnName("TKT_NUMBER");
@@ -4976,6 +4991,7 @@ public partial class ComplexContext : DbContext,IComplexContext
                 .HasColumnName("TD_EXPIRE_DATE");
             entity.Property(e => e.TdFrTicket).HasColumnName("TD_FR_TICKET");
             entity.Property(e => e.TdSerial)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("TD_SERIAL");
@@ -5396,4 +5412,38 @@ public partial class ComplexContext : DbContext,IComplexContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public override int SaveChanges()
+    {
+        var modifiedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted || x.State == EntityState.Added);
+        foreach (var entry in modifiedEntries)
+        {
+            var baseConfig = _httpContext.HttpContext.Session.GetJson<BaseConfigDto>("BaseConfig");
+
+            var getEntityType = entry.Context.Model.FindEntityType(entry.Entity.GetType());
+            if (getEntityType != null)
+            {
+                //shodow property
+                var insert = getEntityType.FindProperty("SysUsrCreatedon");
+                var insertBy = getEntityType.FindProperty("SysUsrCreatedby");
+                var updateBy = getEntityType.FindProperty("SysUsrModifiedby");
+                var updateDate = getEntityType.FindProperty("SysUsrModifiedon");
+                var busUnitUid = getEntityType.FindProperty("BusUnitUid");
+                var fisPeriodUid = getEntityType.FindProperty("FisPeriodUid");
+
+
+                if (entry.State == EntityState.Added && busUnitUid != null) entry.Property("BusUnitUid").CurrentValue = baseConfig.BusUnitUId;
+                if (entry.State == EntityState.Added && fisPeriodUid != null) entry.Property("FisPeriodUid").CurrentValue = baseConfig.FisPeriodUId;//TODO current user
+
+                if (entry.State == EntityState.Added && insert != null) entry.Property("SysUsrCreatedon").CurrentValue = DateTime.Now;
+                if (entry.State == EntityState.Added && insertBy != null) entry.Property("SysUsrCreatedby").CurrentValue = new Guid();//TODO current user
+
+                if (entry.State == EntityState.Modified && updateBy != null) entry.Property("SysUsrModifiedon").CurrentValue = DateTime.Now;
+                if (entry.State == EntityState.Modified && updateDate != null)
+                    entry.Property("SysUsrModifiedby").CurrentValue = entry.Property("SysUsrCreatedby").CurrentValue = new Guid();//TODO current user
+            }
+        }
+        return base.SaveChanges();
+    }
+
 }

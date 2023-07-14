@@ -29,9 +29,9 @@ public partial class ProductQuantityOnHand
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual ProductQuantity? PrdQuanU { get; set; }
+    public virtual ProductQuantity PrdQuanU { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 
-    public virtual WareHouse? WarHosU { get; set; }
+    public virtual WareHouse WarHosU { get; set; }
 }

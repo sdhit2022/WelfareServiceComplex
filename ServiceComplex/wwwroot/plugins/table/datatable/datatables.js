@@ -11449,7 +11449,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "نمایش 0 تا 0 از 0 سطر",
+			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
 	
 	
 			/**
@@ -11727,7 +11727,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "هیچ رکورد منطبقی یافت نشد."
+			"sZeroRecords": "No matching records found"
 		},
 	
 	

@@ -9,9 +9,9 @@ public partial class City
 
     public Guid SttUid { get; set; }
 
-    public string? CityName { get; set; }
+    public string CityName { get; set; }
 
-    public string? CityCode { get; set; }
+    public string CityCode { get; set; }
 
     public bool? CityStatus { get; set; }
 
@@ -27,5 +27,5 @@ public partial class City
 
     public virtual ICollection<PhoneBook> PhoneBooks { get; set; } = new List<PhoneBook>();
 
-    public virtual State SttU { get; set; } = null!;
+    public virtual State SttU { get; set; }
 }

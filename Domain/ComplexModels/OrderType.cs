@@ -7,7 +7,7 @@ public partial class OrderType
 {
     public Guid OrdTypUid { get; set; }
 
-    public string? OrdTypName { get; set; }
+    public string OrdTypName { get; set; }
 
     public byte? OrdTypCode { get; set; }
 
@@ -25,9 +25,9 @@ public partial class OrderType
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public string? OrdTypColor { get; set; }
+    public string OrdTypColor { get; set; }
 
-    public string? OrdTypFile { get; set; }
+    public string OrdTypFile { get; set; }
 
-    public string? OrdTypFile2 { get; set; }
+    public string OrdTypFile2 { get; set; }
 }

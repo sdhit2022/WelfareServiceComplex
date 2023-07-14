@@ -23,13 +23,13 @@ public partial class Product
 
     public Guid? UomUid2 { get; set; }
 
-    public string? PrdName { get; set; }
+    public string PrdName { get; set; }
 
-    public string? PrdCode { get; set; }
+    public string PrdCode { get; set; }
 
-    public string? PrdBarcode { get; set; }
+    public string PrdBarcode { get; set; }
 
-    public string? PrdIranCode { get; set; }
+    public string PrdIranCode { get; set; }
 
     public decimal? PrdCoefficient { get; set; }
 
@@ -41,7 +41,7 @@ public partial class Product
 
     public long? PrdMaxQuantityOnHand { get; set; }
 
-    public string? PrdTechnicalDescription { get; set; }
+    public string PrdTechnicalDescription { get; set; }
 
     public bool? PrdTax { get; set; }
 
@@ -61,9 +61,9 @@ public partial class Product
 
     public int? PrdMemory2 { get; set; }
 
-    public string? PrdUnit { get; set; }
+    public string PrdUnit { get; set; }
 
-    public string? PrdUnit2 { get; set; }
+    public string PrdUnit2 { get; set; }
 
     public int? PrdTarazoId { get; set; }
 
@@ -83,15 +83,15 @@ public partial class Product
 
     public double? PrdRemain { get; set; }
 
-    public string? PrdImage { get; set; }
+    public string PrdImage { get; set; }
 
     public bool? PrdNameShow { get; set; }
 
     public bool? PrdImageShow { get; set; }
 
-    public string? PrdNameInPrint { get; set; }
+    public string PrdNameInPrint { get; set; }
 
-    public string? PrdLatinName { get; set; }
+    public string PrdLatinName { get; set; }
 
     public int? PrdMaxSale { get; set; }
 
@@ -111,9 +111,9 @@ public partial class Product
 
     public bool? PrdPriceInPrint { get; set; }
 
-    public string? PrdSalegroupid { get; set; }
+    public string PrdSalegroupid { get; set; }
 
-    public string? ShortDescription { get; set; }
+    public string ShortDescription { get; set; }
 
     public bool? PrdIsUnit1Bigger { get; set; }
 
@@ -121,11 +121,11 @@ public partial class Product
 
     public Guid? FkProductUnit2 { get; set; }
 
-    public string? Volume { get; set; }
+    public string Volume { get; set; }
 
-    public string? Weight { get; set; }
+    public string Weight { get; set; }
 
-    public string? WebDescription { get; set; }
+    public string WebDescription { get; set; }
 
     public int? Type { get; set; }
 
@@ -163,15 +163,15 @@ public partial class Product
 
     public virtual ICollection<ContractDetail> ContractDetails { get; set; } = new List<ContractDetail>();
 
-    public virtual UnitOfMeasurement? FkProductUnit2Navigation { get; set; }
+    public virtual UnitOfMeasurement FkProductUnit2Navigation { get; set; }
 
-    public virtual UnitOfMeasurement? FkProductUnitNavigation { get; set; }
+    public virtual UnitOfMeasurement FkProductUnitNavigation { get; set; }
 
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
-    public virtual ProductLevel? PrdLvlUid3Navigation { get; set; }
+    public virtual ProductLevel PrdLvlUid3Navigation { get; set; }
 
     public virtual ICollection<ProductPicture> ProductPictures { get; set; } = new List<ProductPicture>();
 
@@ -191,13 +191,13 @@ public partial class Product
 
     public virtual ICollection<SystemGame> SystemGames { get; set; } = new List<SystemGame>();
 
-    public virtual Tax? TaxU { get; set; }
+    public virtual Tax TaxU { get; set; }
 
     public virtual ICollection<TicketProduct> TicketProducts { get; set; } = new List<TicketProduct>();
 
-    public virtual UnitOfMeasurement? UomUid1Navigation { get; set; }
+    public virtual UnitOfMeasurement UomUid1Navigation { get; set; }
 
-    public virtual UnitOfMeasurement? UomUid2Navigation { get; set; }
+    public virtual UnitOfMeasurement UomUid2Navigation { get; set; }
 
     public virtual ICollection<WarehouseRecieptDetail> WarehouseRecieptDetails { get; set; } = new List<WarehouseRecieptDetail>();
 }

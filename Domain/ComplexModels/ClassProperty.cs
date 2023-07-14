@@ -7,13 +7,13 @@ public partial class ClassProperty
 {
     public Guid ClsPrpUid { get; set; }
 
-    public string? ClsPrpName { get; set; }
+    public string ClsPrpName { get; set; }
 
-    public string? ClsPrpCode { get; set; }
+    public string ClsPrpCode { get; set; }
 
     public int? ClsPrpLengthDetailCode { get; set; }
 
-    public string? ClsPrpDescription { get; set; }
+    public string ClsPrpDescription { get; set; }
 
     public int? ClsPrpStatus { get; set; }
 

@@ -7,9 +7,9 @@ public partial class State
 {
     public Guid SttUid { get; set; }
 
-    public string? SttName { get; set; }
+    public string SttName { get; set; }
 
-    public string? SttCode { get; set; }
+    public string SttCode { get; set; }
 
     public bool? SttStatus { get; set; }
 

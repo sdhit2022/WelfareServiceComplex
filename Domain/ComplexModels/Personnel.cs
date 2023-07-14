@@ -11,19 +11,19 @@ public partial class Personnel
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? PrsFirstName { get; set; }
+    public string PrsFirstName { get; set; }
 
-    public string? PrsLastName { get; set; }
+    public string PrsLastName { get; set; }
 
-    public string? PrsId { get; set; }
+    public string PrsId { get; set; }
 
     public int? PrsSex { get; set; }
 
-    public string? PrsPhone1 { get; set; }
+    public string PrsPhone1 { get; set; }
 
-    public string? PrsPhone2 { get; set; }
+    public string PrsPhone2 { get; set; }
 
-    public string? PrsJobtitle { get; set; }
+    public string PrsJobtitle { get; set; }
 
     public bool? PrsStatus { get; set; }
 
@@ -39,7 +39,7 @@ public partial class Personnel
 
     public bool? PrsFixed { get; set; }
 
-    public string? PrsDescription { get; set; }
+    public string PrsDescription { get; set; }
 
     public virtual ICollection<RelatedPersonnel> RelatedPersonnel { get; set; } = new List<RelatedPersonnel>();
 }

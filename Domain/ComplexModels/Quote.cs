@@ -15,7 +15,7 @@ public partial class Quote
 
     public Guid? AccUid { get; set; }
 
-    public string? QutNumber { get; set; }
+    public string QutNumber { get; set; }
 
     public decimal? QutTotalAmount { get; set; }
 
@@ -29,7 +29,7 @@ public partial class Quote
 
     public DateTime? QutDate { get; set; }
 
-    public string? QutDescribtion { get; set; }
+    public string QutDescribtion { get; set; }
 
     public bool? QutStatusControl { get; set; }
 
@@ -45,15 +45,15 @@ public partial class Quote
 
     public bool? QutFinalStatusControl { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
     public virtual ICollection<QuoteDetail> QuoteDetails { get; set; } = new List<QuoteDetail>();
 
-    public virtual SalesCategory? SalCatU { get; set; }
+    public virtual SalesCategory SalCatU { get; set; }
 
     public virtual ICollection<WarehouseReciept> WarehouseReciepts { get; set; } = new List<WarehouseReciept>();
 }

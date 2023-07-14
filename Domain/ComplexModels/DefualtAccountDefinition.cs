@@ -15,7 +15,7 @@ public partial class DefualtAccountDefinition
 
     public Guid? SalCatUid { get; set; }
 
-    public string? DftAccDfinName { get; set; }
+    public string DftAccDfinName { get; set; }
 
     public bool? DftAccDfinIsUsedInPaymentSheet { get; set; }
 
@@ -35,11 +35,11 @@ public partial class DefualtAccountDefinition
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
     public virtual ICollection<ChequSheetStatus> ChequSheetStatuses { get; set; } = new List<ChequSheetStatus>();
 
     public virtual ICollection<DocumentDetail> DocumentDetails { get; set; } = new List<DocumentDetail>();
 
-    public virtual SalesCategory? SalCatU { get; set; }
+    public virtual SalesCategory SalCatU { get; set; }
 }

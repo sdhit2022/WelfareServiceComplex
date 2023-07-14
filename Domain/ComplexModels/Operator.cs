@@ -10,12 +10,12 @@ public partial class Operator
     /// <summary>
     /// عملگر
     /// </summary>
-    public string? OprName { get; set; }
+    public string OprName { get; set; }
 
     /// <summary>
     /// نام نمایشی فیلد در برنامه
     /// </summary>
-    public string? OprText { get; set; }
+    public string OprText { get; set; }
 
     public int? OprType { get; set; }
 

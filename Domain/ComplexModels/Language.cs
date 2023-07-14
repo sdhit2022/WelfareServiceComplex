@@ -7,11 +7,11 @@ public partial class Language
 {
     public Guid LangUid { get; set; }
 
-    public string? LangPersianName { get; set; }
+    public string LangPersianName { get; set; }
 
-    public string? LangEnglishName { get; set; }
+    public string LangEnglishName { get; set; }
 
-    public string? LangCode { get; set; }
+    public string LangCode { get; set; }
 
     public bool? LangStatus { get; set; }
 

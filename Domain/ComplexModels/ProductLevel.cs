@@ -13,9 +13,9 @@ public partial class ProductLevel
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? PrdLvlName { get; set; }
+    public string PrdLvlName { get; set; }
 
-    public string? PrdLvlCode { get; set; }
+    public string PrdLvlCode { get; set; }
 
     public bool? PrdLvlStatus { get; set; }
 
@@ -35,7 +35,7 @@ public partial class ProductLevel
 
     public int? PrdLvlCustomButton { get; set; }
 
-    public string? PrdLvlPrinter { get; set; }
+    public string PrdLvlPrinter { get; set; }
 
     public int? PrdLvlExpButton { get; set; }
 
@@ -43,9 +43,9 @@ public partial class ProductLevel
 
     public int? PrdLvlType { get; set; }
 
-    public string? PrdLvlCodeValue { get; set; }
+    public string PrdLvlCodeValue { get; set; }
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

@@ -23,13 +23,13 @@ public partial class Calender
 
     public virtual ICollection<CalenderDetail> CalenderDetails { get; set; } = new List<CalenderDetail>();
 
-    public virtual AccountClub? ClrFrAccountclubNavigation { get; set; }
+    public virtual AccountClub ClrFrAccountclubNavigation { get; set; }
 
-    public virtual Contract ClrFrContractNavigation { get; set; } = null!;
+    public virtual Contract ClrFrContractNavigation { get; set; }
 
-    public virtual Salon ClrFrSalonNavigation { get; set; } = null!;
+    public virtual Salon ClrFrSalonNavigation { get; set; }
 
-    public virtual Shift ClrFrShiftsNavigation { get; set; } = null!;
+    public virtual Shift ClrFrShiftsNavigation { get; set; }
 
     public virtual ICollection<InOut> InOuts { get; set; } = new List<InOut>();
 

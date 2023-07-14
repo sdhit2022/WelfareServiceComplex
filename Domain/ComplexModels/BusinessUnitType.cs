@@ -7,7 +7,7 @@ public partial class BusinessUnitType
 {
     public Guid BusUnitTypUid { get; set; }
 
-    public string? BusUnitTypName { get; set; }
+    public string BusUnitTypName { get; set; }
 
     public bool? BusUnitTypStatus { get; set; }
 

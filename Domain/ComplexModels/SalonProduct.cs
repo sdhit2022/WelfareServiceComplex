@@ -11,7 +11,7 @@ public partial class SalonProduct
 
     public long SpFrSalon { get; set; }
 
-    public virtual Product SpFrProductNavigation { get; set; } = null!;
+    public virtual Product SpFrProductNavigation { get; set; }
 
-    public virtual Salon SpFrSalonNavigation { get; set; } = null!;
+    public virtual Salon SpFrSalonNavigation { get; set; }
 }

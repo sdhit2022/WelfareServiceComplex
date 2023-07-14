@@ -21,7 +21,7 @@ public partial class Ticket
 
     public decimal? TktSaleAmount { get; set; }
 
-    public string TktName { get; set; } = null!;
+    public string TktName { get; set; }
 
     public int TktNumber { get; set; }
 
@@ -33,7 +33,7 @@ public partial class Ticket
 
     public virtual ICollection<TicketProduct> TicketProducts { get; set; } = new List<TicketProduct>();
 
-    public virtual SystemUser TktFrCreateByNavigation { get; set; } = null!;
+    public virtual SystemUser TktFrCreateByNavigation { get; set; }
 
-    public virtual Salon TktFrSalonNavigation { get; set; } = null!;
+    public virtual Salon TktFrSalonNavigation { get; set; }
 }

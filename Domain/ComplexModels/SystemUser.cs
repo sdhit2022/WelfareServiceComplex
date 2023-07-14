@@ -11,23 +11,23 @@ public partial class SystemUser
 
     public Guid? BusUnitUid { get; set; }
 
-    public string? SysUsrFirstName { get; set; }
+    public string SysUsrFirstName { get; set; }
 
-    public string? SysUsrLastName { get; set; }
+    public string SysUsrLastName { get; set; }
 
-    public string? SysUsrCode { get; set; }
+    public string SysUsrCode { get; set; }
 
-    public string? SysUsrUsername { get; set; }
+    public string SysUsrUsername { get; set; }
 
-    public string? SysUsrPassword { get; set; }
+    public string SysUsrPassword { get; set; }
 
-    public string? SysUsrPhone { get; set; }
+    public string SysUsrPhone { get; set; }
 
-    public string? SysUsrMobile { get; set; }
+    public string SysUsrMobile { get; set; }
 
-    public string? SysUsrEmail { get; set; }
+    public string SysUsrEmail { get; set; }
 
-    public string? SysUsrWesite { get; set; }
+    public string SysUsrWesite { get; set; }
 
     public bool? SysUsrStatus { get; set; }
 
@@ -43,9 +43,9 @@ public partial class SystemUser
 
     public Guid? RolUid { get; set; }
 
-    public string? SysUsrBackgroundImage { get; set; }
+    public string SysUsrBackgroundImage { get; set; }
 
-    public string? SysUsrForecolor { get; set; }
+    public string SysUsrForecolor { get; set; }
 
     public Guid? AccUid { get; set; }
 
@@ -61,7 +61,7 @@ public partial class SystemUser
 
     public virtual ICollection<MenuUser> MenuUsers { get; set; } = new List<MenuUser>();
 
-    public virtual Role? RolU { get; set; }
+    public virtual Role RolU { get; set; }
 
     public virtual ICollection<ServiceTransaction> ServiceTransactionStrFrCreateByNavigations { get; set; } = new List<ServiceTransaction>();
 

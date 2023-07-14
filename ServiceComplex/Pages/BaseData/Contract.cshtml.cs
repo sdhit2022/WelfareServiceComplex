@@ -24,11 +24,12 @@ namespace ServiceComplex.Pages.BaseData
 
         public void OnGet()
         {
-        } 
+        }
 
         public IActionResult OnGetData(JqueryDatatableParam param)
         {
-            return new JsonResult( _baseDataService.GetAllContracts(param));
+            var result = _baseDataService.GetAllContracts(param);
+            return result;
 
         }
 
@@ -38,8 +39,8 @@ namespace ServiceComplex.Pages.BaseData
 
         }
 
-        public IActionResult OnPostCreate(string CntTitle,string CntStartDateShamsi,string CntEndDateShamsi
-            ,short CntType,string CntContractNum)
+        public IActionResult OnPostCreate(string CntTitle, string CntStartDateShamsi, string CntEndDateShamsi
+            , short CntType, string CntContractNum)
         {
             try
             {
@@ -47,13 +48,13 @@ namespace ServiceComplex.Pages.BaseData
                 {
                     CntStartDateShamsi = CntStartDateShamsi[..10];
                     CntStartDateShamsi.ToGeorgianDateTime();
-                } 
+                }
                 if (!string.IsNullOrWhiteSpace(CntEndDateShamsi))
                 {
                     CntEndDateShamsi = CntEndDateShamsi[..10];
                     CntEndDateShamsi.ToGeorgianDateTime();
-                } 
-                
+                }
+
             }
             catch (Exception)
             {
@@ -62,15 +63,15 @@ namespace ServiceComplex.Pages.BaseData
             }
             var contract = new ContractDto()
             {
-                CntId=new Guid(),
-                CntTitle= CntTitle,
-                CntStartDateShamsi= CntStartDateShamsi,
+                CntId = new Guid(),
+                CntTitle = CntTitle,
+                CntStartDateShamsi = CntStartDateShamsi,
                 CntEndDateShamsi = CntEndDateShamsi,
                 CntType = CntType,
                 CntContractNum = CntContractNum,
-                CntCreateon=DateTime.Now
+                CntCreateon = DateTime.Now
             };
-            
+
             return new JsonResult(_baseDataService.CreateContract(contract));
         }
 
@@ -80,36 +81,45 @@ namespace ServiceComplex.Pages.BaseData
             ContractDto Contract = _baseDataService.GetContract(id);
             return new JsonResult(JsonConvert.SerializeObject(Contract));
         }
-        public IActionResult OnPostEdit(Guid id,string CntTitle, string CntStartDateShamsi, string CntEndDateShamsi
+        public IActionResult OnPostEdit(Guid CntId, string CntTitle, string CntStartDateShamsi, string CntEndDateShamsi
             , short CntType, string CntContractNum)
         {
-            Contract Contract;
-            if (FrWarHosUid == Guid.Empty)
+            try
             {
-                Contract = new Contract
+                if (!string.IsNullOrWhiteSpace(CntStartDateShamsi))
                 {
-                    SlnId = SlnId,
-                    SlnName = SlnName,
-                    SlnType = SlnType,
-                };
-            }
-            else
-            {
-                Contract = new Contract
+                    CntStartDateShamsi = CntStartDateShamsi[..10];
+                    CntStartDateShamsi.ToGeorgianDateTime();
+                }
+                if (!string.IsNullOrWhiteSpace(CntEndDateShamsi))
                 {
-                    SlnId = SlnId,
-                    SlnName = SlnName,
-                    SlnType = SlnType,
+                    CntEndDateShamsi = CntEndDateShamsi[..10];
+                    CntEndDateShamsi.ToGeorgianDateTime();
+                }
 
-                    FrWarHosUid = FrWarHosUid
-                };
             }
-            _baseDataService.UpdateContract(Contract);
+            catch (Exception)
+            {
+                var operation = new ResultDto();
+                return new JsonResult(operation.Failed("فرمت تاریخ وارد شده درست نمیباشد"));
+            }
+            var contract = new ContractDto()
+            {
+                CntId = CntId,
+                CntTitle = CntTitle,
+                CntStartDateShamsi = CntStartDateShamsi,
+                CntEndDateShamsi = CntEndDateShamsi,
+                CntType = CntType,
+                CntContractNum = CntContractNum,
+                CntCreateon = DateTime.Now
+            };
+
+            _baseDataService.UpdateContract(contract);
             return Redirect("/BaseData/Contract");
 
         }
 
-        public IActionResult OnGetRemove(long id)
+        public IActionResult OnGetRemove(Guid id)
         {
             return new JsonResult(_baseDataService.RemoveContract(id));
         }
@@ -118,16 +128,10 @@ namespace ServiceComplex.Pages.BaseData
         {
             return new JsonResult(_baseDataService.GetContractByName(name));
         }
-        public IActionResult OnGetCheckContractNameExists(string name, long id)
+        public IActionResult OnGetCheckContractNameExists(string name, Guid id)
         {
             return new JsonResult(_baseDataService.CheckContractNameExists(name, id));
         }
-        public IActionResult OnGetChangeContract(long Contractid)
-        {
-            var Contract = _baseDataService.GetContract(Contractid);
-            Global.ContractId["ContractId"] = Contract.SlnId;
-            Global.ContractName["ContractName"] = Contract.SlnName;
-            return new JsonResult(Contract.SlnName);
-        }
+        
     }
 }

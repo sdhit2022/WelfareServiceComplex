@@ -17,7 +17,7 @@ public partial class Purchase
 
     public Guid? AccUid { get; set; }
 
-    public string? PurchNumber { get; set; }
+    public string PurchNumber { get; set; }
 
     public decimal? PurchTotalAmount { get; set; }
 
@@ -29,13 +29,13 @@ public partial class Purchase
 
     public decimal? PurchExtendedAmount { get; set; }
 
-    public string? PurchReference { get; set; }
+    public string PurchReference { get; set; }
 
     public DateTime? PurchDate { get; set; }
 
     public DateTime? PurchDueDate { get; set; }
 
-    public string? PurchDescribtion { get; set; }
+    public string PurchDescribtion { get; set; }
 
     public bool? PurchStatusControl { get; set; }
 
@@ -61,11 +61,11 @@ public partial class Purchase
 
     public decimal? PurchDetTotalDiscount { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
-    public virtual Order? OrdU { get; set; }
+    public virtual Order OrdU { get; set; }
 
     public virtual ICollection<PaymentReceiptRelatedPurchaseInvoice> PaymentReceiptRelatedPurchaseInvoices { get; set; } = new List<PaymentReceiptRelatedPurchaseInvoice>();
 
@@ -73,5 +73,5 @@ public partial class Purchase
 
     public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
 
-    public virtual SalesCategory? SalCatU { get; set; }
+    public virtual SalesCategory SalCatU { get; set; }
 }

@@ -9,7 +9,7 @@ public partial class SmsHeader
 
     public Guid? BusUnitUid { get; set; }
 
-    public string? SmsHedName { get; set; }
+    public string SmsHedName { get; set; }
 
     public bool? SmsHedStatus { get; set; }
 

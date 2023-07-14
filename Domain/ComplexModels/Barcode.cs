@@ -9,7 +9,7 @@ public partial class Barcode
 
     public Guid? PrdUid { get; set; }
 
-    public string? BarBarcode { get; set; }
+    public string BarBarcode { get; set; }
 
     public bool? BarStatus { get; set; }
 
@@ -21,5 +21,5 @@ public partial class Barcode
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 }

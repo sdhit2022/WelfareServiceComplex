@@ -15,13 +15,13 @@ public partial class Cost
 
     public Guid? CstRgdUid { get; set; }
 
-    public string? CstNumber { get; set; }
+    public string CstNumber { get; set; }
 
     public decimal? CstTotalAmount { get; set; }
 
     public DateTime? CstDate { get; set; }
 
-    public string? CstDescribtion { get; set; }
+    public string CstDescribtion { get; set; }
 
     public bool? CstStatus { get; set; }
 
@@ -35,7 +35,7 @@ public partial class Cost
 
     public virtual ICollection<CostDetail> CostDetails { get; set; } = new List<CostDetail>();
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
-    public virtual RegardingObject? RgdObjU { get; set; }
+    public virtual RegardingObject RgdObjU { get; set; }
 }

@@ -11,9 +11,9 @@ public partial class WareHouse
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? WarHosName { get; set; }
+    public string WarHosName { get; set; }
 
-    public string? WarHosCode { get; set; }
+    public string WarHosCode { get; set; }
 
     public bool? WarHosStatus { get; set; }
 
@@ -25,7 +25,7 @@ public partial class WareHouse
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 

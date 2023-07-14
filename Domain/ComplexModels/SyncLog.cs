@@ -7,9 +7,9 @@ public partial class SyncLog
 {
     public Guid SynUid { get; set; }
 
-    public string? SynSuccessful { get; set; }
+    public string SynSuccessful { get; set; }
 
-    public string? SynUnsuccessful { get; set; }
+    public string SynUnsuccessful { get; set; }
 
     /// <summary>
     /// [1-kala][2-hesab][3-moshtari][4-factor][5-karbar]

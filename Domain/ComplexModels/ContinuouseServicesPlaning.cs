@@ -27,9 +27,9 @@ public partial class ContinuouseServicesPlaning
 
     public virtual ICollection<CalenderDetail> CalenderDetails { get; set; } = new List<CalenderDetail>();
 
-    public virtual AccountClub CspFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub CspFrAccountclubNavigation { get; set; }
 
-    public virtual Product CspFrProductNavigation { get; set; } = null!;
+    public virtual Product CspFrProductNavigation { get; set; }
 
     public virtual ICollection<InOut> InOuts { get; set; } = new List<InOut>();
 

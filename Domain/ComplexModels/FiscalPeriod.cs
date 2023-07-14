@@ -9,9 +9,9 @@ public partial class FiscalPeriod
 
     public Guid? BusUnitUid { get; set; }
 
-    public string? FisPeriodName { get; set; }
+    public string FisPeriodName { get; set; }
 
-    public string? FisPeriodCode { get; set; }
+    public string FisPeriodCode { get; set; }
 
     public DateTime? FisPeriodStartDate { get; set; }
 
@@ -33,7 +33,7 @@ public partial class FiscalPeriod
 
     public virtual ICollection<AccountLevel> AccountLevels { get; set; } = new List<AccountLevel>();
 
-    public virtual BusinessUnit? BusUnitU { get; set; }
+    public virtual BusinessUnit BusUnitU { get; set; }
 
     public virtual ICollection<ChequSheet> ChequSheets { get; set; } = new List<ChequSheet>();
 

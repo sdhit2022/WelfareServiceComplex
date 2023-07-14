@@ -7,9 +7,9 @@ public partial class SalesCategory
 {
     public Guid SalCatUid { get; set; }
 
-    public string? SalCatName { get; set; }
+    public string SalCatName { get; set; }
 
-    public string? SalCatCode { get; set; }
+    public string SalCatCode { get; set; }
 
     public bool? SalCatStatus { get; set; }
 

@@ -11,7 +11,7 @@ public partial class PersonelCalender
 
     public Guid PcFrAccountclub { get; set; }
 
-    public virtual AccountClub PcFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub PcFrAccountclubNavigation { get; set; }
 
-    public virtual Calender PcFrCalenderNavigation { get; set; } = null!;
+    public virtual Calender PcFrCalenderNavigation { get; set; }
 }

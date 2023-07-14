@@ -13,9 +13,9 @@ public partial class AccountLevel
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? AccLvlName { get; set; }
+    public string AccLvlName { get; set; }
 
-    public string? AccLvlCode { get; set; }
+    public string AccLvlCode { get; set; }
 
     public bool? AccLvlStatus { get; set; }
 
@@ -31,5 +31,5 @@ public partial class AccountLevel
 
     public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 }

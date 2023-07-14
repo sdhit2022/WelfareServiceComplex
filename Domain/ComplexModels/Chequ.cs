@@ -13,11 +13,11 @@ public partial class Chequ
 
     public Guid? AccUid { get; set; }
 
-    public string? CheqSerialNo { get; set; }
+    public string CheqSerialNo { get; set; }
 
-    public string? CheqFromSerialNo { get; set; }
+    public string CheqFromSerialNo { get; set; }
 
-    public string? CheqToSerialNo { get; set; }
+    public string CheqToSerialNo { get; set; }
 
     public DateTime? CheqReceiptDate { get; set; }
 
@@ -31,11 +31,11 @@ public partial class Chequ
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual BusinessUnit? BusUnitU { get; set; }
+    public virtual BusinessUnit BusUnitU { get; set; }
 
     public virtual ICollection<ChequSheet> ChequSheets { get; set; } = new List<ChequSheet>();
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 }

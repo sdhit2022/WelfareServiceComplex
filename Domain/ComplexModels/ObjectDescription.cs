@@ -9,5 +9,5 @@ public partial class ObjectDescription
 
     public Guid? ObjUid { get; set; }
 
-    public string? DscDescription { get; set; }
+    public string DscDescription { get; set; }
 }

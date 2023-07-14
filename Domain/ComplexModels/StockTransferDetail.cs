@@ -25,7 +25,7 @@ public partial class StockTransferDetail
 
     public decimal? StkTrnsDetTotalAmount { get; set; }
 
-    public string? StkTrnsDetDescribtion { get; set; }
+    public string StkTrnsDetDescribtion { get; set; }
 
     public bool? StkTrnsDetStatus { get; set; }
 
@@ -37,11 +37,11 @@ public partial class StockTransferDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Product? PrdU { get; set; }
+    public virtual Product PrdU { get; set; }
 
-    public virtual StockTransfer? StkTrnsU { get; set; }
+    public virtual StockTransfer StkTrnsU { get; set; }
 
-    public virtual UnitOfMeasurement? UomU { get; set; }
+    public virtual UnitOfMeasurement UomU { get; set; }
 
-    public virtual WareHouse? WarHosU { get; set; }
+    public virtual WareHouse WarHosU { get; set; }
 }

@@ -23,7 +23,7 @@ public partial class Invoice
 
     public Guid? CstCtrUid { get; set; }
 
-    public string? InvNumber { get; set; }
+    public string InvNumber { get; set; }
 
     public decimal? InvTotalAmount { get; set; }
 
@@ -39,9 +39,9 @@ public partial class Invoice
 
     public DateTime? InvDueDate { get; set; }
 
-    public string? InvReference { get; set; }
+    public string InvReference { get; set; }
 
-    public string? InvDescribtion { get; set; }
+    public string InvDescribtion { get; set; }
 
     public bool? InvStatusControl { get; set; }
 
@@ -57,7 +57,7 @@ public partial class Invoice
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public string? InvBarcode { get; set; }
+    public string InvBarcode { get; set; }
 
     public int? InvSync { get; set; }
 
@@ -79,11 +79,11 @@ public partial class Invoice
 
     public Guid? InvApplicantUid { get; set; }
 
-    public string? InvStartTime { get; set; }
+    public string InvStartTime { get; set; }
 
-    public string? InvEndTime { get; set; }
+    public string InvEndTime { get; set; }
 
-    public string? InvDailyNumber { get; set; }
+    public string InvDailyNumber { get; set; }
 
     public Guid? IncidentUid { get; set; }
 
@@ -99,7 +99,7 @@ public partial class Invoice
 
     public int? InvDiscountType { get; set; }
 
-    public string? InvDefaultAddress { get; set; }
+    public string InvDefaultAddress { get; set; }
 
     public int? InvStep { get; set; }
 
@@ -111,31 +111,33 @@ public partial class Invoice
 
     public int? InvSection { get; set; }
 
-    public string? InvDueTime { get; set; }
+    public string InvDueTime { get; set; }
 
     public bool? InvShareDiscount { get; set; }
 
-    public virtual AccountClub? AccClbU { get; set; }
+    public int? ApplicationType { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual AccountClub AccClbU { get; set; }
+
+    public virtual Account AccU { get; set; }
 
     public virtual ICollection<ConditionLog> ConditionLogs { get; set; } = new List<ConditionLog>();
 
-    public virtual CostCenter? CstCtrU { get; set; }
+    public virtual CostCenter CstCtrU { get; set; }
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 
-    public virtual Order? OrdU { get; set; }
+    public virtual Order OrdU { get; set; }
 
     public virtual ICollection<PaymentReceiptRelatedPurchaseInvoice> PaymentReceiptRelatedPurchaseInvoices { get; set; } = new List<PaymentReceiptRelatedPurchaseInvoice>();
 
     public virtual ICollection<PaymentRecieptSheet> PaymentRecieptSheets { get; set; } = new List<PaymentRecieptSheet>();
 
-    public virtual Quote? QutU { get; set; }
+    public virtual Quote QutU { get; set; }
 
     public virtual ICollection<RelatedPersonnel> RelatedPersonnel { get; set; } = new List<RelatedPersonnel>();
 
-    public virtual SalesCategory? SalCatU { get; set; }
+    public virtual SalesCategory SalCatU { get; set; }
 }

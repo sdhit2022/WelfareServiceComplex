@@ -15,9 +15,9 @@ public partial class PaymentRecieptDetail
 
     public decimal? PayRciptDetTotalAmount { get; set; }
 
-    public string? PayRciptDetDraft { get; set; }
+    public string PayRciptDetDraft { get; set; }
 
-    public string? PayRciptDetDescribtion { get; set; }
+    public string PayRciptDetDescribtion { get; set; }
 
     public bool? PayRciptDetStatus { get; set; }
 
@@ -54,9 +54,9 @@ public partial class PaymentRecieptDetail
 
     public Guid? CheqSheetUid { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual PaymentRecieptSheet? PayRciptSheetU { get; set; }
+    public virtual PaymentRecieptSheet PayRciptSheetU { get; set; }
 
-    public virtual SalesCategory? SalCatU { get; set; }
+    public virtual SalesCategory SalCatU { get; set; }
 }

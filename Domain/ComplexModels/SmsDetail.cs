@@ -13,7 +13,7 @@ public partial class SmsDetail
 
     public int? SmsDetMessageType { get; set; }
 
-    public string? SmsDetMessage { get; set; }
+    public string SmsDetMessage { get; set; }
 
     public bool? SmsDetNewline { get; set; }
 
@@ -27,5 +27,5 @@ public partial class SmsDetail
 
     public Guid? FldUid { get; set; }
 
-    public virtual SmsHeader? SmsHedU { get; set; }
+    public virtual SmsHeader SmsHedU { get; set; }
 }

@@ -27,9 +27,9 @@ public partial class PaymentReceiptRelatedPurchaseInvoice
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Invoice? InvU { get; set; }
+    public virtual Invoice InvU { get; set; }
 
-    public virtual PaymentRecieptSheet PayRciptSheetU { get; set; } = null!;
+    public virtual PaymentRecieptSheet PayRciptSheetU { get; set; }
 
-    public virtual Purchase? PurchU { get; set; }
+    public virtual Purchase PurchU { get; set; }
 }

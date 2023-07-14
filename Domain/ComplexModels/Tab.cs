@@ -9,7 +9,7 @@ public partial class Tab
 
     public byte? TabType { get; set; }
 
-    public string? TabName { get; set; }
+    public string TabName { get; set; }
 
     public int? TabOrder { get; set; }
 }

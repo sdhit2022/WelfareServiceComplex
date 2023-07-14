@@ -13,7 +13,7 @@ public partial class SerialDetail
 
     public Guid? PurchDetUid { get; set; }
 
-    public string? SerDetNumber { get; set; }
+    public string SerDetNumber { get; set; }
 
     public int? SerDetState { get; set; }
 
@@ -29,7 +29,7 @@ public partial class SerialDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual InvoiceDetail? InvDetU { get; set; }
+    public virtual InvoiceDetail InvDetU { get; set; }
 
-    public virtual PurchaseDetail? PurchDetU { get; set; }
+    public virtual PurchaseDetail PurchDetU { get; set; }
 }

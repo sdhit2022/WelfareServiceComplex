@@ -9,9 +9,9 @@ public partial class Bank
 
     public Guid? BusUnitUid { get; set; }
 
-    public string? BankName { get; set; }
+    public string BankName { get; set; }
 
-    public string? BankCode { get; set; }
+    public string BankCode { get; set; }
 
     public bool? BankStatus { get; set; }
 

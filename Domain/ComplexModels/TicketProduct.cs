@@ -11,7 +11,7 @@ public partial class TicketProduct
 
     public long TpFrTicket { get; set; }
 
-    public virtual Product TpFrProductNavigation { get; set; } = null!;
+    public virtual Product TpFrProductNavigation { get; set; }
 
-    public virtual Ticket TpFrTicketNavigation { get; set; } = null!;
+    public virtual Ticket TpFrTicketNavigation { get; set; }
 }

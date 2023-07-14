@@ -25,7 +25,7 @@ public partial class ContractDetail
 
     public decimal? CdExtraCost { get; set; }
 
-    public virtual Contract CdFrContractNavigation { get; set; } = null!;
+    public virtual Contract CdFrContractNavigation { get; set; }
 
-    public virtual Product CdFrProductNavigation { get; set; } = null!;
+    public virtual Product CdFrProductNavigation { get; set; }
 }

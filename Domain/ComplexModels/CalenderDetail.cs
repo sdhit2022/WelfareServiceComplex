@@ -23,13 +23,13 @@ public partial class CalenderDetail
 
     public decimal? CdPersonelPayment { get; set; }
 
-    public virtual AccountClub CdFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub CdFrAccountclubNavigation { get; set; }
 
-    public virtual Calender CdFrCalenderNavigation { get; set; } = null!;
+    public virtual Calender CdFrCalenderNavigation { get; set; }
 
-    public virtual ContinuouseServicesPlaning? CdFrCspNavigation { get; set; }
+    public virtual ContinuouseServicesPlaning CdFrCspNavigation { get; set; }
 
-    public virtual Product CdFrProductNavigation { get; set; } = null!;
+    public virtual Product CdFrProductNavigation { get; set; }
 
     public virtual ICollection<InOut> InOuts { get; set; } = new List<InOut>();
 }

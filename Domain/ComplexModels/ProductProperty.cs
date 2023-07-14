@@ -11,9 +11,9 @@ public partial class ProductProperty
 
     public Guid ProductId { get; set; }
 
-    public string Value { get; set; } = null!;
+    public string Value { get; set; }
 
-    public virtual Product Product { get; set; } = null!;
+    public virtual Product Product { get; set; }
 
-    public virtual Property Property { get; set; } = null!;
+    public virtual Property Property { get; set; }
 }

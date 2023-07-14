@@ -23,7 +23,7 @@ public partial class StockTransfer
 
     public Guid? CstCtrUid { get; set; }
 
-    public string? StkTrnsNumber { get; set; }
+    public string StkTrnsNumber { get; set; }
 
     public decimal? StkTrnsTotalAmount { get; set; }
 
@@ -39,9 +39,9 @@ public partial class StockTransfer
 
     public DateTime? StkTrnsDueDate { get; set; }
 
-    public string? StkTrnsReference { get; set; }
+    public string StkTrnsReference { get; set; }
 
-    public string? StkTrnsDescribtion { get; set; }
+    public string StkTrnsDescribtion { get; set; }
 
     public bool? StkTrnsStatusControl { get; set; }
 
@@ -57,7 +57,7 @@ public partial class StockTransfer
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
     public virtual ICollection<PaymentRecieptSheet> PaymentRecieptSheets { get; set; } = new List<PaymentRecieptSheet>();
 

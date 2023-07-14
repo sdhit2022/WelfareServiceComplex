@@ -7,7 +7,7 @@ public partial class AccountType
 {
     public Guid AccTypUid { get; set; }
 
-    public string? AccTypName { get; set; }
+    public string AccTypName { get; set; }
 
     public bool? AccTypStatus { get; set; }
 

@@ -43,29 +43,29 @@ public partial class ServiceTransaction
 
     public short StrCheckoutType { get; set; }
 
-    public string? StrMobile { get; set; }
+    public string StrMobile { get; set; }
 
-    public string? StrFullName { get; set; }
+    public string StrFullName { get; set; }
 
-    public string? StrDesc { get; set; }
+    public string StrDesc { get; set; }
 
     public virtual ICollection<InOut> InOuts { get; set; } = new List<InOut>();
 
-    public virtual AccountClub StrFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub StrFrAccountclubNavigation { get; set; }
 
-    public virtual Contract StrFrContractNavigation { get; set; } = null!;
+    public virtual Contract StrFrContractNavigation { get; set; }
 
-    public virtual SystemUser StrFrCreateByNavigation { get; set; } = null!;
+    public virtual SystemUser StrFrCreateByNavigation { get; set; }
 
-    public virtual ContinuouseServicesPlaning? StrFrCspNavigation { get; set; }
+    public virtual ContinuouseServicesPlaning StrFrCspNavigation { get; set; }
 
-    public virtual SystemUser? StrFrModifiedByNavigation { get; set; }
+    public virtual SystemUser StrFrModifiedByNavigation { get; set; }
 
-    public virtual Product StrFrProductNavigation { get; set; } = null!;
+    public virtual Product StrFrProductNavigation { get; set; }
 
-    public virtual CardRechage StrFrRechargeNavigation { get; set; } = null!;
+    public virtual CardRechage StrFrRechargeNavigation { get; set; }
 
-    public virtual Salon StrFrSalonNavigation { get; set; } = null!;
+    public virtual Salon StrFrSalonNavigation { get; set; }
 
-    public virtual TicketDetail? StrFrTicketDetailNavigation { get; set; }
+    public virtual TicketDetail StrFrTicketDetailNavigation { get; set; }
 }

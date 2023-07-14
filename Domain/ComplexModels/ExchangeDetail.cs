@@ -31,5 +31,5 @@ public partial class ExchangeDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Exchange? ExchU { get; set; }
+    public virtual Exchange ExchU { get; set; }
 }

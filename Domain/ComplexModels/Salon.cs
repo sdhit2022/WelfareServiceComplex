@@ -7,7 +7,7 @@ public partial class Salon
 {
     public long SlnId { get; set; }
 
-    public string SlnName { get; set; } = null!;
+    public string SlnName { get; set; }
 
     public short SlnType { get; set; }
 
@@ -17,7 +17,7 @@ public partial class Salon
 
     public virtual ICollection<CardRechage> CardRechages { get; set; } = new List<CardRechage>();
 
-    public virtual WareHouse? FrWarHosU { get; set; }
+    public virtual WareHouse FrWarHosU { get; set; }
 
     public virtual ICollection<SalonDetail> SalonDetails { get; set; } = new List<SalonDetail>();
 

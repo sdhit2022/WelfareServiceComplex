@@ -53,5 +53,5 @@ public partial class RoleAccess
 
     public bool? AcsPreInvoice { get; set; }
 
-    public virtual Role? RolU { get; set; }
+    public virtual Role RolU { get; set; }
 }

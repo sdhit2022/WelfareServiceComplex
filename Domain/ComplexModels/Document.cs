@@ -15,13 +15,13 @@ public partial class Document
 
     public Guid? DocRgdUid { get; set; }
 
-    public string? DocNumber { get; set; }
+    public string DocNumber { get; set; }
 
     public DateTime? DocDate { get; set; }
 
-    public string? DocReference { get; set; }
+    public string DocReference { get; set; }
 
-    public string? DocDescription { get; set; }
+    public string DocDescription { get; set; }
 
     public bool? DocCheck { get; set; }
 
@@ -37,5 +37,5 @@ public partial class Document
 
     public virtual ICollection<DocumentDetail> DocumentDetails { get; set; } = new List<DocumentDetail>();
 
-    public virtual RegardingObject? RgdObjU { get; set; }
+    public virtual RegardingObject RgdObjU { get; set; }
 }

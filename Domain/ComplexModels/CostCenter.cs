@@ -11,9 +11,9 @@ public partial class CostCenter
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? CstCtrName { get; set; }
+    public string CstCtrName { get; set; }
 
-    public string? CstCtrCode { get; set; }
+    public string CstCtrCode { get; set; }
 
     public decimal? CstCtrRemainCredit { get; set; }
 
@@ -29,7 +29,7 @@ public partial class CostCenter
 
     public virtual ICollection<DocumentDetail> DocumentDetails { get; set; } = new List<DocumentDetail>();
 
-    public virtual FiscalPeriod? FisPeriodU { get; set; }
+    public virtual FiscalPeriod FisPeriodU { get; set; }
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 }

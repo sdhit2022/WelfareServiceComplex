@@ -7,7 +7,7 @@ public partial class Shift
 {
     public int ShfId { get; set; }
 
-    public string ShfName { get; set; } = null!;
+    public string ShfName { get; set; }
 
     public int ShfStartTime { get; set; }
 

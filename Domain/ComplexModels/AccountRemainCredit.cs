@@ -23,5 +23,5 @@ public partial class AccountRemainCredit
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 }

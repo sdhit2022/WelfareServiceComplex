@@ -23,7 +23,7 @@ public partial class WarehouseReciept
 
     public Guid? CstCtrUid { get; set; }
 
-    public string? WarHosRecNumber { get; set; }
+    public string WarHosRecNumber { get; set; }
 
     public decimal? WarHosRecTotalAmount { get; set; }
 
@@ -39,9 +39,9 @@ public partial class WarehouseReciept
 
     public DateTime? WarHosRecDueDate { get; set; }
 
-    public string? WarHosRecReference { get; set; }
+    public string WarHosRecReference { get; set; }
 
-    public string? WarHosRecDescribtion { get; set; }
+    public string WarHosRecDescribtion { get; set; }
 
     public bool? WarHosRecStatusControl { get; set; }
 
@@ -57,15 +57,15 @@ public partial class WarehouseReciept
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual BusinessUnit? BusUnitU { get; set; }
+    public virtual BusinessUnit BusUnitU { get; set; }
 
-    public virtual Order? OrdU { get; set; }
+    public virtual Order OrdU { get; set; }
 
     public virtual ICollection<PaymentRecieptSheet> PaymentRecieptSheets { get; set; } = new List<PaymentRecieptSheet>();
 
-    public virtual Quote? QutU { get; set; }
+    public virtual Quote QutU { get; set; }
 
-    public virtual SalesCategory? SalCatU { get; set; }
+    public virtual SalesCategory SalCatU { get; set; }
 }

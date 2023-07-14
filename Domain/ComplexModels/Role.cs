@@ -7,7 +7,7 @@ public partial class Role
 {
     public Guid RolUid { get; set; }
 
-    public string? RolName { get; set; }
+    public string RolName { get; set; }
 
     /// <summary>
     /// 1- admin 2 - supervisor 3 - user

@@ -13,9 +13,9 @@ public partial class Tax
 
     public Guid? FisPeriodUid { get; set; }
 
-    public string? TaxName { get; set; }
+    public string TaxName { get; set; }
 
-    public string? TaxCode { get; set; }
+    public string TaxCode { get; set; }
 
     public decimal? TaxValue { get; set; }
 
@@ -35,7 +35,7 @@ public partial class Tax
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
-    public virtual Account? TaxAccU { get; set; }
+    public virtual Account TaxAccU { get; set; }
 
-    public virtual Account? TaxTaxesAccU { get; set; }
+    public virtual Account TaxTaxesAccU { get; set; }
 }

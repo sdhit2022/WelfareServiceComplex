@@ -7,11 +7,11 @@ public partial class Condition
 {
     public Guid ConUid { get; set; }
 
-    public string? ConName { get; set; }
+    public string ConName { get; set; }
 
-    public string? ConText { get; set; }
+    public string ConText { get; set; }
 
-    public string? ConTextShow { get; set; }
+    public string ConTextShow { get; set; }
 
     public int? ConPriority { get; set; }
 
@@ -49,7 +49,7 @@ public partial class Condition
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual BusinessUnit? BusU { get; set; }
+    public virtual BusinessUnit BusU { get; set; }
 
     public virtual ICollection<ConditionDetail> ConditionDetails { get; set; } = new List<ConditionDetail>();
 

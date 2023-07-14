@@ -148,3 +148,98 @@ function notify(position, text, type) {
         globalPosition: position
     });
 }
+
+
+//cookie
+
+
+function getCookie(cname) {
+    var name = cname + '=';
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return '';
+}
+
+function getParseCookie(cname) {
+    var stringify = getCookie(cname);
+    return JSON.parse(stringify);
+}
+
+function setCookie(cname, cvalue, path = "/", exdays = 1) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = 'expires=' + d.toUTCString();
+    document.cookie = cname + '=' + JSON.stringify(cvalue) + ';' + expires + ';path=' + path;
+}
+
+
+function setCookieList(cname, cvalue, productId, path = "/", exdays = 1) {
+    debugger
+    var cookie = getCookie(cname);
+
+    if (cookie === "")
+        setCookie(cname, cvalue, path, exdays);
+    else {
+        var parse = JSON.parse(cookie);
+
+        const found = parse.find(element => element.productId === productId);
+        if (found != undefined) {
+            var test = parse.filter(element => element.productId === found.productId);
+
+            test.push.apply(test, cvalue);
+            setCookie(cname, parse);
+        }
+        else {
+            cvalue.push.apply(cvalue, parse);
+            setCookie(cname, cvalue, path, exdays);
+        }
+
+    }
+}
+
+function deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+function deleteCookie(name, path = "/") {
+    document.cookie = name + '=; Path=' + path + '; Expires = Thu, 01 Jan 1970 00: 00: 01 GMT; ';
+}
+
+
+$(document).on('click', '[data-dismiss="modal"]', function () {
+
+    //To Do when close modal
+
+})
+
+function reinitialise(dataTableId) {
+    if ($.fn.DataTable.isDataTable("#" + dataTableId)) {
+
+        $("#" + dataTableId).dataTable().fnClearTable();
+        $("#" + dataTableId).dataTable().fnDestroy();
+    }
+}
+
+
+function showLoader() {
+   $("#requestLoader").removeClass("d-none");
+}
+function hideLoader() {
+    $("#requestLoader").addClass("d-none");
+
+}

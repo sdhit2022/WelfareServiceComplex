@@ -25,9 +25,9 @@ public partial class CostDetail
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Account? AccU { get; set; }
+    public virtual Account AccU { get; set; }
 
-    public virtual Account? CstDetAccU { get; set; }
+    public virtual Account CstDetAccU { get; set; }
 
-    public virtual Cost? CstU { get; set; }
+    public virtual Cost CstU { get; set; }
 }

@@ -49,12 +49,12 @@ namespace Application.BaseData.Dto
 
         public string CntEndDateShamsi { get; set; }
 
-        public Guid CntFrCreatedby { get; set; }
+        public Guid? CntFrCreatedby { get; set; }
 
         public Guid? CntFrModifiedby { get; set; }
 
         public string CntCreateonShamsi { get; set; }
-        public DateTime CntCreateon { get; set; }
+        public DateTime? CntCreateon { get; set; }
 
         public DateTime? CntModifiedon { get; set; }
 

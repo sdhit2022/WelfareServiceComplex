@@ -7,11 +7,11 @@ public partial class AccountClubCard
 {
     public long AccId { get; set; }
 
-    public string AccCardSerial { get; set; } = null!;
+    public string AccCardSerial { get; set; }
 
     public short AccType { get; set; }
 
-    public string AccDesc { get; set; } = null!;
+    public string AccDesc { get; set; }
 
     public Guid AccFrAccountclub { get; set; }
 
@@ -19,7 +19,7 @@ public partial class AccountClubCard
 
     public DateTime AccCreateOn { get; set; }
 
-    public virtual AccountClub AccFrAccountclubNavigation { get; set; } = null!;
+    public virtual AccountClub AccFrAccountclubNavigation { get; set; }
 
-    public virtual SystemUser AccFrCreateByNavigation { get; set; } = null!;
+    public virtual SystemUser AccFrCreateByNavigation { get; set; }
 }

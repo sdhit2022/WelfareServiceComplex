@@ -7,7 +7,7 @@ public partial class AccountClubType
 {
     public Guid AccClbTypUid { get; set; }
 
-    public string? AccClbTypName { get; set; }
+    public string AccClbTypName { get; set; }
 
     public bool? AccClbTypStatus { get; set; }
 

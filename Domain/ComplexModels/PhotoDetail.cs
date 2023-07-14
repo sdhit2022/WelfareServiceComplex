@@ -11,15 +11,15 @@ public partial class PhotoDetail
 
     public Guid? InvDetUid { get; set; }
 
-    public string? PhtDetCode { get; set; }
+    public string PhtDetCode { get; set; }
 
-    public string? PhtDetName { get; set; }
+    public string PhtDetName { get; set; }
 
     public int? PhtDetCount { get; set; }
 
-    public string? PhtDetSize { get; set; }
+    public string PhtDetSize { get; set; }
 
-    public string? PhtDetPath { get; set; }
+    public string PhtDetPath { get; set; }
 
     public DateTime? SysUsrCreatedon { get; set; }
 

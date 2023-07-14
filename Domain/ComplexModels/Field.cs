@@ -10,12 +10,12 @@ public partial class Field
     /// <summary>
     /// نام فیلد در دیتابیس
     /// </summary>
-    public string? FldName { get; set; }
+    public string FldName { get; set; }
 
     /// <summary>
     /// نام نمایشی فیلد دربرنامه
     /// </summary>
-    public string? FldText { get; set; }
+    public string FldText { get; set; }
 
     /// <summary>
     /// نوع فیلد برای اعمال روی کل فاکتور یا ردیف های فاکتور

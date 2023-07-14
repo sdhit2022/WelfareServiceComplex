@@ -9,19 +9,19 @@ public partial class ChequeSheet
 
     public Guid? AgtUid { get; set; }
 
-    public string? CheqSheetNumber { get; set; }
+    public string CheqSheetNumber { get; set; }
 
     public DateTime? CheqSheetDueDate { get; set; }
 
     public decimal? CheqSheetAmount { get; set; }
 
-    public string? CheqSheetBankName { get; set; }
+    public string CheqSheetBankName { get; set; }
 
-    public string? CheqSheetBankBranch { get; set; }
+    public string CheqSheetBankBranch { get; set; }
 
-    public string? CheqSheetBankCode { get; set; }
+    public string CheqSheetBankCode { get; set; }
 
-    public string? CheqSheetDescribtion { get; set; }
+    public string CheqSheetDescribtion { get; set; }
 
     public bool? CheqSheetStatus { get; set; }
 
@@ -33,5 +33,5 @@ public partial class ChequeSheet
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Agreement? AgtU { get; set; }
+    public virtual Agreement AgtU { get; set; }
 }

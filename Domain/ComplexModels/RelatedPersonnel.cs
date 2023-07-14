@@ -21,7 +21,7 @@ public partial class RelatedPersonnel
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual Invoice? InvU { get; set; }
+    public virtual Invoice InvU { get; set; }
 
-    public virtual Personnel? PrsU { get; set; }
+    public virtual Personnel PrsU { get; set; }
 }

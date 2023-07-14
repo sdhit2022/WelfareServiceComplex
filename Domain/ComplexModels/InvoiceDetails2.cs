@@ -25,7 +25,7 @@ public partial class InvoiceDetails2
 
     public decimal? InvDetTotalAmount { get; set; }
 
-    public string? InvDetDescribtion { get; set; }
+    public string InvDetDescribtion { get; set; }
 
     public bool? InvDetStatus { get; set; }
 

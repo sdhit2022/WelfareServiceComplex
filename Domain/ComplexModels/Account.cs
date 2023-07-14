@@ -25,9 +25,9 @@ public partial class Account
 
     public Guid? AccLvlUid4 { get; set; }
 
-    public string? AccName { get; set; }
+    public string AccName { get; set; }
 
-    public string? AccCode { get; set; }
+    public string AccCode { get; set; }
 
     /// <summary>
     /// نوع حساب: 1- حقیقی 2- حقوقی 3- حقوقی دولتی 4-سایر
@@ -74,11 +74,11 @@ public partial class Account
 
     public int? AccSyncCrm { get; set; }
 
-    public virtual AccountLevel? AccLvlUid4Navigation { get; set; }
+    public virtual AccountLevel AccLvlUid4Navigation { get; set; }
 
-    public virtual AccountRating? AccRateU { get; set; }
+    public virtual AccountRating AccRateU { get; set; }
 
-    public virtual AccountType? AccTypU { get; set; }
+    public virtual AccountType AccTypU { get; set; }
 
     public virtual ICollection<AccountClub> AccountClubs { get; set; } = new List<AccountClub>();
 
@@ -110,7 +110,7 @@ public partial class Account
 
     public virtual ICollection<PaymentRecieptSheet> PaymentRecieptSheets { get; set; } = new List<PaymentRecieptSheet>();
 
-    public virtual PhoneBook? PhbU { get; set; }
+    public virtual PhoneBook PhbU { get; set; }
 
     public virtual ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
 

@@ -9,9 +9,9 @@ public partial class UnitOfMeasurement
 
     public Guid? BusUnitUid { get; set; }
 
-    public string? UomName { get; set; }
+    public string UomName { get; set; }
 
-    public string? UomCode { get; set; }
+    public string UomCode { get; set; }
 
     public bool? UomStatus { get; set; }
 
@@ -23,7 +23,7 @@ public partial class UnitOfMeasurement
 
     public Guid? SysUsrModifiedby { get; set; }
 
-    public virtual BusinessUnit? BusUnitU { get; set; }
+    public virtual BusinessUnit BusUnitU { get; set; }
 
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 
