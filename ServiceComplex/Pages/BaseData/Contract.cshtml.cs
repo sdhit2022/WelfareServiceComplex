@@ -135,7 +135,12 @@ namespace ServiceComplex.Pages.BaseData
 
         public IActionResult OnGetDefineRate(Guid id)
         {
-            return Partial("BaseData/Partial/_DefineContractRate", _baseDataService.GetContract(id));
+            var contract = new ContractVM
+            {
+                contractDto = _baseDataService.GetContract(id),
+                contractDetails=_baseDataService.GetContractDetails(id)
+            };
+            return Partial("BaseData/Partial/_DefineContractRate", contract);
         }
 
 

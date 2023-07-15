@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.ComplexModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.BaseData.Dto
 {
@@ -64,6 +65,12 @@ namespace Application.BaseData.Dto
         public string CntContractNum { get; set; } = null!;
 
         public string CntFrContractName { get; set; }
+    }
+
+    public class ContractVM
+    {
+        public ContractDto contractDto{get;set;}
+        public List<ContractDetail> contractDetails{get;set;}
     }
     public class CreateAccountClubType
     {

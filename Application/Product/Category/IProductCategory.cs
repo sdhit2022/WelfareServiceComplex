@@ -3,6 +3,7 @@ using Application.Interfaces.Context;
 using AutoMapper;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using static Application.Product.Category.ProductCategory;
@@ -16,6 +17,7 @@ public interface IProductCategory
 {
     List<ProductLevelDto> GetLevelList();
     public List<ProductLevelDto> GetParentLevelList();
+    //public List<string> GetParentLevelNames();
     int GetSubCodeCount();
     int GetMainCodeCount();
     string GetPrdLvlCheck(string groupId);
@@ -28,7 +30,7 @@ public interface IProductCategory
     ResultDto<List<ProductLevelDto>> EditPrdCategory(CreateProductLevel command);
     List<SelectOption> SelectOptions();
     List<TaxSelectOptionDto> TaxSelectOption();
-    List<TwoLevelSelectOption> CategorySelectOption();
+    SelectList CategorySelectOption();
 }
 
 public class ProductCategory : IProductCategory
@@ -111,41 +113,40 @@ public class ProductCategory : IProductCategory
             }).ToList();
     }
 
+    public SelectList CategorySelectOption()
+    {
+        List<TwoLevelSelectOption> list = _context.ProductLevels.Include(x => x.PrdLvlParentU)
+            .Select(
+            x => new TwoLevelSelectOption
+            {
+                Value = x.PrdLvlUid,
+                Text = x.PrdLvlName,
+                Group= x.PrdLvlParentU.PrdLvlName           
+            }).ToList();
+        return new SelectList(list, nameof(TwoLevelSelectOption.Value),
+            nameof(TwoLevelSelectOption.Text), null, nameof(TwoLevelSelectOption.Group));
+    }
+
     //public List<TwoLevelSelectOption> CategorySelectOption()
     //{
-    //    return _context.ProductLevels.Include(x => x.PrdLvlParentU).Select(
+    //    return _context.ProductLevels.Select(
     //        x => new TwoLevelSelectOption
     //        {
     //            Value = x.PrdLvlUid,
     //            Text = x.PrdLvlName,
-    //            Group = new SelectListGroup
-    //            {
-    //                Value = x.PrdLvlParentU.PrdLvlUid,
-    //                Text = x.PrdLvlParentU.PrdLvlName
-    //            }
+
     //        }).ToList();
-    //} 
+    //}
+    //public List<TwoLevelSelectOption> SubSelectOption(Guid id)
+    //{
+    //    return _context.ProductLevels.Where(x=>x.ui).Select(
+    //        x => new TwoLevelSelectOption
+    //        {
+    //            Value = x.PrdLvlUid,
+    //            Text = x.PrdLvlName,
 
-    public List<TwoLevelSelectOption> CategorySelectOption()
-    {
-        return _context.ProductLevels.Select(
-            x => new TwoLevelSelectOption
-            {
-                Value = x.PrdLvlUid,
-                Text = x.PrdLvlName,
-                
-            }).ToList();
-    }
-    public List<TwoLevelSelectOption> SubSelectOption(Guid id)
-    {
-        return _context.ProductLevels.Where(x=>x.ui).Select(
-            x => new TwoLevelSelectOption
-            {
-                Value = x.PrdLvlUid,
-                Text = x.PrdLvlName,
-
-            }).ToList();
-    }
+    //        }).ToList();
+    //}
 
 
     public List<TaxSelectOptionDto> TaxSelectOption()
@@ -265,6 +266,11 @@ public class ProductCategory : IProductCategory
         var parent = _context.ProductLevels.Where(x => x.PrdLvlParentUid == null).AsNoTracking().ToList();
         return _mapper.Map<List<ProductLevelDto>>(parent).ToList();
     }
+    //public List<string> GetParentLevelNames()
+    //{
+    //    var parent = _context.ProductLevels.Where(x => x.PrdLvlParentUid == null).Select(x=>x.PrdLvlName).AsNoTracking().ToList();
+    //    return parent;
+    //}
 
     public class ProductLevelDto
     {
@@ -303,13 +309,13 @@ public class ProductCategory : IProductCategory
     public class TwoLevelSelectOption
     {
         public Guid Value { get; set; }
-        public SelectListGroup Group { get; set; }
+        public string Group { get; set; }
         public string Text { get; set; }
     }
-    public class SelectListGroup
-    {
-        public Guid Value { get; set; }
-        public string Text { get; set; }
+    //public class SelectListGroup
+    //{
+    //    public Guid Value { get; set; }
+    //    public string Text { get; set; }
 
-    }
+    //}
 }

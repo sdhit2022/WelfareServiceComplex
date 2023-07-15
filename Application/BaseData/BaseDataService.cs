@@ -35,6 +35,7 @@ namespace Application.BaseData
         ContractDto GetContract(Guid id);
         bool GetContractByName(string name);
         bool CheckContractNameExists(string name, Guid id);
+       List<ContractDetail> GetContractDetails(Guid id);
 
         ResultDto RemoveContract(Guid id);
         ResultDto UpdateContract(ContractDto contract);
@@ -1160,6 +1161,12 @@ namespace Application.BaseData
                 _logger.LogError($"هنگام حذف قرارداد خطای زیر رخ داد {exception}");
                 return result.Failed("هنگام ثبت عملیات خطای رخ داد");
             }
+        }
+
+        public List<ContractDetail> GetContractDetails(Guid id)
+        {
+            var result = _complexContext.ContractDetails.Where(u => u.CdFrContract==id).Include(x=>x.CdFrContractNavigation).ToList();
+            return result;
         }
 
         #endregion
