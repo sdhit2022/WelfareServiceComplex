@@ -148,6 +148,24 @@
 
 
                         <div class="form-row mb-8">
+                            <div class="form-group col-md-6" >
+                                <div class="n-chk mt-40">
+                                    <label class="new-control new-checkbox checkbox-primary Current-color">
+                                        <input id="PrdHasPersonel"  asp-for="Command.PrdHasPersonel" type="checkbox" class="Current-color new-control-input product-timing">
+                                        <span class="new-control-indicator"></span>دارای پرسنل مرتبط و برنامه ریزی می باشد
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6"  >
+                                <div class="n-chk mt-40">
+                                    <label class="new-control new-checkbox checkbox-primary Current-color">
+                                        <input id="PrdIsContonuouse"  asp-for="Command.PrdIsContonuouse" type="checkbox" class="Current-color new-control-input product-timing">
+                                        <span class="new-control-indicator"></span>خدمت مستمر و دارای برنامه ریزی می باشد
+                                    </label>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="form-row mb-8">
                             <div class="form-group col-md-12">
                                 <label for=""> توضیحات کوتاه</label>
                                 <textarea asp-for="Command.ShortDescription" type="text" class="form-control" rows="3" id="" placeholder=" توضیحات کوتاه"></textarea>

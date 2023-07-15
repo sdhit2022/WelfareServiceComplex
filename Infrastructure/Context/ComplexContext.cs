@@ -49,6 +49,8 @@ public partial class ComplexContext : DbContext,IComplexContext
 
     public virtual DbSet<Bank> Banks { get; set; }
 
+    public virtual DbSet<BankPose> BankPoses { get; set; }
+
     public virtual DbSet<Barcode> Barcodes { get; set; }
 
     public virtual DbSet<BusinessUnit> BusinessUnits { get; set; }
@@ -1149,6 +1151,8 @@ public partial class ComplexContext : DbContext,IComplexContext
 
             entity.ToTable("Bank");
 
+            entity.HasIndex(e => e.Type, "IX_Bank_Type").IsUnique();
+
             entity.Property(e => e.BankUid)
                 .ValueGeneratedNever()
                 .HasColumnName("BANK_UID");
@@ -1172,6 +1176,22 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.Property(e => e.SysUsrModifiedon)
                 .HasColumnType("datetime")
                 .HasColumnName("SYS_USR_MODIFIEDON");
+        });
+
+        modelBuilder.Entity<BankPose>(entity =>
+        {
+            entity.ToTable("BankPose");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Ip).HasMaxLength(50);
+            entity.Property(e => e.Name).HasMaxLength(128);
+            entity.Property(e => e.Port).HasMaxLength(128);
+            entity.Property(e => e.Serial).HasMaxLength(128);
+
+            entity.HasOne(d => d.Bank).WithMany(p => p.BankPoses)
+                .HasForeignKey(d => d.BankId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_BankPose_Bank");
         });
 
         modelBuilder.Entity<Barcode>(entity =>
@@ -3684,6 +3704,10 @@ public partial class ComplexContext : DbContext,IComplexContext
             entity.HasOne(d => d.FisPeriodU).WithMany(p => p.ProductLevels)
                 .HasForeignKey(d => d.FisPeriodUid)
                 .HasConstraintName("FK_ProductLevel_FiscalPeriod");
+
+            entity.HasOne(d => d.PrdLvlParentU).WithMany(p => p.InversePrdLvlParentU)
+                .HasForeignKey(d => d.PrdLvlParentUid)
+                .HasConstraintName("FK_ProductLevel_ProductLevel");
         });
 
         modelBuilder.Entity<ProductLevelAccess>(entity =>

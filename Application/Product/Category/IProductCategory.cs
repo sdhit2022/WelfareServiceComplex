@@ -28,6 +28,7 @@ public interface IProductCategory
     ResultDto<List<ProductLevelDto>> EditPrdCategory(CreateProductLevel command);
     List<SelectOption> SelectOptions();
     List<TaxSelectOptionDto> TaxSelectOption();
+    List<TwoLevelSelectOption> CategorySelectOption();
 }
 
 public class ProductCategory : IProductCategory
@@ -109,6 +110,43 @@ public class ProductCategory : IProductCategory
                 PrdLvlUId = x.PrdLvlUid
             }).ToList();
     }
+
+    //public List<TwoLevelSelectOption> CategorySelectOption()
+    //{
+    //    return _context.ProductLevels.Include(x => x.PrdLvlParentU).Select(
+    //        x => new TwoLevelSelectOption
+    //        {
+    //            Value = x.PrdLvlUid,
+    //            Text = x.PrdLvlName,
+    //            Group = new SelectListGroup
+    //            {
+    //                Value = x.PrdLvlParentU.PrdLvlUid,
+    //                Text = x.PrdLvlParentU.PrdLvlName
+    //            }
+    //        }).ToList();
+    //} 
+
+    public List<TwoLevelSelectOption> CategorySelectOption()
+    {
+        return _context.ProductLevels.Select(
+            x => new TwoLevelSelectOption
+            {
+                Value = x.PrdLvlUid,
+                Text = x.PrdLvlName,
+                
+            }).ToList();
+    }
+    public List<TwoLevelSelectOption> SubSelectOption(Guid id)
+    {
+        return _context.ProductLevels.Where(x=>x.ui).Select(
+            x => new TwoLevelSelectOption
+            {
+                Value = x.PrdLvlUid,
+                Text = x.PrdLvlName,
+
+            }).ToList();
+    }
+
 
     public List<TaxSelectOptionDto> TaxSelectOption()
     {
@@ -260,5 +298,18 @@ public class ProductCategory : IProductCategory
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+    }
+
+    public class TwoLevelSelectOption
+    {
+        public Guid Value { get; set; }
+        public SelectListGroup Group { get; set; }
+        public string Text { get; set; }
+    }
+    public class SelectListGroup
+    {
+        public Guid Value { get; set; }
+        public string Text { get; set; }
+
     }
 }

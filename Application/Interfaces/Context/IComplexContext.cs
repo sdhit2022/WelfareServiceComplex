@@ -36,6 +36,8 @@ public interface IComplexContext
 
     public  DbSet<Bank> Banks { get; set; }
 
+    public  DbSet<BankPose> BankPoses { get; set; }
+
     public  DbSet<Barcode> Barcodes { get; set; }
 
     public  DbSet<BusinessUnit> BusinessUnits { get; set; }

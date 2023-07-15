@@ -15,9 +15,9 @@ namespace Application.Product.ProductDto
 
         public string PrdCode { get; set; }
 
-        public string? PrdBarcode { get; set; }
+        public string PrdBarcode { get; set; }
 
-        public string? PrdIranCode { get; set; }
+        public string PrdIranCode { get; set; }
 
         public decimal? PrdCoefficient { get; set; }
 
@@ -37,8 +37,8 @@ namespace Application.Product.ProductDto
 
         public decimal? PrdPricePerUnit5 { get; set; }
 
-        public string? PrdImage { get; set; }
-        public byte[]? Image { get; set; }
+        public string PrdImage { get; set; }
+        public byte[] Image { get; set; }
 
         public string PrdNameInPrint { get; set; }
 
@@ -46,11 +46,11 @@ namespace Application.Product.ProductDto
 
         public decimal? PrdDiscount { get; set; }
 
-        public string? ShortDescription { get; set; }
-        public string? WebDescription { get; set; }
+        public string ShortDescription { get; set; }
+        public string WebDescription { get; set; }
         public int? PrdLvlType { get; set; }
-        public string? Volume { get; set; }
-        public string? Weight { get; set; }
+        public string Volume { get; set; }
+        public string Weight { get; set; }
         public bool? PrdIsUnit1Bigger { get; set; }
         public int Type { get; set; }
 

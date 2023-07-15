@@ -27,6 +27,18 @@ $(".checkbox").change(function () {
 
     }
 });
+$("input[id='PrdHasPersonel']").change(function () {
+    if (this.checked) {
+        $("#PrdIsContonuouse").prop('checked', false);
+    } 
+
+});
+$("input[id='PrdIsContonuouse']").change(function () {
+    if (this.checked) {
+        $("#PrdHasPersonel").prop('checked', false);
+    } 
+
+});
 $(".product-unit").change(function () {
     if (this.checked) {
         $("#related-products").modal('show')

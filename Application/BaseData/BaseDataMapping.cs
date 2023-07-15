@@ -47,8 +47,7 @@ namespace Application.BaseData
                 .ForMember(x => x.CntCreateonShamsi, opt => opt.MapFrom(x => x.CntCreateon.ToFarsi()));
             this.CreateMap<ContractDto, Contract>()
                 .ForMember(x => x.CntStartDate, opt => opt.MapFrom(x => x.CntStartDateShamsi.ToGeorgianDateTime()))
-                .ForMember(x => x.CntEndDate, opt => opt.MapFrom(x => x.CntEndDateShamsi.ToGeorgianDateTime()))
-                .ForMember(x => x.CntCreateon, opt => opt.MapFrom(x => x.CntCreateonShamsi.ToGeorgianDateTime()));
+                .ForMember(x => x.CntEndDate, opt => opt.MapFrom(x => x.CntEndDateShamsi.ToGeorgianDateTime()));
 
             //Account Clup
             this.CreateMap<AccountClubType, AccountClubTypeDto>()

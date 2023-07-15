@@ -94,13 +94,13 @@ namespace Application.BaseData.Dto
 
     public class EditAccountClub : CreateAccountClub
         {
-            public List<AccountSelectOption>? Account { get; set; }
-            public List<AccountRating>? Rating { get; set; }
-            public List<AccountClubType>? ClupType { get; set; }
-            public List<SelectListOption>? States { get; set; }
-            public List<SelectListOption>? Cities { get; set; }
-            public List<SelectListOption>? Contracts { get; set; }
-            public List<SelectListOptionInt>? Jobs { get; set; }
+            public List<AccountSelectOption> Account { get; set; }
+            public List<AccountRating> Rating { get; set; }
+            public List<AccountClubType> ClupType { get; set; }
+            public List<SelectListOption> States { get; set; }
+            public List<SelectListOption> Cities { get; set; }
+            public List<SelectListOption> Contracts { get; set; }
+            public List<SelectListOptionInt> Jobs { get; set; }
         }
     
 }

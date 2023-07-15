@@ -1112,7 +1112,8 @@ namespace Application.BaseData
                 if (_complexContext.Contracts.Any(x => x.CntContractNum == contract.CntContractNum.Fix() && x.CntId != contract.CntId))
                     return result.Failed(ValidateMessage.DuplicateCode);
 
-
+                contract.CntCreateon = contract1.CntCreateon;
+                contract.CntFrCreatedby = contract1.CntFrCreatedby;
                 var map = _mapper.Map(contract, contract1);
                 _complexContext.Contracts.Update(map);
                 _complexContext.SaveChanges();

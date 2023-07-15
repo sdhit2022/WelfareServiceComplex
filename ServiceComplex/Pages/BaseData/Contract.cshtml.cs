@@ -111,7 +111,7 @@ namespace ServiceComplex.Pages.BaseData
                 CntEndDateShamsi = CntEndDateShamsi,
                 CntType = CntType,
                 CntContractNum = CntContractNum,
-                CntCreateon = DateTime.Now
+                CntModifiedon = DateTime.Now
             };
 
             _baseDataService.UpdateContract(contract);
@@ -132,6 +132,14 @@ namespace ServiceComplex.Pages.BaseData
         {
             return new JsonResult(_baseDataService.CheckContractNameExists(name, id));
         }
-        
+
+        public IActionResult OnGetDefineRate(Guid id)
+        {
+            return Partial("BaseData/Partial/_DefineContractRate", _baseDataService.GetContract(id));
+        }
+
+
+
+
     }
 }

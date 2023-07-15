@@ -212,8 +212,7 @@
 
 
 
-<script src="~/assets/js/datepicker/persian-datepicker.min.js"></script>
-<script src="~/assets/js/datepicker/persian-date.min.js"></script>
+
 @*<script src="~/Source/Js/BaseData/Contract.js" ></script>
 *@
 @section Scripts
@@ -221,6 +220,9 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script src="~/assets/js/datepicker/persian-datepicker.min.js"></script>
+<script src="~/assets/js/datepicker/persian-date.min.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -287,7 +289,13 @@
 
             function generateButton(data) {
 
-                return `
+                return `<a title="تعیین نرخ" onclick="DefineRate('${data.CntId}')">
+                                                        <svg style="color:#2196f3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
+                                                            <circle cx="12" cy="12" r="10"></circle>
+                                                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                                                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                                        </svg>
+                                                    </a>
 
                                                                             <a onclick="Edit('${data.CntId}')" asp-page="BaseData/AccountClub" asp-page-handler="Edit" title="ویرایش" class=" mb-2 mr-2">
                                                                     <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
@@ -306,6 +314,19 @@
 
         }
 
+
+        function DefineRate(id){
+            debugger
+            $.ajax({
+                url: "?handler=DefineRate&id=" + id,
+                type: "Get",
+                success: function (result) {
+                    debugger
+                    $("#content").html("");
+                    $("#content").html(result);
+                }
+            });
+        }
 
         function Create() {
             $("#createContract").modal('show');
@@ -349,7 +370,7 @@
                 }
             });
         }
-
+        var Contract;
         function Edit(id) {
             //todo
             $("#editContract").modal('show');
@@ -359,7 +380,7 @@
                 url: "?handler=Edit&id=" + id,
                 success: function (result) {
                     debugger
-                    var Contract = JSON.parse(result);
+                    Contract = JSON.parse(result);
                     $("#CntTitle").val(Contract.CntTitle);
                     $("#CntStartDateShamsi").val(Contract.CntStartDateShamsi);
                     $("#CntEndDateShamsi").val(Contract.CntEndDateShamsi);
@@ -398,6 +419,18 @@
                     
                     if (checkexist) {
                         debugger
+                        //Contract.CntId = $("#CntId").val();
+                        //Contract.CntTitle = $("#CntTitle").val();
+                        //Contract.CntStartDateShamsi = $("#CntStartDateShamsi").val();
+                        //Contract.CntEndDateShamsi = $("#CntEndDateShamsi").val();
+                        //Contract.CntType = $("#CntType").val();
+                        //Contract.CntContractNum = $("#CntContractNum").val();
+                        //$.ajax({
+                        //    type: "Post",
+                        //    url: "?handler=Edit",
+                        //    data: {Contract.stringify( },
+                        //    success: function (result) {}
+                        //});
                         editError.style.display = "none";
                         document.getElementById("EditForm").submit();
                         $("#editContract").modal('toggle');
