@@ -1,0 +1,21 @@
+﻿@model List<Application.Common.ProductAssign>
+@{
+}
+<div class="row  layout-top-spacing" id="cancel-row">
+
+    <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+
+        <div class="widget-content widget-content-area br-6">
+ <ul class="list-group " >
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        @*<li class="list-group-item">@Model.contractDetails[i].CdFrContractNavigation.CntTitle</li>*@
+               <li class="list-group-item">
+               <input type="text" class='Checkboxes' id="@Model[i].PrdUid" name="product-checkbox" value="@Model[i].PrdName" hidden />
+            @Model[i].PrdName
+             </li>
+    }
+ </ul>
+ </div>
+ </div>
+ </div>

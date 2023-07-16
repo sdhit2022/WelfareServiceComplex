@@ -2,6 +2,7 @@
 using Application.BaseData.Dto;
 using Application.BaseInfo;
 using Application.Common;
+using Application.Product;
 using Domain.ComplexModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,13 +14,15 @@ namespace ServiceComplex.Pages.BaseData
     public class ContractModel : PageModel
     {
         private readonly IBaseDataService _baseDataService;
+        private readonly IProductService _productService;
         public List<ContractDto> Contracts;
         public List<SelectListOption> WareHouses;
 
 
-        public ContractModel(IBaseDataService baseDataService)
+        public ContractModel(IBaseDataService baseDataService, IProductService productService)
         {
             _baseDataService = baseDataService;
+            _productService = productService;
         }
 
         public void OnGet()
@@ -138,13 +141,27 @@ namespace ServiceComplex.Pages.BaseData
             var contract = new ContractVM
             {
                 contractDto = _baseDataService.GetContract(id),
-                contractDetails=_baseDataService.GetContractDetails(id)
+                contractDetails = _baseDataService.GetContractDetails(id),
+                products= _productService.GetSalonProductsForContract(30)
             };
             return Partial("BaseData/Partial/_DefineContractRate", contract);
         }
+        //public IActionResult OnGetProductCategory(Guid id)
+        //{
+        //    return Partial("BaseData/Partial/_ContractProduct", _productService.GetProductsByCategoryForContract(id,30));
+        //}
 
+        
 
-
-
+        public IActionResult OnGetGetProductsByCategory(Guid id)
+        {
+            //ToDo آیدی سالن خودکار پر شود
+            return Partial("BaseData/Partial/_ContractProduct", _productService.GetProductsByCategoryForContract(id, 30));
+        }
+        public IActionResult OnGetGetAllProducts()
+        {
+            return Partial("BaseData/Partial/_ContractProduct", _productService.GetSalonProductsForContract(30));
+        }
     }
+      
 }

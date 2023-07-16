@@ -17,7 +17,7 @@
                 
                 <div class="widget-content widget-content-area br-6">
                     <div class="form-row">
-                        @switch (Model.CntType)
+                        @switch (Model.contractDto.CntType)
                         {
                             case 0:
                                 <div class="form-group col-md-3">
@@ -40,11 +40,17 @@
                         }
                     <div class="form-group col-md-7">
                                 <label>اعمال برای</label>
-                            <select id="CntType_create" name="CntType" asp-items="_service.CategorySelectOption()" class="form-control" required>
+                        <select  id="CntCategory" name="CntCategory" asp-items="_service.CategorySelectOption()" class="form-control" required>
+                                    <option value="0" default="" selected="">انتخاب همه</option>
+                        </select>
+                    </div>
+                    
+                    @* <div class="form-group col-md-7">
+                                <label>لیست کالاهای منتخب</label>
+                        <select id="CntType_create" name="CntType" asp-items="_service.SelectOptionProducts('document.getElementById('CntCategory').val()')" class="form-control" required>
                                     <option value="0" default="" selected="">انتخاب همه</option>
                             </select>
-                    </div>
-                           
+                    </div>*@
                     <div class="form-group col-md-1 ">
                      <label></label>
                     <button onclick="AddProducts()" type="button" class="form-control btn btn-success" >+</button>
@@ -53,14 +59,8 @@
 
 
                     </div>
-                    <div class="form-row">
-                    <ul class="list-group" id="Products">
-                        @for(int i = 0; i < Model.contractDetails.Count; i++)
-                        {
-                            <li class="list-group-item">@Model.contractDetails[i].CdFrContractNavigation.CntTitle</li>
-                        }
-                    </ul>
-                    </div>
+                    <div id="ProductCategory">
+                   
                     </div>
                 </div>
             </div>

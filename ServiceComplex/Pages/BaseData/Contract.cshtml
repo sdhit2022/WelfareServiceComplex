@@ -276,7 +276,35 @@
 
         }
 
+        function AddProducts(){
+            if($("#CntCategory").val()==""){
+                alert("لطفا یک گروه کالا/خدمت انتخاب کنید");
+                return
+            }
+            if ($("#CntCategory").val() == 0) {
+                $.ajax({
+                    url: "?handler=GetAllProducts",
+                    type: "Get",
+                    success: function (result) {
+                        debugger
+                        $("#ProductCategory").html("");
+                        $("#ProductCategory").html(result);
+                    }
+                });
+            }else{
+            debugger
+             $.ajax({
+                url: "?handler=GetProductsByCategory&id=" + $("#CntCategory").val(),
+                type: "Get",
+                success: function (result) {
+                    debugger
+                    //$("#content").html("");
+                    //$("#content").html(result);
+                }
+            });
+            }
 
+        }
         function DefineRate(id){
             debugger
             $.ajax({
@@ -289,6 +317,19 @@
                 }
             });
         }
+
+        //function ProductCategory(item) {
+        //    debugger
+        //    $.ajax({
+        //        url: "?handler=ProductCategory&id=" + item.value,
+        //        type: "Get",
+        //        success: function (result) {
+        //            debugger
+        //            $("#ProductCategory").html("");
+        //            $("#ProductCategory").html(result);
+        //        }
+        //    });
+        //}
 
         function Create() {
             $("#createContract").modal('show');

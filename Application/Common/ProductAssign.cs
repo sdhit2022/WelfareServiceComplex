@@ -11,7 +11,7 @@ namespace Application.Common
     {
         public Guid PrdUid { get; set; }
         public Guid PrdLvlUid3 { get; set; }
-        public string? PrdName { get; set; }
+        public string PrdName { get; set; }
         public int? Type { get; set; }
         public bool? PrdStatus { get; set; }
         public string? PrdLevelId { get; set; }

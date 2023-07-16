@@ -1,4 +1,5 @@
-﻿using Domain.ComplexModels;
+﻿using Application.Common;
+using Domain.ComplexModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.BaseData.Dto
@@ -71,6 +72,7 @@ namespace Application.BaseData.Dto
     {
         public ContractDto contractDto{get;set;}
         public List<ContractDetail> contractDetails{get;set;}
+        public List<ProductAssign> products { get; set; }
     }
     public class CreateAccountClubType
     {

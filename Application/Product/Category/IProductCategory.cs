@@ -31,6 +31,7 @@ public interface IProductCategory
     List<SelectOption> SelectOptions();
     List<TaxSelectOptionDto> TaxSelectOption();
     SelectList CategorySelectOption();
+    List<SelectListOption> SelectOptionProducts(Guid id);
 }
 
 public class ProductCategory : IProductCategory
@@ -125,6 +126,10 @@ public class ProductCategory : IProductCategory
             }).ToList();
         return new SelectList(list, nameof(TwoLevelSelectOption.Value),
             nameof(TwoLevelSelectOption.Text), null, nameof(TwoLevelSelectOption.Group));
+    }
+    public List<SelectListOption> SelectOptionProducts(Guid id)
+    {
+        return _context.Products.Where(x => x.PrdLvlUid3 == id).Select(x => new { x.PrdName, x.PrdUid }).Select(x => new SelectListOption() { Value = x.PrdUid, Text = x.PrdName }).AsNoTracking().ToList();
     }
 
     //public List<TwoLevelSelectOption> CategorySelectOption()

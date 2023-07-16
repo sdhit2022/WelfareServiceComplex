@@ -31,7 +31,9 @@ namespace Application.Product
 
         List<ProductDto.ProductDto> GetAll();
         List<ProductAssign> GetProductsByCategory(Guid id);
+        List<ProductAssign> GetProductsByCategoryForContract(Guid id, long slnId);
         List<ProductAssign> GetSalonProducts(long id);
+        List<ProductAssign> GetSalonProductsForContract(long id);
         List<ProductAssign> GetNotAssignedPrd(long SlnId);
         ProductAssign GetProductsById(Guid id);
         ProductDetails GetDetails(Guid id);
@@ -510,81 +512,28 @@ namespace Application.Product
             }
         }
 
-        private void UpdateProperties(Guid productId)
+        public List<ProductAssign> GetProductsByCategoryForContract(Guid id,long slnId)
         {
-            var getProperty =
-                _contextAccessor.HttpContext.Session.GetJson<List<PropertySelectOptionDto>>("edit-Property") ??
-                new List<PropertySelectOptionDto>();
-
-            _complexContext.ProductProperties.Where(x => x.ProductId == productId).ExecuteDelete();
-
-            foreach (var dto in getProperty)
+            //TODO آیدی سالن خودکار پر بشه
+            var result = _complexContext.Products.FromSqlInterpolated($"select * from Product left outer join SalonProduct on SalonProduct.SP_FR_PRODUCT=Product.PRD_UID where SalonProduct.SP_FR_SALON={slnId} and Product.PRD_LVL_UID3={id}").ToList();
+            List<ProductAssign> list = new List<ProductAssign>();
+            for (int i = 0; i < result.Count; i++)
             {
-                var update = new ProductProperty
+                list.Add(new ProductAssign()
                 {
-                    PropertyId = dto.PropertyId,
-                    Value = dto.Value,
-                    ProductId = productId,
-                    Id = Guid.NewGuid()
-                };
-
-                _complexContext.ProductProperties.Add(update);
-                _complexContext.SaveChanges();
+                    PrdUid = result[i].PrdUid,
+                    PrdLvlUid3 = (Guid)result[i].PrdLvlUid3,
+                    PrdName = result[i].PrdName,
+                    Type = result[i].Type,
+                    PrdStatus = result[i].PrdStatus,
+                });
             }
+          
+
+            return list;
         }
 
-        private void UpdatePictures(Guid productId, List<IFormFile> files)
-        {
-            var pictures = _contextAccessor.HttpContext.Session.GetJson<List<ProductPicturesDto>>("edit-picture")
-                .ToList();
-
-            if (!pictures.Any())
-                _complexContext.ProductPictures.Where(x => x.ProductId == productId).ExecuteDelete();
-            if (pictures.Any())
-            {
-                var list = new List<ProductPicture>();
-                foreach (var picture in pictures)
-                {
-                    var productPictures =
-                        _complexContext.ProductPictures.FirstOrDefault(x =>
-                            x.ProductId == productId && x.Id == picture.Id);
-                    list.Add(productPictures);
-                }
-
-                var list2 = _complexContext.ProductPictures.Where(x => x.ProductId == productId).ToList();
-                var list3 = list2.Except(list).ToList();
-                _complexContext.ProductPictures.RemoveRange(list3);
-                _complexContext.SaveChanges();
-            }
-
-            if (files.Any())
-            {
-                var getPictures =
-                    _contextAccessor.HttpContext.Session.GetJson<List<ProductPicturesDto>>("edit-picture");
-
-                foreach (var picture in files)
-                {
-                    var base64String = ToBase64.Image(picture);
-                    var add = new ProductPicture
-                    {
-                        Image = base64String,
-                        Id = Guid.NewGuid(),
-                        ProductId = productId
-                    };
-                    _complexContext.ProductPictures.Add(add);
-                    _complexContext.SaveChanges();
-
-                    getPictures.Add(new ProductPicturesDto
-                    {
-                        Id = add.Id,
-                        ImageBase64 = Convert.FromBase64String(add.Image),
-                        Image = add.Image
-                    });
-                    _contextAccessor.HttpContext.Session.SetJson("edit-picture", getPictures);
-                }
-            }
-        }
-
+       
         public List<ProductAssign> GetProductsByCategory(Guid id)
         {
             var result = _complexContext.Products.AsNoTracking().Include(x => x.PrdLvlUid3Navigation)
@@ -593,25 +542,53 @@ namespace Application.Product
                    x.PrdUid,
                    x.PrdName,
                    x.PrdLvlUid3,
-                   x.PrdStatus,        
+                   x.PrdStatus,
                    x.Type,
                    x.PrdLvlUid3Navigation.PrdLvlName
                }).Select(x => new ProductAssign
                {
                    PrdUid = x.PrdUid,
                    PrdName = x.PrdName,
-                   PrdLvlUid3= (Guid)x.PrdLvlUid3,
+                   PrdLvlUid3 = (Guid)x.PrdLvlUid3,
                    PrdStatus = x.PrdStatus,
                    PrdLevelId = x.PrdLvlName,
-                   Type=x.Type
+                   Type = x.Type
                }).Where(x => x.PrdLvlUid3 == id).ToList();
 
             // var products = _mapper.Map<List<ProductDto>>(result);
 
-            
+
 
             return result;
         }
+        public List<ProductAssign> GetSalonProductsForContract(long id)
+        {
+            var list = _complexContext.SalonProducts.Where(p => p.SpFrSalon == id).ToList();
+            var assigned = new List<ProductAssign>();
+            foreach (var item in list)
+            {
+                var product = GetProductsById(item.SpFrProduct);
+                assigned.Add(product);
+            }
+            return assigned;
+        }
+        public List<ProductAssign> GetSalonProducts(long id)
+        {
+            var list = _complexContext.SalonProducts.Where(p => p.SpFrSalon == id).ToList();
+            var assigned = new List<ProductAssign>();
+            foreach (var item in list)
+            {
+                var product = GetProductsById(item.SpFrProduct);
+                assigned.Add(product);
+            }
+
+            //List<ProductAssign> result = new List<ProductAssign>();
+            //  result  = _contextAccessor?.HttpContext?.Session.GetJson<List<ProductAssign>>("ProductAss");
+            //result.AddRange(assigned);
+            _contextAccessor.HttpContext.Session.SetComplexData("Assigned", assigned);
+            return assigned;
+        }
+
         public ProductAssign GetProductsById(Guid id) { 
             var result = _complexContext.Products.AsNoTracking().Include(x => x.PrdLvlUid3Navigation)
                .Select(x => new
@@ -636,22 +613,7 @@ namespace Application.Product
             return result;
         }
 
-        public List<ProductAssign> GetSalonProducts(long id)
-        {         
-            var list=_complexContext.SalonProducts.Where(p=>p.SpFrSalon==id).ToList();
-            var assigned = new List<ProductAssign>();
-            foreach (var item in list)
-            {
-                var product = GetProductsById(item.SpFrProduct);
-                assigned.Add(product);
-            }
-
-            //List<ProductAssign> result = new List<ProductAssign>();
-            //  result  = _contextAccessor?.HttpContext?.Session.GetJson<List<ProductAssign>>("ProductAss");
-            //result.AddRange(assigned);
-            _contextAccessor.HttpContext.Session.SetComplexData("Assigned", assigned);
-            return assigned;
-        }
+       
 
         public List<ProductAssign> GetNotAssignedPrd(long SlnId)
         {      
