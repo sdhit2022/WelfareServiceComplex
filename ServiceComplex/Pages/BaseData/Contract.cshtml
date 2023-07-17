@@ -88,15 +88,15 @@
                             <div class="form-group col-md-6">
                                 <div class="n-chk mt-40">
                                     <label class="new-control new-checkbox checkbox-primary Current-color">
-                                        <input id="superseded" onchange="getContracts(this)" type="checkbox" class="Current-color new-control-input product-timing">
+                                        <input id="superseded"  type="checkbox" class="Current-color new-control-input product-timing">
                                         <span class="new-control-indicator"></span>جایگزین قرارداد دیگری شود
                                     </label>
                                 </div>
                             </div>                                             
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-6" id="contractSelection" style="display:none">
                           <label for=""> قرارداد قبلی </label>
-                            <select asp-items="@(new SelectList(_service.SelectOptionContract(),"Value","Text"))" type="text" class="form-control">
-                                  <option>--انتخاب کنید--</option>
+                                <select name="CntFrContract" id="CntFrContract" asp-items="@(new SelectList(_service.SelectOptionContract(),"Value","Text"))" type="text" class="form-control">
+                                  <option value="0">--انتخاب کنید--</option>
                             </select>
                             </div>
                         </div>

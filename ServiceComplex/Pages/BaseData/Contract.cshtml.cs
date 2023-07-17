@@ -42,7 +42,7 @@ namespace ServiceComplex.Pages.BaseData
         }
 
         public IActionResult OnPostCreate(string CntTitle, string CntStartDateShamsi, string CntEndDateShamsi
-            , short CntType, string CntContractNum)
+            , short CntType, string CntContractNum,Guid CntFrContract)
         {
             try
             {
@@ -65,13 +65,14 @@ namespace ServiceComplex.Pages.BaseData
             }
             var contract = new ContractDto()
             {
-                CntId = new Guid(),
+                CntId = Guid.NewGuid(),
                 CntTitle = CntTitle,
                 CntStartDateShamsi = CntStartDateShamsi,
                 CntEndDateShamsi = CntEndDateShamsi,
                 CntType = CntType,
                 CntContractNum = CntContractNum,
-                CntCreateon = DateTime.Now
+                CntCreateon = DateTime.Now,
+                CntFrContract= CntFrContract
             };
 
             return new JsonResult(_baseDataService.CreateContract(contract));

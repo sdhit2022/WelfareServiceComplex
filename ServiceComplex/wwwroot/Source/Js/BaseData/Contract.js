@@ -130,7 +130,18 @@ function Cancel() {
 
 }
 
-$('#superseded')
+
+    
+$("#superseded").change(function () {
+    debugger
+        if (this.checked) {
+            /*   if (item.isChecked == true) {*/
+            $("#contractSelection").show();
+        } else {
+            $("#contractSelection").hide();
+        }
+    });
+    
 
 
 function AddProductsFinal() {
@@ -343,11 +354,21 @@ function saveCreate() {
                     error.innerHTML = "فیلدها را به درستی پر کنید";
                     return
                 }//createError.style.display = "none";
-                else {
+                debugger
+                if ($("#superseded").prop('checked') == true && $("#CntFrContract").val()==0) {
+                    createError.style.display = "block";
+                    error.innerHTML = "قرارداد فسخ شده را انتخاب کنید";
+                    return
+                }else {
                     createError.style.display = "none";
                     document.getElementById("CreateForm").submit();
                     $("#createContract").modal('toggle');
-
+                    $("#CntTitle_create").val("");
+                    $("#CntStartDateShamsi_create").val("");
+                    $("#CntEndDateShamsi_create").val("")
+                    $("#CntType_create").val("");
+                    $("#CntContractNum_create").val("");
+                    $("#superseded").prop('checked', false);
                 }
             }
         }

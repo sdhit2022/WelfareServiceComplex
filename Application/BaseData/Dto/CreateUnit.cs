@@ -65,7 +65,7 @@ namespace Application.BaseData.Dto
 
         public string CntContractNum { get; set; } = null!;
 
-        public string CntFrContractName { get; set; }
+        public Guid CntFrContract { get; set; }
     }
 
     public class ContractVM

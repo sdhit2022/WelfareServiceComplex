@@ -1005,7 +1005,8 @@ namespace Application.BaseData
         #region Contracts 
         public JsonResult GetAllContracts(JqueryDatatableParam param)
         {
-            var list = _complexContext.Contracts.AsNoTracking();
+            //var list = _complexContext.Contracts.AsNoTracking();
+            var list = _complexContext.Contracts.FromSqlInterpolated($"select * from Contract c where c.CNT_FR_CONTRACT is not null or( c.CNT_FR_CONTRACT is null and c.CNT_ID not in(select Contract.CNT_FR_CONTRACT from Contract where Contract.CNT_FR_CONTRACT is not null))");
 
             if (!string.IsNullOrEmpty(param.SSearch))
                 list = list.Where(x => x.CntTitle.ToLower().Contains(param.SSearch.ToLower()));
@@ -1201,7 +1202,7 @@ namespace Application.BaseData
         public List<SelectListOption> SelectOptionContract()
         {
             List<SelectListOption> list=new List<SelectListOption>();
-            var result = _complexContext.Contracts.FromSqlInterpolated($"select * from Contract c where c.CNT_FR_CONTRACT is null and c.CNT_ID not in(select Contract.CNT_FR_CONTRACT from Contract where Contract.CNT_FR_CONTRACT is not null)").ToList();
+            var result = _complexContext.Contracts.FromSqlInterpolated($"select * from Contract c where c.CNT_FR_CONTRACT is not null or( c.CNT_FR_CONTRACT is null and c.CNT_ID not in(select Contract.CNT_FR_CONTRACT from Contract where Contract.CNT_FR_CONTRACT is not null))").ToList();
             foreach(var item in result)
             {
                 list.Add(new SelectListOption() { Value = item.CntId, Text = item.CntTitle });
