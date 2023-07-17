@@ -742,7 +742,6 @@ namespace Application.Product
             return Convert.ToInt32(result);
         }
 
-
-
+        
     }
 }

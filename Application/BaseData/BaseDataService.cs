@@ -15,6 +15,7 @@ using Application.Product;
 using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
+
 namespace Application.BaseData
 {
     public interface IBaseDataService
@@ -31,12 +32,13 @@ namespace Application.BaseData
 
 
         JsonResult GetAllContracts(JqueryDatatableParam param);
+        List<SelectListOption> SelectOptionContract();
         ResultDto CreateContract(ContractDto contract);
         ContractDto GetContract(Guid id);
         bool GetContractByName(string name);
         bool CheckContractNameExists(string name, Guid id);
        List<ContractDetail> GetContractDetails(Guid id);
-
+        ResultDto InsertProductContract(List<ContractDetail> contractDetails);
         ResultDto RemoveContract(Guid id);
         ResultDto UpdateContract(ContractDto contract);
 
@@ -1151,7 +1153,10 @@ namespace Application.BaseData
                     _logger.LogWarning($"Don't Find Any Record With Id {id} On Table Contracts");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
-
+                if (_complexContext.AccountClubs.Any(x => x.AccFrContract == unit.CntId))
+                {
+                    return result.Failed("این قرارداد در بخش مشترکین در حال استفاده است .لطفا از فسخ قرارداد استفاده نمایید");
+                }
                 _complexContext.Contracts.Remove(unit);
                 _complexContext.SaveChanges();
                 return result.Succeeded();
@@ -1168,6 +1173,41 @@ namespace Application.BaseData
             var result = _complexContext.ContractDetails.Where(u => u.CdFrContract==id).Include(x=>x.CdFrContractNavigation).ToList();
             return result;
         }
+
+        public ResultDto InsertProductContract(List<ContractDetail> contractDetails)
+        {
+            var result = new ResultDto();
+
+            foreach (var item in contractDetails) {
+               if( _complexContext.ContractDetails
+                    .Any(x => x.CdFrContract ==item.CdFrContract && x.CdFrProduct==item.CdFrProduct))
+                {
+                    return result.Failed(ValidateMessage.DuplicateCode);
+                }
+                    }
+            try {
+                _complexContext.ContractDetails.AddRange(contractDetails);
+                _complexContext.SaveChanges();
+                return result.Succeeded();
+            }
+            catch(Exception e)
+            {
+                _logger.LogError($"هنگام ثبت قرارداد خطای زیر رخ داد {e}");
+                return result.Failed("هنگام ثبت عملیات خطای رخ داد");
+            };
+            
+        }
+
+        public List<SelectListOption> SelectOptionContract()
+        {
+            List<SelectListOption> list=new List<SelectListOption>();
+            var result = _complexContext.Contracts.FromSqlInterpolated($"select * from Contract c where c.CNT_FR_CONTRACT is null and c.CNT_ID not in(select Contract.CNT_FR_CONTRACT from Contract where Contract.CNT_FR_CONTRACT is not null)").ToList();
+            foreach(var item in result)
+            {
+                list.Add(new SelectListOption() { Value = item.CntId, Text = item.CntTitle });
+            }
+            return list;
+                }
 
         #endregion
 

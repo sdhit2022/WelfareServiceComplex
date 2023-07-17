@@ -1,7 +1,5 @@
-﻿
-
-$(document).ready(function () {
-    debugger
+﻿$(document).ready(function () {
+    
     bindDatatable();
 });
 
@@ -64,25 +62,157 @@ function bindDatatable() {
 
     function generateButton(data) {
 
-        return `
+        return `<a title="تعیین نرخ" onclick="DefineRate('${data.CntId}')">
+                                                        <svg style="color:#2196f3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
+                                                            <circle cx="12" cy="12" r="10"></circle>
+                                                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                                                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                                        </svg>
+                                                    </a>
 
-                                                    <a onclick="Edit('${data.AccClbUid}')" asp-page="BaseData/AccountClub" asp-page-handler="Edit" title="ویرایش" class=" mb-2 mr-2">
-                                                    <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
-                                                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                                   </svg>
-                                               </a>
-                                                        <a class="" onclick="Remove('${data.AccClbUid}')" title="حذف">
-                                                   <svg style="color:#e7515a" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
-                                                       <polyline points="3 6 5 6 21 6"></polyline>
-                                                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                       <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                       <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                   </svg>
-                                               </a>` ;
+                                                                            <a onclick="Edit('${data.CntId}')" asp-page="BaseData/AccountClub" asp-page-handler="Edit" title="ویرایش" class=" mb-2 mr-2">
+                                                                    <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
+                                                                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                                                   </svg>
+                                                               </a>
+                                                                                <a class="" onclick="Remove('${data.CntId}')" title="حذف">
+                                                                   <svg style="color:#e7515a" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                       <polyline points="3 6 5 6 21 6"></polyline>
+                                                                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                       <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                       <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                   </svg>
+                                                               </a>` ;
     };
 
 }
 
+function AddProducts() {
+    debugger;
+    if ( $("#CdCreditLimit").val() == "" || $("#CdDiscountPercent").val() == "" || $("#CdDiscountRial").val() == "") {
+        notify("top center", " فیلدهای ستاره دار را پر کنید", "error");
+        return;
+    }
+    if ($("#CntCategory").val() == "") {
+        notify("top center", "لطفا یک گروه کالا/خدمت انتخاب کنید", "error");
+        // alert("لطفا یک گروه کالا/خدمت انتخاب کنید");
+        return
+    }
+    debugger
+    if ($("#CntCategory").val() == 0) {
+        $.ajax({
+            url: "?handler=GetAllProducts",
+            type: "Get",
+            success: function (result) {
+                debugger
+                $("#ProductCategory").html("");
+                $("#ProductCategory").html(result);
+            }
+        });
+    } else {
+        debugger
+        $.ajax({
+            url: "?handler=GetProductsByCategory&id=" + $("#CntCategory").val(),
+            type: "Get",
+            success: function (result) {
+                debugger
+                $("#ProductCategory").html("");
+                $("#ProductCategory").html(result);
+                $("#Cancel").show();
+                $("#AddProductsFinal").show();
+            }
+        });
+    }
+}
+
+function Cancel() {
+    window.location = "/BaseData/Contract";
+
+}
+
+$('#superseded')
+
+
+function AddProductsFinal() {
+    debugger
+    var i = 0;
+    var list=[];
+    var id = $("#contractId").val(); 
+    var type = $("#contractType").val(); 
+    var typeValue;
+    switch (type) {
+        case '0':
+            typeValue = $("#CdCreditLimit").val(); 
+            break;
+        case '1':
+            typeValue = $("#CdDiscountPercent").val(); 
+            break;
+        case '2':
+            typeValue = $("#CdDiscountRial").val(); 
+            break;
+    }
+    while (i < $('input[name="product-li"]').length) {
+
+        $('input[name="product-li"]').each(function () {
+            list.push(this.value);
+            console.log(list);
+            i++;
+        });
+    }
+
+    $.ajax({
+        url: "?handler=ProductContract&id=" + id + "&products=" + list + "&type=" + type + "&typeValue=" + typeValue,
+        type: "Get",
+        success: function (result) {
+            debugger
+            if (result.isSucceeded) {
+                debugger
+                swal(
+                    'موفق!',
+                    result.message,
+                    'success'
+                ).then(function () {
+                    window.location = "/BaseData/Contract";
+                });
+            } else {
+                swal(
+                    'خطا!',
+                    result.message,
+                    'error'
+                )
+            }
+        }
+    });
+
+
+}
+
+function DefineRate(id) {
+    
+    $.ajax({
+        url: "?handler=DefineRate&id=" + id,
+        type: "Get",
+        success: function (result) {
+            debugger
+
+            $("#content").html("");
+            $("#content").html(result);
+        }
+    });
+}
+
+//function ProductCategory(item) {
+//    debugger
+//    $.ajax({
+//        url: "?handler=ProductCategory&id=" + item.value,
+//        type: "Get",
+//        success: function (result) {
+//            debugger
+//            $("#ProductCategory").html("");
+//            $("#ProductCategory").html(result);
+//        }
+//    });
+//}
 
 function Create() {
     $("#createContract").modal('show');
@@ -126,24 +256,23 @@ function Remove(id) {
         }
     });
 }
-
+var Contract;
 function Edit(id) {
-    //todo 
+    //todo
     $("#editContract").modal('show');
     debugger
     $.ajax({
         type: "GET",
-        url: "?handler=Edit&SLN_ID=" + id,
+        url: "?handler=Edit&id=" + id,
         success: function (result) {
             debugger
-            var Contract = JSON.parse(result);
-            $("#SlnName").val(Contract.SlnName);
-            $("#SlnType").val(Contract.SlnType);
-            //if (Contract.FrWarHosUid !=null){
-            debugger
-            $("#FrWarHosUid").val(Contract.FrWarHosUid);
-            //}
-            $("#SlnId").val(Contract.SlnId);
+            Contract = JSON.parse(result);
+            $("#CntTitle").val(Contract.CntTitle);
+            $("#CntStartDateShamsi").val(Contract.CntStartDateShamsi);
+            $("#CntEndDateShamsi").val(Contract.CntEndDateShamsi);
+            $("#CntType").val(Contract.CntType);
+            $("#CntContractNum").val(Contract.CntContractNum);
+            $("#CntId").val(Contract.CntId);
         }
     });
 }
@@ -158,27 +287,36 @@ function saveEdit() {
     $.ajax({
         type: "get",
         url: "?handler=CheckContractNameExists",
-        data: { name: $("#SlnName").val(), id: $("#SlnId").val() },
+        data: { name: $("#CntTitle").val(), id: $("#CntId").val() },
         success: function (result) {
             debugger
             if (result == true) {
-                edit_error.innerHTML = "نام سالن تکراری است";
+                edit_error.innerHTML = "نام قرارداد تکراری است";
                 editError.style.display = "block";
                 checkexist = false;
             }
-            if ($("#SlnName").val() == "" || $("#SlnName").val() == null) {
-                edit_error.innerHTML = "نام سالن را وارد کنید";
+            if ($("#CntTitle").val() == "" || $("#CntStartDateShamsi").val() == ""
+                || $("#CntEndDateShamsi").val() == "" || $("#CntType").val() == ""
+                || $("#CntContractNum").val() == "") {
+                edit_error.innerHTML = "فیلدها را به درستی پر کنید";
                 editError.style.display = "block";
                 checkexist = false;
             }
-            //editError.style.display = "none";
-            if ($("#SlnType").val() == "0") {
-                edit_error.innerHTML = "نوع سالن را نتخاب کنید";
-                editError.style.display = "block";
-                checkexist = false;
-            }
+
             if (checkexist) {
                 debugger
+                //Contract.CntId = $("#CntId").val();
+                //Contract.CntTitle = $("#CntTitle").val();
+                //Contract.CntStartDateShamsi = $("#CntStartDateShamsi").val();
+                //Contract.CntEndDateShamsi = $("#CntEndDateShamsi").val();
+                //Contract.CntType = $("#CntType").val();
+                //Contract.CntContractNum = $("#CntContractNum").val();
+                //$.ajax({
+                //    type: "Post",
+                //    url: "?handler=Edit",
+                //    data: {Contract.stringify( },
+                //    success: function (result) {}
+                //});
                 editError.style.display = "none";
                 document.getElementById("EditForm").submit();
                 $("#editContract").modal('toggle');
@@ -189,26 +327,22 @@ function saveEdit() {
 function saveCreate() {
     $.ajax({
         type: "get",
-        url: "?handler=CheckName&name=" + $("#SlnName_create").val(),
+        url: "?handler=CheckName&name=" + $("#CntTitle_create").val(),
         success: function (result) {
             debugger
             if (result == true) {
                 createError.style.display = "block";
-                error.innerHTML = "نام سالن تکراری است";
+                error.innerHTML = "نام قرارداد تکراری است";
                 return
             }
             else {
-                if ($("#SlnName_create").val() == "" || $("#SlnName_create").val() == null) {
+                if ($("#CntTitle_create").val() == "" || $("#CntStartDateShamsi_create").val() == ""
+                    || $("#CntEndDateShamsi_create").val() == "" || $("#CntType_create").val() == ""
+                    || $("#CntContractNum_create").val() == "") {
                     createError.style.display = "block";
-                    error.innerHTML = "نام سالن را وارد کنید";
+                    error.innerHTML = "فیلدها را به درستی پر کنید";
                     return
-                }
-                createError.style.display = "none";
-                if ($("#SlnType_create").val() == "0") {
-                    error.innerHTML = "نوع سالن را نتخاب کنید";
-                    createError.style.display = "block";
-                    return
-                }
+                }//createError.style.display = "none";
                 else {
                     createError.style.display = "none";
                     document.getElementById("CreateForm").submit();

@@ -16,7 +16,6 @@ namespace ServiceComplex.Pages.BaseData
         private readonly IBaseDataService _baseDataService;
         private readonly IProductService _productService;
         public List<ContractDto> Contracts;
-        public List<SelectListOption> WareHouses;
 
 
         public ContractModel(IBaseDataService baseDataService, IProductService productService)
@@ -146,18 +145,56 @@ namespace ServiceComplex.Pages.BaseData
             };
             return Partial("BaseData/Partial/_DefineContractRate", contract);
         }
-        //public IActionResult OnGetProductCategory(Guid id)
-        //{
-        //    return Partial("BaseData/Partial/_ContractProduct", _productService.GetProductsByCategoryForContract(id,30));
-        //}
 
-        
+        public IActionResult OnGetProductContract(Guid id,string products, short type, decimal typeValue)
+        {
+            var rrr = products.Split(",");
+            var guid =new List<Guid>();
+            foreach (var item in rrr)
+            {
+                 guid.Add(new Guid(item));
+            }
+            List<ContractDetail> list = new List<ContractDetail>();
+            foreach (var item in guid)
+            {
+                switch (type)
+                {
+                    case 0:
+                        list.Add(new ContractDetail
+                        {
+                            CdId =Guid.NewGuid(),
+                            CdFrContract = id,
+                            CdFrProduct = item,
+                            CdCreditLimit = typeValue
+                        });
+                        break;
+                    case 1:
+                        list.Add(new ContractDetail
+                        {
+                            CdId = Guid.NewGuid(),
+                            CdFrContract = id,
+                            CdFrProduct = item,
+                            CdDiscountPercent = typeValue
+                        });
+                        break;
+                    case 2:
+                        list.Add(new ContractDetail 
+                        { CdId = Guid.NewGuid(),
+                          CdFrContract = id, CdFrProduct = item, CdDiscountRial = typeValue });
+                        break;
+                }
+            }
+            return new JsonResult(_baseDataService.InsertProductContract(list));
+        }
+
+
 
         public IActionResult OnGetGetProductsByCategory(Guid id)
         {
             //ToDo آیدی سالن خودکار پر شود
             return Partial("BaseData/Partial/_ContractProduct", _productService.GetProductsByCategoryForContract(id, 30));
         }
+
         public IActionResult OnGetGetAllProducts()
         {
             return Partial("BaseData/Partial/_ContractProduct", _productService.GetSalonProductsForContract(30));

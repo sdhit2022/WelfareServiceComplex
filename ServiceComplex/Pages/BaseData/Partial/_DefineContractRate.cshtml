@@ -4,6 +4,7 @@
 @{
 
 }
+
 <div class="layout-px-spacing">
         <div class="page-header">
             <div class="page-title layout-top-spacing">
@@ -21,19 +22,19 @@
                         {
                             case 0:
                                 <div class="form-group col-md-3">
-                                    <label for="">سقف اعتبار</label>
-                                    <input id="CdCreditLimit" type="number" class="form-control" placeholder="سقف اعتبار">
+                                <label for="">سقف اعتبار<span class="error">*</span></label>
+                                <input name="CdCreditLimit" id="CdCreditLimit" type="number" class="form-control" placeholder="سقف اعتبار">
                                 </div>
                                 break;
                             case 1:
                                 <div class="form-group col-md-3">
-                                    <label for="">درصد تخفیف</label>
+                                    <label for="">درصد تخفیف<span class="error">*</span></label>
                                     <input id="CdDiscountPercent" type="number" class="form-control" placeholder="درصد تخفیف">
                                 </div>
                                 break;
                              case 2:
                                 <div class="form-group col-md-3">
-                                    <label for="">مبلغ تخفیف</label>
+                                <label for="">مبلغ تخفیف<span class="error">*</span></label>
                                     <input id="CdDiscountRial" type="number" class="form-control" placeholder="مبلغ تخفیف">
                                 </div>
                                 break;
@@ -41,29 +42,43 @@
                     <div class="form-group col-md-7">
                                 <label>اعمال برای</label>
                         <select  id="CntCategory" name="CntCategory" asp-items="_service.CategorySelectOption()" class="form-control" required>
-                                    <option value="0" default="" selected="">انتخاب همه</option>
+                               <option value="0" default="" selected="">انتخاب همه</option>
                         </select>
                     </div>
                     
-                    @* <div class="form-group col-md-7">
-                                <label>لیست کالاهای منتخب</label>
-                        <select id="CntType_create" name="CntType" asp-items="_service.SelectOptionProducts('document.getElementById('CntCategory').val()')" class="form-control" required>
-                                    <option value="0" default="" selected="">انتخاب همه</option>
-                            </select>
-                    </div>*@
+                   
                     <div class="form-group col-md-1 ">
                      <label></label>
                     <button onclick="AddProducts()" type="button" class="form-control btn btn-success" >+</button>
                     </div>
-
-
-
                     </div>
                     <div id="ProductCategory">
                    
                     </div>
+                <input id="contractId" value="@Model.contractDto.CntId"  class="form-control" hidden>
+                <input id="contractType" value="@Model.contractDto.CntType" class="form-control" hidden>
+                <div class="form-row">
+                    <button onclick="AddProductsFinal()" id="AddProductsFinal" type="button" class="form-control btn btn-success col-lg-1" style="display:none">تایید </button>
+                    <button onclick="Cancel()" id="Cancel" type="button" class="form-control btn btn-light-warning col-lg-1" style="display:none">انصراف</button>
+
+                </div>
                 </div>
             </div>
 
         </div>
 </div>
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+<script src="~/assets/js/datepicker/persian-datepicker.min.js"></script>
+<script src="~/assets/js/datepicker/persian-date.min.js"></script>
+
+    <script>
+
+      
+    </script>
+}
+

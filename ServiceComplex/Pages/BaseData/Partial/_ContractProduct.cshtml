@@ -11,8 +11,8 @@
     {
         @*<li class="list-group-item">@Model.contractDetails[i].CdFrContractNavigation.CntTitle</li>*@
                <li class="list-group-item">
-               <input type="text" class='Checkboxes' id="@Model[i].PrdUid" name="product-checkbox" value="@Model[i].PrdName" hidden />
-            @Model[i].PrdName
+               <input type="text"  name="product-li" value="@Model[i].PrdUid" hidden />
+               @Model[i].PrdName
              </li>
     }
  </ul>

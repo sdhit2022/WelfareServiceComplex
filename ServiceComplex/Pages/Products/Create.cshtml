@@ -56,19 +56,16 @@
                                 <select asp-for="Command.PrdLvlUid3" id="group" class="form-control" asp-Items="@(new SelectList(Model.Category, "PrdLvlUId", "PrdLvlName"))">
                                     <option value="" selected>انتخاب کنید...</option>
                                 </select>
-@*                                <span asp-validation-for="Command.PrdLvlUid3" class="error"></span>
-*@
+
                             </div>
                             <div class="form-group col-md-4">
                                 <label for=""> نام <span class="error">*</span></label>
                                 <input asp-for="Command.PrdName" type="text" class="form-control" id="" required="" placeholder="نام">
-@*                                <span asp-validation-for="Command.PrdName" class="error"></span>
-*@                            </div>
+                           </div>
                             <div class="form-group col-md-4">
                                 <label title="نمایش در فروشگاه، اپلیکشن موبایل و چاپ" for="">نام نمایشی کالا <span class="error">*</span></label>
                                 <input asp-for="Command.PrdNameInPrint" type="text" class="form-control" id="" placeholder="نام نمایشی">
-@*                                <span asp-validation-for="Command.PrdNameInPrint" class="error"></span>
-*@                            </div>
+                            </div>
                                                    
 
                           
@@ -84,8 +81,7 @@
                                     <option value="3">مجازی</option>
                                     <option value="1">غرفه</option>
                                 </select>
-@*                                <span asp-validation-for="Command.Type" class="error"></span>
-*@                            </div>
+                            </div>
                              <div class="form-group col-md-4" id="isService" style="display:none">
                                 <div class="n-chk mt-40">
                                     <label class="new-control new-checkbox checkbox-primary Current-color">
@@ -101,8 +97,7 @@
                                     <option value="">انتخاب...</option>
                                      
                                 </select>
-@*                                <span asp-validation-for="Command.FkProductUnit" class="error"></span>
-*@                            </div>
+                            </div>
                              <div class="form-group col-md-4" id="prdUnit2" style="display:none">
                                 <div class="n-chk mt-40">
                                     <label class="new-control new-checkbox checkbox-primary Current-color">
