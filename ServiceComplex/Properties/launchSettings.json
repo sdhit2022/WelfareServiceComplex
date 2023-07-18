@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "launchUrl": "https://localhost:44394/BaseData/Contract",
+      //"launchUrl": "https://localhost:44394/BaseData/Contract",
       "applicationUrl": "http://localhost:18995",
       "sslPort": 44394
     }
@@ -13,7 +13,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "https://localhost:44394/BaseData/Contract",
+      ////"launchUrl": "https://localhost:44394/BaseData/Contract",
       "applicationUrl": "http://localhost:5252",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -23,7 +23,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "https://localhost:44394/BaseData/Contract",
+      //"launchUrl": "https://localhost:44394/BaseData/Contract",
       "applicationUrl": "https://localhost:7122;http://localhost:5252",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -32,7 +32,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:44394/BaseData/Contract",
+      //"launchUrl": "https://localhost:44394/BaseData/Contract",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

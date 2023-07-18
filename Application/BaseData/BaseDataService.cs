@@ -272,7 +272,7 @@ namespace Application.BaseData
                 if (_complexContext.WareHouses.Any(x => x.WarHosName == command.Name.Fix()))
                     return result.Failed(ValidateMessage.DuplicateName);
 
-                if (_complexContext.WareHouses.Any(x => x.WarHosName == command.Code.Fix()))
+                if (_complexContext.WareHouses.Any(x => x.WarHosCode == command.Code.Fix()))
                     return result.Failed(ValidateMessage.DuplicateCode);
 
                 var unit = _mapper.Map<WareHouse>(command);
@@ -330,7 +330,10 @@ namespace Application.BaseData
                     _logger.LogWarning($"Don't Find Any Record With Id {id} On Table WareHouse");
                     return result.Failed("خطای رخ داد، لطفا با پشتیبانی تماس بگرید");
                 }
-
+                if(_complexContext.Salons.Any(x=>x.FrWarHosUid== unit.WarHosUid))
+                {
+                    return result.Failed("انبار به سالن تخصیص داده شده است و نمیتوان آن را حذف کرد");
+                }
                 _complexContext.WareHouses.Remove(unit);
                 _complexContext.SaveChanges();
                 return result.Succeeded();
@@ -341,12 +344,8 @@ namespace Application.BaseData
                 return result.Failed("هنگام ثبت عملیات خطای رخ داد");
             }
         }
-
         #endregion
-
         #region Unit Of AccountClubType
-
-
 
         public JsonResult GetAllAccountClupType(JqueryDatatableParam param)
         {
@@ -517,7 +516,6 @@ namespace Application.BaseData
                 return result.Failed("هنگام ثبت عملیات خطای رخ داد");
             }
         }
-
         #endregion
 
         #region  AccountRating
@@ -644,9 +642,6 @@ namespace Application.BaseData
         #endregion
 
         #region Account Club
-
-
-
         public JsonResult GetAllAccountClub(JqueryDatatableParam param)
         {
 
@@ -939,8 +934,7 @@ namespace Application.BaseData
                 map.ClupType = this.GetSelectOptionClubTypes();
                 map.Rating = this.GetSelectOptionRatings();
                 map.States = this.SelectOptionState();
-                // TODO  قرار داد اضافه شود
-                //map.States = this.SelectOptionContract();
+                map.Contracts = this.SelectOptionContract();
                 map.Jobs = this.SelectOptionJob();               
                 map.SateUid = _complexContext.Cities.Include(x => x.SttU)
                     .SingleOrDefault(x => x.CityUid == accClub.CityUid)?.SttUid;

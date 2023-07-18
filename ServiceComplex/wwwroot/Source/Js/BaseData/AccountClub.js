@@ -1,4 +1,8 @@
-﻿
+﻿function CancelCreate() {
+    debugger
+    window.location = "/BaseData/AccountClub";
+
+}
 
 function submitEdit(){
     debugger

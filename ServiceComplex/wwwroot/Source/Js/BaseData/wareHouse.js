@@ -4,7 +4,10 @@ $(document).ready(function () {
     bindDatatable();
 });
 
-
+var editError = document.querySelector("#EditError");
+var createError = document.querySelector("#CreateError");
+var error = document.querySelector("#error");
+var edit_error = document.querySelector("#editError");
 
 $("#editSubmit").on('click', function (evn) {
     evn.preventDefault();
@@ -14,6 +17,13 @@ $("#editSubmit").on('click', function (evn) {
     form.validate();
     if (form.valid() === false) {
         return false;
+    }
+
+    if ($("#Name").val() == "" || $("#Code").val() == "") {
+        edit_error.innerHTML = "فیلدهای ستاره دار را پر کنید";
+        editError.style.display = "block";
+        return
+
     }
 
     $.ajax({
@@ -44,13 +54,17 @@ $("#editSubmit").on('click', function (evn) {
 
 
 $("#addSubmit").on('click', function (evn) {
-    evn.preventDefault();
     debugger
 
     var form = $("#submitAddForm");
     form.validate();
     if (form.valid() === false) {
         return false;
+    }
+    if ($("#Name_create").val() == "" || $("#Code_create").val() == "") {
+        createError.style.display = "block";
+        error.innerHTML = "فیلدهای ستاره دار را پر کنید";
+        return
     }
 
     $.ajax({
@@ -72,29 +86,24 @@ $("#addSubmit").on('click', function (evn) {
                 notify("top center", result.message, "error")
                 return false;
             }
-
         }
     })
-
 })
+
 function Edit(id, name, code) {
     debugger
+    editError.style.display = "none";
     $("#edit").modal("show");
-    $("#Command_Name").val(name);
-    $("#Command_Code").val(code);
-    $("#Command_Id").val(id);
+    $("#Name").val(name);
+    $("#Code").val(code);
+    $("#Id").val(id);
 }
 
 function Add() {
     debugger
+    createError.style.display = "none";
     $("#add").modal("show");
-
 }
-
-
-
-
-
 
 function Remove(id) {
     debugger
@@ -178,7 +187,19 @@ function bindDatatable() {
 
     function generateButton(data) {
         debugger
-        return `<center><button onclick="Edit('${data.Id}','${data.Name}','${data.Code}')" class="btn btn-warning btn-rounded btn-sm">ویرایش</button>&nbsp; <button onclick="Remove('${data.Id}')" class="btn btn-danger btn-rounded btn-sm"> حذف </button></center>`
+        return `   <a onclick="Edit('${data.Id}','${data.Name}','${data.Code}')" title="ویرایش" class=" mb-2 mr-2">
+                                                                    <svg style="color:#e2a03f !important" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
+                                                                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                                                   </svg>
+                                                               </a>
+                                                                   <a class="" onclick="Remove('${data.Id}')" title="حذف">
+                                                                   <svg style="color:#e7515a" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                       <polyline points="3 6 5 6 21 6"></polyline>
+                                                                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                       <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                       <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                   </svg>
+                                                               </a>`
     };
 
 

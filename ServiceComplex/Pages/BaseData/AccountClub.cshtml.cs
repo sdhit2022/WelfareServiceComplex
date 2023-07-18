@@ -16,6 +16,7 @@ namespace ServiceComplex.Pages.BaseData
         public List<AccountClubType> ClupType;
         public List<SelectListOption> States;
         public List<SelectListOptionInt> Jobs;
+        public List<SelectListOption> Contracts;
 
 
         public AccountClubModel(IBaseDataService service)
@@ -29,6 +30,7 @@ namespace ServiceComplex.Pages.BaseData
             ClupType = _service.GetSelectOptionClubTypes();
             States = _service.SelectOptionState();
             Jobs = _service.SelectOptionJob();
+            Contracts = _service.SelectOptionContract();
         }
         public IActionResult OnGetData(JqueryDatatableParam param)
         {
@@ -38,8 +40,8 @@ namespace ServiceComplex.Pages.BaseData
 
         public IActionResult OnGetEdit(Guid id)
         {
-
-            return Partial("BaseData/Partial/_EditAccountClub", _service.GetDetailsAccountClub(id));
+            var result = _service.GetDetailsAccountClub(id);
+            return Partial("BaseData/Partial/_EditAccountClub",result);
         }
 
         public IActionResult OnPostEdit(EditAccountClub command)

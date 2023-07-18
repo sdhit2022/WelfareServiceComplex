@@ -95,7 +95,10 @@ function AddProducts() {
     }
     if ($("#CntCategory").val() == "") {
         notify("top center", "لطفا یک گروه کالا/خدمت انتخاب کنید", "error");
-        // alert("لطفا یک گروه کالا/خدمت انتخاب کنید");
+        return
+    }
+    if ($("#CdDiscountPercent").val() != "" && $("#CdDiscountPercent").val() > 100) {
+        notify("top center", "نخفیف بالاتر از 100% مجاز نیست", "error");
         return
     }
     debugger
@@ -107,6 +110,7 @@ function AddProducts() {
                 debugger
                 $("#ProductCategory").html("");
                 $("#ProductCategory").html(result);
+                $("#AddProductsFinal").show();
             }
         });
     } else {
@@ -118,7 +122,6 @@ function AddProducts() {
                 debugger
                 $("#ProductCategory").html("");
                 $("#ProductCategory").html(result);
-                $("#Cancel").show();
                 $("#AddProductsFinal").show();
             }
         });
@@ -246,7 +249,7 @@ function Remove(id) {
                 type: "get",
                 success: function (result) {
 
-                    if (result) {
+                    if (result.isSucceeded) {
                         swal(
                             'موفق!',
                             result.message,
